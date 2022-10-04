@@ -11,6 +11,6 @@ public class EnemyMeleeAtk : MonoBehaviour
     public void Dmg()
     {
         if (enemyDetectingObjects.hit2DAtk.collider != null)
-            enemyDetectingObjects.hit2DAtk.collider.GetComponent<CharacterAttributes>().TakeDMG(characterAttributes.DealDmg());
+            enemyDetectingObjects.hit2DAtk.collider.GetComponent<CharacterAttributes>().TakeDMG(characterAttributes.DealDmg(), characterAttributes.criticalDmg);
     }
 }

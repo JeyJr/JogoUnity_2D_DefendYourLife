@@ -7,10 +7,11 @@ public class EnemyHorizontalMovement : MonoBehaviour
     [SerializeField] private EnemyDetectingObjects enemyDetectingObjects;
 
     [SerializeField] private Animator anim;
-    [SerializeField] private float moveSpeed;
+    private float moveSpeed;
 
     private void Awake()
     {
+        moveSpeed = Random.Range(0.5f, 1.2f);
         Rotate();
     }
 

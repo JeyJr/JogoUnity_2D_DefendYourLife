@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [Header("Animation Controll")]
-    [SerializeField] private Animator anim;
-    public bool isWalk, isJump; //Controlling anims state in animator
 
     [Header("Movement Controll")]
-    [SerializeField] private Rigidbody2D rb2D;
     [SerializeField] private Transform startPosition;
     [SerializeField] private float jumpForce, distance;
     [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask groundMask; 
+    public Rigidbody2D rb2D;
     private Vector3 inputDir;
+    private bool onGround;
+    private bool jumpActive;
 
-
+    public float InputDir{ get => inputDir.x;}
+    public bool OnGround{ get => onGround;}
     private void Update() {
         inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
-        Jump();
-        Anims();
+
+        if (Input.GetButtonDown("Jump")) jumpActive = true;
+        else jumpActive = false;
     }
     private void FixedUpdate() {
         PlayerRotate();
         PlayerMovement();
+        GroundCheck();
+        Jump();
     }
     private void PlayerRotate()
     {
@@ -39,25 +42,21 @@ public class PlayerMove : MonoBehaviour
     private void PlayerMovement()
     {
         transform.position += new Vector3(inputDir.x * moveSpeed, 0, 0) * Time.deltaTime;
-
-        if (inputDir.x != 0) isWalk = true;
-        else isWalk = false;
     }
-    private void Jump(){
+    private void Jump()
+    {
+        if(onGround && jumpActive)
+            rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+    }
+    private void GroundCheck(){
         RaycastHit2D hit2D = Physics2D.Raycast(startPosition.position, Vector2.down, distance, groundMask);
 
-        if (hit2D && Input.GetButtonDown("Jump"))
-        {
-            rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-            isJump = true;
-        }
-        else isJump = false;
+        if (hit2D.collider != null)
+            onGround = true;
+        else
+            onGround = false;
     }
-    private void Anims()
-    {
-        anim.SetBool("isWalk", isWalk);
-        anim.SetBool("isJump", isJump);
-    }
+
     private void OnDrawGizmos() {
         //Ground
         Debug.DrawRay(startPosition.position, Vector2.down * distance, Color.green);
