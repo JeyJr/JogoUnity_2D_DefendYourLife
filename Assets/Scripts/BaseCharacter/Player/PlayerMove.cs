@@ -45,8 +45,10 @@ public class PlayerMove : MonoBehaviour
     }
     private void Jump()
     {
-        if(onGround && jumpActive)
-            rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        if (onGround && jumpActive)
+            rb2D.velocity = Vector2.up * jumpForce;    
+            //rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+
     }
     private void GroundCheck(){
         RaycastHit2D hit2D = Physics2D.Raycast(startPosition.position, Vector2.down, distance, groundMask);

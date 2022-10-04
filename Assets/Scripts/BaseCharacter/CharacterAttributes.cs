@@ -5,40 +5,105 @@ using UnityEngine;
 
 public class CharacterAttributes : MonoBehaviour
 {
+    //---------------------------------------AttributesBase
     [SerializeField] private int strength, vitality, intelligence, luck;
-
-    [SerializeField] private int life, maxLife, atkPower, criticalRate;
+    [SerializeField] private int life, maxLife, physicalAtkPower, magicAtkPower, criticalRate;
     public bool criticalDmg;
+    //---------------------------------------Exp Control
+    [SerializeField] private int currentExp, nextLevelExp, level, attributePoints, usedAttributePoints;
+    private int expScaleValue = 125, attributesPointsScaleValue = 3;
 
-
+    [SerializeField] private int dropExp;
+    //---------------------------------------Objs
     [SerializeField] private GameObject textDmg;
     [SerializeField] private Transform spawnPosition;
 
-
+   
     private void Awake()
     {
-        VitalityBase();
-        StrengthBase();
-        LuckBase();
-    }
-    void StrengthBase()
-    {
-        atkPower = strength * 3;
+        InitialAttributesValue();
+        CheckLevelUp();
     }
 
-    void VitalityBase()
+    private void InitialAttributesValue()
     {
-        maxLife = 100 + (vitality * 25);
-        life = maxLife;
-    }
-
-    void LuckBase()
-    {
-        //Every 3pts in luck: atkPower+1, criticalRate+1
-        if(luck % 3 == 0)
+        //Exp
+        if (level < 1)
         {
-            criticalRate = luck / 3;
+            level = 1;
+            nextLevelExp = level * expScaleValue;
+            attributePoints = level * attributesPointsScaleValue;
         }
+        else
+        {
+            nextLevelExp = level * expScaleValue;
+            attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
+        }
+
+
+        physicalAtkPower = strength * 3; //atk = str * 3 
+        maxLife = vitality * 50; //maxlife = vit * 50 
+        life = maxLife;
+        magicAtkPower = Mathf.RoundToInt(intelligence * 1.5f); //magic = int * 1.5f
+        criticalRate = Mathf.RoundToInt(luck / 2); 
+    }
+
+    private void Update()
+    {
+        CheckLevelUp();
+    }
+
+    private void CheckLevelUp()
+    {
+        nextLevelExp = level * expScaleValue;
+        attributePoints = attributesPointsScaleValue * level;
+        
+
+        if (currentExp >= nextLevelExp)
+        {
+            level++;
+            currentExp -= nextLevelExp;
+            nextLevelExp = level * expScaleValue;
+            attributePoints = attributesPointsScaleValue * level;
+        }
+
+        if (usedAttributePoints > 0) attributePoints -= usedAttributePoints;
+        
+        if(attributePoints < 0)
+        {
+            attributePoints++;
+            usedAttributePoints--;
+        }
+        
+    }
+
+    public void UsingAttributePoints()
+    {
+        if(attributePoints > 0)
+        {
+            attributePoints--;
+            usedAttributePoints++;
+        }
+    }
+
+    public void ReturningAttributePoints()
+    {
+        if(usedAttributePoints > 0)
+        {
+            attributePoints++;
+            usedAttributePoints--;
+        }
+    }
+
+
+    public void GetExp(int value)
+    {
+        currentExp += value;
+        //CheckLevelUp();
+    }
+    public int DropExp()
+    {
+        return dropExp;
     }
 
     public void TakeDMG(int dmg, bool critical)
@@ -49,9 +114,9 @@ public class CharacterAttributes : MonoBehaviour
 
     public int DealDmg()
     {
-        int dmg = (int)Random.Range(atkPower / 1.2f, atkPower / 0.9f);
-
+        int dmg = Mathf.RoundToInt(Random.Range(physicalAtkPower / 1.2f, physicalAtkPower / 0.9f));
         float critChance = Random.Range(1, 100);
+
         if (critChance <= criticalRate)
         {
             criticalDmg = true;
@@ -59,15 +124,15 @@ public class CharacterAttributes : MonoBehaviour
         }
         else criticalDmg = false;
             
-
         return  dmg;
     }
 
-
     private void SpawnText(string text, bool critical)
     {
-        if (critical) textDmg.GetComponent<TextMeshPro>().color = Color.red;
-        else textDmg.GetComponent<TextMeshPro>().color = Color.white;
+        if (critical) 
+            textDmg.GetComponent<TextMeshPro>().color = Color.red;
+        else 
+            textDmg.GetComponent<TextMeshPro>().color = Color.white;
 
         textDmg.GetComponent<TextMeshPro>().text = text;
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
