@@ -7,13 +7,6 @@ public class EnemyMeleeAtk : MonoBehaviour
     [SerializeField] private CharacterAttributes characterAttributes;
     [SerializeField] private EnemyDetectingObjects enemyDetectingObjects;
 
-    
-    void Update()
-    {
-        
-    }
-
-
     //method in animation atk
     public void Dmg()
     {

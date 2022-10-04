@@ -39,6 +39,7 @@ public class EnemyDetectingObjects : MonoBehaviour
         }
         else playerBehind = false;
     }
+
     //AtkArea
     private void AtkArea()
     {
