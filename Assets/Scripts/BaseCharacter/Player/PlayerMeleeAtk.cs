@@ -7,7 +7,7 @@ public class PlayerMeleeAtk : MonoBehaviour
     [SerializeField] private CharacterAttributes characterAttributes;
 
     [SerializeField] private Transform startPosition;
-    [SerializeField] private RaycastHit2D[] hit2DAtk;
+    [SerializeField] public RaycastHit2D[] hit2DAtk;
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float atkRange;
 
@@ -16,7 +16,7 @@ public class PlayerMeleeAtk : MonoBehaviour
 
     private void Update()
     {
-        if (!isAtk && Input.GetMouseButtonDown(0)) SetIsAtk();
+        if (!isAtk && Input.GetMouseButton(0)) SetIsAtk();
         //Anims();
     }
 
@@ -30,6 +30,7 @@ public class PlayerMeleeAtk : MonoBehaviour
                 hit2DAtk[i].collider.GetComponent<CharacterAttributes>().TakeDMG(characterAttributes.DealDmg(), characterAttributes.criticalDmg);
             }
     }
+
 
     //end anim atk, set isAtk value
     public void SetIsAtk()

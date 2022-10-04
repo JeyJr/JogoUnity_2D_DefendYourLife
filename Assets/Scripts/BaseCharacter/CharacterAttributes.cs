@@ -6,112 +6,56 @@ using UnityEngine;
 public class CharacterAttributes : MonoBehaviour
 {
     //---------------------------------------AttributesBase
-    [SerializeField] private int strength, vitality, intelligence, luck;
-    [SerializeField] private int life, maxLife, physicalAtkPower, magicAtkPower, criticalRate;
-    public bool criticalDmg;
-    //---------------------------------------Exp Control
-    [SerializeField] private int currentExp, nextLevelExp, level, attributePoints, usedAttributePoints;
-    private int expScaleValue = 125, attributesPointsScaleValue = 3;
+    [SerializeField] private int strength, intelligence, vitality, luck;
 
-    [SerializeField] private int dropExp;
+    //---------------------------------------Status
+    [SerializeField] private int physicalAtkPower, magicAtkPower, life, maxLife, criticalRate;
+    public bool criticalDmg;
+
+
+    //---------------------------------------Propriedades AttributeBase
+    public int Strength { get => strength; set => strength = value; }
+    public int Intelligence { get => intelligence; set => intelligence = value; }
+    public int Vitality { get => vitality; set => vitality = value; }
+    public int Luck { get => luck; set => luck = value; }
+
+    //---------------------------------------Propriedades Status
+    public int PhysicalAtkPower { get => physicalAtkPower; }
+    public int MagicAtkPower { get => magicAtkPower;}
+    public int MaxLife { get => maxLife;}
+    public int CriticalRate { get => criticalRate;}
+
     //---------------------------------------Objs
     [SerializeField] private GameObject textDmg;
     [SerializeField] private Transform spawnPosition;
 
-   
     private void Awake()
     {
-        InitialAttributesValue();
-        CheckLevelUp();
+        AttributeValues();
+
+        if (strength < 1) strength = 1;
+        if (vitality < 1) vitality = 1;
+        if (intelligence < 1) intelligence = 1;
+        if (luck < 1) luck = 1;
+
+        life = vitality * 50;
     }
-
-    private void InitialAttributesValue()
-    {
-        //Exp
-        if (level < 1)
-        {
-            level = 1;
-            nextLevelExp = level * expScaleValue;
-            attributePoints = level * attributesPointsScaleValue;
-        }
-        else
-        {
-            nextLevelExp = level * expScaleValue;
-            attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
-        }
-
-
-        physicalAtkPower = strength * 3; //atk = str * 3 
-        maxLife = vitality * 50; //maxlife = vit * 50 
-        life = maxLife;
-        magicAtkPower = Mathf.RoundToInt(intelligence * 1.5f); //magic = int * 1.5f
-        criticalRate = Mathf.RoundToInt(luck / 2); 
-    }
-
     private void Update()
     {
-        CheckLevelUp();
+        AttributeValues();
     }
-
-    private void CheckLevelUp()
+    private void AttributeValues()
     {
-        nextLevelExp = level * expScaleValue;
-        attributePoints = attributesPointsScaleValue * level;
-        
-
-        if (currentExp >= nextLevelExp)
-        {
-            level++;
-            currentExp -= nextLevelExp;
-            nextLevelExp = level * expScaleValue;
-            attributePoints = attributesPointsScaleValue * level;
-        }
-
-        if (usedAttributePoints > 0) attributePoints -= usedAttributePoints;
-        
-        if(attributePoints < 0)
-        {
-            attributePoints++;
-            usedAttributePoints--;
-        }
-        
+        physicalAtkPower = strength * 3; //atk = str * 3 
+        magicAtkPower = Mathf.RoundToInt(Intelligence * 1.5f); //magic = int * 1.5f
+        maxLife = vitality * 50; //maxlife = vit * 50 
+        criticalRate = Mathf.RoundToInt(luck / 2); 
     }
-
-    public void UsingAttributePoints()
-    {
-        if(attributePoints > 0)
-        {
-            attributePoints--;
-            usedAttributePoints++;
-        }
-    }
-
-    public void ReturningAttributePoints()
-    {
-        if(usedAttributePoints > 0)
-        {
-            attributePoints++;
-            usedAttributePoints--;
-        }
-    }
-
-
-    public void GetExp(int value)
-    {
-        currentExp += value;
-        //CheckLevelUp();
-    }
-    public int DropExp()
-    {
-        return dropExp;
-    }
-
     public void TakeDMG(int dmg, bool critical)
     {
         SpawnText(dmg.ToString(), critical);
         life -= dmg;
     }
-
     public int DealDmg()
     {
         int dmg = Mathf.RoundToInt(Random.Range(physicalAtkPower / 1.2f, physicalAtkPower / 0.9f));
@@ -126,15 +70,32 @@ public class CharacterAttributes : MonoBehaviour
             
         return  dmg;
     }
-
     private void SpawnText(string text, bool critical)
     {
-        if (critical) 
-            textDmg.GetComponent<TextMeshPro>().color = Color.red;
-        else 
-            textDmg.GetComponent<TextMeshPro>().color = Color.white;
+        
+        if(this.gameObject.layer == 6) //Player
+        {
+            if (critical)
+                TextColor(0, 0, 1, 1, true);
+            else
+                TextColor(0, 0, 0.5f, 1, false);
+        }
+        else //Other 
+        {
+            if (critical)
+                TextColor(1, 0, 0, 1, true);
+            else
+                TextColor(1, 1, 1, 1, false);
+        }
+            
 
         textDmg.GetComponent<TextMeshPro>().text = text;
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
+    }
+
+    private void TextColor(float r, float g, float b, float a, bool critical)
+    {
+        textDmg.GetComponent<TextMeshPro>().color = new Color(r, g, b, a);
+        textDmg.GetComponent<TextDmgBehavior>().bgCritical.SetActive(critical);
     }
 }
