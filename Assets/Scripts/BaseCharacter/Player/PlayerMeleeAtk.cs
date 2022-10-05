@@ -11,15 +11,16 @@ public class PlayerMeleeAtk : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float atkRange;
 
-    private bool isAtk;
-    public bool IsAtk{ get => isAtk;}
+    private bool attackingMelee;
+    public bool AttackingMelee { get => attackingMelee;}
 
     private void Update()
     {
-        if (!isAtk && Input.GetMouseButton(0)) SetIsAtk();
-        //Anims();
+        if (!attackingMelee && Input.GetMouseButton(0)) SetIsAtk();
     }
 
+
+    //this methods is call in animPlayer_MeleeAtk1
     public void AtkArea() {
         hit2DAtk = Physics2D.RaycastAll(startPosition.position, startPosition.right, atkRange, enemyMask);
         
@@ -31,15 +32,9 @@ public class PlayerMeleeAtk : MonoBehaviour
             }
     }
 
-
-    //end anim atk, set isAtk value
+    //this methods is call in animPlayer_MeleeAtk1
     public void SetIsAtk()
     {
-        isAtk = !isAtk;
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Debug.DrawRay(startPosition.position, startPosition.right * atkRange, Color.red);
+        attackingMelee = !attackingMelee;
     }
 }
