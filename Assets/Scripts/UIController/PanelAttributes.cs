@@ -8,88 +8,89 @@ public class PanelAttributes : MonoBehaviour
 {
     [SerializeField] private GameObject player;
 
-    private CharacterExpControl characterExpControl;
-    private CharacterAttributes characterAttributes;
+    private CharacterExpControl cExpControl;
+    private CharacterAttributes cAttributes;
 
     //PanelComponentes
 
-    public TextMeshProUGUI textStrValue, textIntValue, textVitValue, textLukValue;
-    public TextMeshProUGUI textAtkPowerValue, textMagicPowerValue, textMaxLifeValue, textCriticalRateValue;
-    public Slider sliderStrValue, sliderIntValue, sliderVitValue, sliderLukValue;
+    public List<TextMeshProUGUI> textAttributes = new List<TextMeshProUGUI> ();
+    public List<TextMeshProUGUI> textStatus = new List<TextMeshProUGUI> ();
+    public List<Slider> sliders = new List<Slider> ();
 
 
     private void Start()
     {
-        characterExpControl = player.GetComponent<CharacterExpControl>();
-        characterAttributes = player.GetComponent<CharacterAttributes>();
+        cExpControl = player.GetComponent<CharacterExpControl>();
+        cAttributes = player.GetComponent<CharacterAttributes>();
 
-        sliderStrValue.maxValue = 100;
-        sliderIntValue.maxValue = 100;
-        sliderVitValue.maxValue = 100;
-        sliderLukValue.maxValue = 100;
+        foreach (var item in sliders)
+        {
+            item.maxValue = 100;
+        }
 
         //Update values 
         PanelComponentsUpdate();
     }
+
     private void Update()
     {
         if (this.gameObject.activeSelf) PanelComponentsUpdate();
     }
 
-    //--------------------------------------Refatorar(se possível) sequencia abaixo
+    #region buttons
     public void ChangeStrValues(bool value)
     {
-        if(characterExpControl.AttributePoints > 0 && value && characterAttributes.Strength < 100)
+        if(cExpControl.AttributePoints > 0 && value && cAttributes.Strength < 100)
         {
-            characterAttributes.Strength++;
+            cAttributes.Strength++;
             AddStatusPoint(true);
         }
         
-        if(characterExpControl.UsedAttributePoints > 0 && !value && characterAttributes.Strength > 1)
+        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Strength > 1)
         {
-            characterAttributes.Strength--;
+            cAttributes.Strength--;
             AddStatusPoint(false);
         }
     }
     public void ChangeIntValues(bool value)
     {
-        if(characterExpControl.AttributePoints > 0 && value && characterAttributes.Intelligence < 100)
+        if(cExpControl.AttributePoints > 0 && value && cAttributes.Intelligence < 100)
         {
-            characterAttributes.Intelligence++;
+            cAttributes.Intelligence++;
             AddStatusPoint(true);
         }
         
-        if(characterExpControl.UsedAttributePoints > 0 && !value && characterAttributes.Intelligence > 1)
+        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Intelligence > 1)
         {
-            characterAttributes.Intelligence--;
+            cAttributes.Intelligence--;
             AddStatusPoint(false);
         }
     }    
     public void ChangeVitValues(bool value)
     {
-        if(characterExpControl.AttributePoints > 0 && value && characterAttributes.Vitality < 100)
+        if(cExpControl.AttributePoints > 0 && value && cAttributes.Vitality < 100)
         {
-            characterAttributes.Vitality++;
+            cAttributes.Vitality++;
             AddStatusPoint(true);
         }
         
-        if(characterExpControl.UsedAttributePoints > 0 && !value && characterAttributes.Vitality > 1)
+        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Vitality > 1)
         {
-            characterAttributes.Vitality--;
+            cAttributes.Vitality--;
             AddStatusPoint(false);
         }
     }    
     public void ChangeLukValues(bool value)
     {
-        if(characterExpControl.AttributePoints > 0 && value && characterAttributes.Luck < 100)
+        if(cExpControl.AttributePoints > 0 && value && cAttributes.Luck < 100)
         {
-            characterAttributes.Luck++;
+            cAttributes.Luck++;
             AddStatusPoint(true);
         }
         
-        if(characterExpControl.UsedAttributePoints > 0 && !value && characterAttributes.Luck > 1)
+        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Luck > 1)
         {
-            characterAttributes.Luck--;
+            cAttributes.Luck--;
             AddStatusPoint(false);
         }
     }
@@ -97,36 +98,78 @@ public class PanelAttributes : MonoBehaviour
     {
         if (value)
         {
-            characterExpControl.AttributePoints--;
-            characterExpControl.UsedAttributePoints++;
+            cExpControl.AttributePoints--;
+            cExpControl.UsedAttributePoints++;
         }
         else
         {
-            characterExpControl.AttributePoints++;
-            characterExpControl.UsedAttributePoints--;
+            cExpControl.AttributePoints++;
+            cExpControl.UsedAttributePoints--;
         }
     }
+    #endregion
+
+    # region PanelUIUpdate
     private void PanelComponentsUpdate()
     {
-        //STR
-        textAtkPowerValue.text = characterAttributes.PhysicalAtkPower.ToString();
-        textStrValue.text = characterAttributes.Strength.ToString();
-        sliderStrValue.value = characterAttributes.Strength;
+        //Attributes
+        SetValuesTextAttributes("txtStrValue", cAttributes.Strength);
+        SetValuesTextAttributes("txtIntValue", cAttributes.Intelligence);
+        SetValuesTextAttributes("txtVitValue", cAttributes.Vitality);
+        SetValuesTextAttributes("txtLukValue", cAttributes.Luck);
 
-        //INT
-        textMagicPowerValue.text = characterAttributes.MagicAtkPower.ToString();
-        textIntValue.text = characterAttributes.Intelligence.ToString();
-        sliderIntValue.value = characterAttributes.Intelligence;
 
-        //VIT
-        textMaxLifeValue.text = characterAttributes.MaxLife.ToString();
-        textVitValue.text = characterAttributes.Vitality.ToString();
-        sliderVitValue.value = characterAttributes.Vitality;
+        //Status
+        SetValuesTextStatus("txtAtkPowerValue", cAttributes.PhysicalAtkPower);
+        SetValuesTextStatus("txtMagicPowerValue", cAttributes.MagicAtkPower);
+        SetValuesTextStatus("txtMaxLifeValue", cAttributes.MaxLife);
+        SetValuesTextStatus("txtCriticalRateValue", cAttributes.CriticalRate);
 
-        //LUK
-        textCriticalRateValue.text = characterAttributes.CriticalRate.ToString();
-        textLukValue.text = characterAttributes.Luck.ToString();
-        sliderLukValue.value = characterAttributes.Luck;
+
+        //Sliders
+        SetValuesSliders("sliderStrValue", cAttributes.Strength);
+        SetValuesSliders("sliderIntValue", cAttributes.Intelligence);
+        SetValuesSliders("sliderVitValue", cAttributes.Vitality);
+        SetValuesSliders("sliderLukValue", cAttributes.Luck);
     }
+
+    /// <summary>
+    /// [0]txtStrValue, [1]txtIntValue, [2]txtVitValue, [3]txtLukValue
+    /// </summary>
+    private void SetValuesTextAttributes(string name, int value)
+    {
+        //txtStrValue, txtIntValue, txtVitValue, txtLukValue
+
+        foreach (var item in textAttributes)
+        {
+            if(item.name == name)
+                item.text = value.ToString();
+        }
+    }
+
+    /// <summary>
+    /// [0]txtAtkPowerValue, [1]txtMagicPowerValue, [2]txtMaxLifeValue, [3]txtCriticalRateValue
+    /// </summary>
+    private void SetValuesTextStatus(string name, int value)
+    {
+        foreach (var item in textStatus)
+        {
+            if(item.name == name)
+                item.text = value.ToString();
+        }
+    }
+
+    /// <summary>
+    /// [0]sliderStrValue, [1]sliderIntValue, [2]sliderVitValue, [3]sliderLukValue
+    /// </summary>
+    private void SetValuesSliders(string name, int value)
+    {
+        foreach (var item in sliders)
+        {
+            if(item.name == name)
+                item.value = value;
+        }
+    }
+    #endregion
 
 }

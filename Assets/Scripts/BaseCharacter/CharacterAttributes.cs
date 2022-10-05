@@ -51,11 +51,18 @@ public class CharacterAttributes : MonoBehaviour
         maxLife = vitality * 50; //maxlife = vit * 50 
         criticalRate = Mathf.RoundToInt(luck / 2); 
     }
+
+    /// <summary>
+    /// Object will take X amount of damage from the attacker
+    /// </summary>
+    /// <param name="dmg"> Amount of damage the target will receive </param>
+    /// <param name="critical"> Defines if this damage is critical </param>
     public void TakeDMG(int dmg, bool critical)
     {
         SpawnText(dmg.ToString(), critical);
         life -= dmg;
     }
+
     public int DealDmg()
     {
         int dmg = Mathf.RoundToInt(Random.Range(physicalAtkPower / 1.2f, physicalAtkPower / 0.9f));
@@ -70,22 +77,24 @@ public class CharacterAttributes : MonoBehaviour
             
         return  dmg;
     }
+
+    
     private void SpawnText(string text, bool critical)
     {
         
         if(this.gameObject.layer == 6) //Player
         {
             if (critical)
-                TextColor(0, 0, 1, 1, true);
+                TextColor(1, 0, 0, 1);
             else
-                TextColor(0, 0, 0.5f, 1, false);
+                TextColor(0.3f, 0, 0, 1);
         }
         else //Other 
         {
             if (critical)
-                TextColor(1, 0, 0, 1, true);
+                TextColor(0.1f, 0, 1, 1);
             else
-                TextColor(1, 1, 1, 1, false);
+                TextColor(1, 1, 1, 1);
         }
             
 
@@ -93,9 +102,8 @@ public class CharacterAttributes : MonoBehaviour
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
     }
 
-    private void TextColor(float r, float g, float b, float a, bool critical)
+    private void TextColor(float r, float g, float b, float a)
     {
         textDmg.GetComponent<TextMeshPro>().color = new Color(r, g, b, a);
-        textDmg.GetComponent<TextDmgBehavior>().bgCritical.SetActive(critical);
     }
 }

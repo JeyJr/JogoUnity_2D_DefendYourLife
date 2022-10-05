@@ -7,6 +7,6 @@ public class MainUI : MonoBehaviour
 
     public void BtnClose(GameObject gameObject)
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 }

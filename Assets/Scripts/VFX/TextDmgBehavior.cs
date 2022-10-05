@@ -6,7 +6,6 @@ using UnityEngine;
 public class TextDmgBehavior : MonoBehaviour
 {
     [SerializeField] private float speed = 2;
-    public GameObject bgCritical;
 
     private void Awake()
     {
