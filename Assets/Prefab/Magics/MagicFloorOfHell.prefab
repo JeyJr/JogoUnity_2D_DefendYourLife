@@ -210,6 +210,9 @@ MonoBehaviour:
   target:
     serializedVersion: 2
     m_Bits: 128
+  sprites:
+  - {fileID: 3026725307278491100}
+  - {fileID: 3026725306565613925}
   ground: {fileID: 7881176874990751676, guid: 1039f98d77660944d964ce0b89e20c66, type: 3}
 --- !u!1 &3026725307278491103
 GameObject:

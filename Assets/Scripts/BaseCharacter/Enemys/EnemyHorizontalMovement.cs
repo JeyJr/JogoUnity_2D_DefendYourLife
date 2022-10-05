@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHorizontalMovement : MonoBehaviour
 {
     [SerializeField] private EnemyDetectingObjects enemyDetectingObjects;
-
+    [SerializeField] private CharacterAttributes cAttributes;
     [SerializeField] private Animator anim;
     private float moveSpeed;
 
@@ -23,8 +23,10 @@ public class EnemyHorizontalMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HorizontalMovement();
-        SwitchDirection();
+        if(!cAttributes.Dead){
+            HorizontalMovement();
+            SwitchDirection();
+        }
     }
     private void HorizontalMovement()
     {
@@ -50,5 +52,6 @@ public class EnemyHorizontalMovement : MonoBehaviour
     {
         anim.SetBool("isWalk", enemyDetectingObjects.playerAhead);
         anim.SetBool("isAtk", enemyDetectingObjects.atkArea);
+        anim.SetBool("isDead", cAttributes.Dead);
     }
 }

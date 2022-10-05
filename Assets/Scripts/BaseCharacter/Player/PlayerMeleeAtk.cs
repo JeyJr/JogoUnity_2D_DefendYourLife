@@ -13,10 +13,11 @@ public class PlayerMeleeAtk : MonoBehaviour
 
     private bool attackingMelee;
     public bool AttackingMelee { get => attackingMelee;}
+    public int RandomAtkMelee { get; set;}
 
     private void Update()
     {
-        if (!attackingMelee && Input.GetMouseButton(0)) SetIsAtk();
+        if (!attackingMelee && Input.GetMouseButton(0)) SetAttackingMelee();
     }
 
 
@@ -28,13 +29,14 @@ public class PlayerMeleeAtk : MonoBehaviour
             for (int i = 0; i < hit2DAtk.Length; i++)
             {
                 //fazer critico
-                hit2DAtk[i].collider.GetComponent<CharacterAttributes>().TakeDMG(characterAttributes.DealDmg(), characterAttributes.criticalDmg);
+                hit2DAtk[i].collider.GetComponent<CharacterAttributes>().TakeDMG(characterAttributes.DealDmg(), characterAttributes.criticalDmg, GetComponent<CharacterExpControl>());
             }
     }
 
     //this methods is call in animPlayer_MeleeAtk1
-    public void SetIsAtk()
+    public void SetAttackingMelee()
     {
+        RandomAtkMelee = Random.Range(1,4);
         attackingMelee = !attackingMelee;
     }
 }

@@ -7,7 +7,6 @@ public class CharacterExpControl : MonoBehaviour
     //--------------------------------------ExpControl
     [SerializeField] private int currentExp, nextLevelExp, level, attributePoints, usedAttributePoints;
     private int expScaleValue = 125, attributesPointsScaleValue = 3;
-    [SerializeField] private int dropExp;
 
     //---------------------------------------Propriedades
     public int AttributePoints { get => attributePoints; set => attributePoints = value; }
@@ -79,14 +78,10 @@ public class CharacterExpControl : MonoBehaviour
     }
 
 
-    //Possível implementação: Add exp pt a pt ao invés do valor completo
+    //Possivel implementacao: Add exp pt a pt ao inves do valor completo
     public void GetExp(int value)
     {
         currentExp += value;
         //CheckLevelUp();
-    }
-    public int DropExp()
-    {
-        return dropExp;
     }
 }

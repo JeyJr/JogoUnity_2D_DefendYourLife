@@ -47,7 +47,20 @@ public class PlayerAnimsControl : MonoBehaviour
     }
     private void AnimAtkMelee()
     {
-        anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
+        switch(playerMeleeAtk.RandomAtkMelee){
+            case 1:
+                anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
+                break;
+            case 2:
+                anim.Play("Base Layer.animPlayer_MeleeAtk2", 0);
+                break;
+            case 3:
+                anim.Play("Base Layer.animPlayer_MeleeAtk3", 0);
+                break;
+            default:
+                anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
+                break;
+        }
     }
     private void AnimAtkMagic()
     {

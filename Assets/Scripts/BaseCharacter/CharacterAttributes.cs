@@ -25,6 +25,10 @@ public class CharacterAttributes : MonoBehaviour
     public int MaxLife { get => maxLife;}
     public int CriticalRate { get => criticalRate;}
 
+    //--------------------------------------Behaviors and Drops
+    [SerializeField] private int expToDrop;
+    public bool Dead { get; private set;}
+
     //---------------------------------------Objs
     [SerializeField] private GameObject textDmg;
     [SerializeField] private Transform spawnPosition;
@@ -53,15 +57,41 @@ public class CharacterAttributes : MonoBehaviour
     }
 
     /// <summary>
-    /// Object will take X amount of damage from the attacker
+    /// Object will take X amount of damage from the attacker.
+    /// This overhead drops EXP for the attacker.
     /// </summary>
     /// <param name="dmg"> Amount of damage the target will receive </param>
     /// <param name="critical"> Defines if this damage is critical </param>
+    /// <param name="gainExp"> The attacker gains experience </param>
+    public void TakeDMG(int dmg, bool critical, CharacterExpControl gainExp)
+    {
+        life -= dmg;
+
+        if(life > 0){
+            SpawnText(dmg.ToString(), critical);
+            Dead = false;
+        }
+        else if(life < 0 && !Dead){
+            gainExp.GetExp(expToDrop);
+            Dead = true;
+        }
+
+     }
+
+    /// <summary>
+    /// This overload does not drop EXP
+    /// </summary>
     public void TakeDMG(int dmg, bool critical)
     {
-        SpawnText(dmg.ToString(), critical);
-        life -= dmg;
-    }
+        if(life > 0){
+            SpawnText(dmg.ToString(), critical);
+            life -= dmg;
+            Dead = false;
+        }
+        else{
+            Dead = true;
+        }
+     }
 
     public int DealDmg()
     {
@@ -105,5 +135,17 @@ public class CharacterAttributes : MonoBehaviour
     private void TextColor(float r, float g, float b, float a)
     {
         textDmg.GetComponent<TextMeshPro>().color = new Color(r, g, b, a);
+    }
+
+    public void Destroy() => StartCoroutine(FadeOutAndDestroy());
+
+    IEnumerator FadeOutAndDestroy(){
+        var sprite = GetComponent<SpriteRenderer>();
+        for(float i = 1; i > -0.2f; i -= .1f){
+        sprite.color = new Color(1,1,1,i);
+            yield return new WaitForSeconds(.01f);
+        }
+
+        Destroy(this.gameObject);
     }
 }

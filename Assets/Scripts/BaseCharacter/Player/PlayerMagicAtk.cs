@@ -28,7 +28,7 @@ public class PlayerMagicAtk : MonoBehaviour
     //Function magic atk
     public void ActiveMagicFloorOfHell()
     {
-        MagicFloorOfHell.GetComponent<FloorOfHell>().SetSkillValues(cAttributes.DealDmg(), 2f, 10, target);
+        MagicFloorOfHell.GetComponent<FloorOfHell>().SetSkillValues(cAttributes.DealDmg(), .5f, 10, target, GetComponent<CharacterExpControl>());
         Instantiate(MagicFloorOfHell, transform.position, Quaternion.identity);
     }
 

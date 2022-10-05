@@ -40,32 +40,61 @@ AnimatorStateMachine:
     m_Position: {x: -20, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8655047193240783344}
-    m_Position: {x: -20, y: 240, z: 0}
+    m_Position: {x: -240, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6257163640986599388}
-    m_Position: {x: 270, y: 230, z: 0}
+    m_Position: {x: -240, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 331745793088513493}
-    m_Position: {x: 270, y: 280, z: 0}
+    m_Position: {x: -240, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5396738444770809806}
-    m_Position: {x: 270, y: 180, z: 0}
+    m_Position: {x: 200, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2584370940133880333}
-    m_Position: {x: 270, y: 330, z: 0}
+    m_Position: {x: 420, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 41900332476387813}
-    m_Position: {x: 305, y: 395, z: 0}
+    m_Position: {x: 200, y: 270, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2685317870824255611}
+    m_Position: {x: 200, y: 220, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 280, y: 110, z: 0}
+  m_AnyStatePosition: {x: 0, y: 70, z: 0}
   m_EntryPosition: {x: 0, y: 110, z: 0}
-  m_ExitPosition: {x: 980, y: 120, z: 0}
+  m_ExitPosition: {x: 0, y: 30, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 7962380899864874673}
+--- !u!1102 &-2685317870824255611
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: animPlayer_MeleeAtk2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: e954c88040e5af444ab83b00ce3ef077, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -113,7 +142,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: animPlayer_MagicAtk2
+  m_Name: animPlayer_MeleeAtk3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

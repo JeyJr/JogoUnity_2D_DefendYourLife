@@ -12,6 +12,8 @@ public class FloorOfHell : MonoBehaviour
     [SerializeField] private int maxHit;
     [SerializeField] private LayerMask target;
 
+    [SerializeField] private SpriteRenderer[] sprites;
+    public CharacterExpControl gainExp;
     public Transform ground;
 
     /// <summary>
@@ -28,12 +30,20 @@ public class FloorOfHell : MonoBehaviour
         this.maxHit = maxHit;
         this.target = target;
     }
-
+    public void SetSkillValues(int dmg, float delayNexHitSequence, int maxHit, LayerMask target, CharacterExpControl gainExp)
+    {
+        this.dmg = dmg;
+        this.delayNextHit = delayNexHitSequence;
+        this.maxHit = maxHit;
+        this.target = target;
+        this.gainExp = gainExp;
+    }
 
     private void Awake()
     {
         transform.position = new Vector3(transform.position.x, ground.position.y + 1, 4);
         StartCoroutine(nameof(HitArea));
+        StartCoroutine(FadeIn());
     }
     
     IEnumerator HitArea()
@@ -48,18 +58,37 @@ public class FloorOfHell : MonoBehaviour
                 for (int i = 0; i < hit.Length; i++)
                 {
                     //Debug.Log($"Index: {i} / Name: {hit[i].collider.name}");
-                    hit[i].collider.GetComponent<CharacterAttributes>().TakeDMG(dmg, false);
+                    if(gainExp != null)
+                        hit[i].collider.GetComponent<CharacterAttributes>().TakeDMG(dmg, false, gainExp);
+                    else
+                        hit[i].collider.GetComponent<CharacterAttributes>().TakeDMG(dmg, false);
+
                     yield return new WaitForSeconds(delayHit);
                 }
             }
             yield return new WaitForSeconds(delayNextHit);
             maxHit--;
 
-            if (maxHit <= 0) Destroy(this.gameObject);
+            if (maxHit <= 0) StartCoroutine(FadeOut());
         }
     }
+    
+    IEnumerator FadeOut(){
+        for(float i = 1; i > -0.2f; i -= .1f){
+            sprites[0].color = new Color(1,1,1,i);
+            sprites[1].color = new Color(1,1,1,i);
+            yield return new WaitForSeconds(.01f);
+        }
 
-
+        Destroy(this.gameObject);
+    }
+    IEnumerator FadeIn(){
+        for(float i = 0; i < 1.2f; i += .1f){
+            sprites[0].color = new Color(1,1,1,i);
+            sprites[1].color = new Color(1,1,1,i);
+            yield return new WaitForSeconds(.01f);
+        }
+    }
     //private void HitSingleTargetInArea()
     //{
     //    RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0f, Vector2.zero);
