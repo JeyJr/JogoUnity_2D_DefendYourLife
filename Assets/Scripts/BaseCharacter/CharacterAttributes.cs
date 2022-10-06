@@ -24,7 +24,7 @@ public class CharacterAttributes : MonoBehaviour
     public int MagicAtkPower { get => magicAtkPower;}
     public int MaxLife { get => maxLife;}
     public int Mana {get => mana; set => mana = value; }
-    public int MaxMana {get => MaxMana;}
+    public int MaxMana {get => maxMana;}
     public int CriticalRate { get => criticalRate;}
 
     //--------------------------------------Behaviors and Drops

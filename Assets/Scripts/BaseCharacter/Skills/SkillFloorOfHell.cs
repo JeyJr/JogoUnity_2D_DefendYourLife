@@ -9,6 +9,9 @@ public class SkillFloorOfHell : MonoBehaviour
     [SerializeField] private int skillDMG;
     [SerializeField] private int skillLevel;
     private int skillMaxLevel = 10;
+
+    public int SkillLevel { get => skillLevel; set => skillLevel = value;}
+    public int SkillMaxLevel { get => skillMaxLevel;}
     [SerializeField] private int manaCost;
     public LayerMask target;
     bool gainExp;
@@ -22,14 +25,14 @@ public class SkillFloorOfHell : MonoBehaviour
     {
         this.gainExp = gainExp;
 
-        skillDMG = cAttributes.MagicAtkPower;
+        skillDMG = cAttributes.DealDmg(false);
 
         if (cAttributes.Mana > manaCost)
         {
-            if (skillMaxLevel > 0)
+            if (skillLevel > 0)
                 StartCoroutine(SpawnMagicFloorOfHell());
             else
-                Debug.Log("Skill não upada!");
+                Debug.Log("Skill nao upada!");
         }
         else
             Debug.Log("Sem mana!");

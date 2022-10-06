@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterExpControl : MonoBehaviour
 {
-    CharacterAttributes c;
     //--------------------------------------ExpControl
     [SerializeField] private int currentExp, nextLevelExp, level, attributePoints;
     private int expScaleValue = 125, attributesPointsScaleValue = 3;
@@ -12,6 +11,8 @@ public class CharacterExpControl : MonoBehaviour
 
     //--------------------------------------Skill
     [SerializeField] private int skillLevel, skillPoints, usedSkillPoints;
+    public int SkillPoints { get => skillPoints; set => skillPoints = value; }
+    public int UsedSkillsPoints{get => usedSkillPoints; set => usedSkillPoints = value;}
 
     //---------------------------------------Propriedades
     public int AttributePoints { get => attributePoints; set => attributePoints = value; }
@@ -20,8 +21,6 @@ public class CharacterExpControl : MonoBehaviour
 
     private void Awake()
     {
-        c = GetComponent<CharacterAttributes>();
-
         if (level < 1)
         {
             level = 1;
@@ -40,10 +39,12 @@ public class CharacterExpControl : MonoBehaviour
     }
 
 
-    private void CheckLevelUp()
+    public void CheckLevelUp()
     {
-        if (currentExp >= nextLevelExp && level  < 99)
+        if (currentExp >= nextLevelExp && level  < 100){
             CharLevelUp(1);
+            SkillLevelUp(1);
+        }
     }
 
     private void CharLevelUp(int value)
@@ -53,12 +54,12 @@ public class CharacterExpControl : MonoBehaviour
         nextLevelExp = level * expScaleValue;
         attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
     }
-
-
     private void SkillLevelUp(int value)
     {
-        skillLevel += value;
-
+        if(level % 2  == 0){
+            skillLevel += value;
+            skillPoints = level / 2 - usedSkillPoints;
+        }
     }
 
 
@@ -66,6 +67,5 @@ public class CharacterExpControl : MonoBehaviour
     public void GetExp(int value)
     {
         currentExp += value;
-        //CheckLevelUp();
     }
 }

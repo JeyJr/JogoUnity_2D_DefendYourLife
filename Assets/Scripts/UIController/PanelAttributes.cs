@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PanelAttributes : MonoBehaviour
-{
+{   
+    MainUI mainUI;
     [SerializeField] private GameObject player;
 
     private CharacterExpControl cExpControl;
@@ -20,161 +21,109 @@ public class PanelAttributes : MonoBehaviour
     //Decorative informative
     public TextMeshProUGUI textAttributePointsValue, textPointsUsedValue;
 
-    private void Start()
+    private void Awake()
     {
+        mainUI = GetComponent<MainUI>();
         cExpControl = player.GetComponent<CharacterExpControl>();
         cAttributes = player.GetComponent<CharacterAttributes>();
 
-        foreach (var item in sliders)
-        {
-            item.maxValue = 100;
-        }
+        mainUI.SetMaxValueSliders(100, sliders);
 
         //Update values 
-        PanelComponentsUpdate();
+        UpdateComponentesPanelAttributess();
     }
 
     private void Update()
     {
         if (this.gameObject.activeSelf)
         {
-            PanelComponentsUpdate();
+            UpdateComponentesPanelAttributess();
             cExpControl.usedAttributePoints = (cAttributes.Strength - 1) + (cAttributes.Intelligence - 1) + (cAttributes.Vitality - 1) + (cAttributes.Luck - 1);
         }
-
     }
 
-    #region buttons
-    public void ChangeStrValues(bool value)
-    {
-        if(cExpControl.AttributePoints > 0 && value && cAttributes.Strength < 100)
-        {
-            cAttributes.Strength++;
-            AddStatusPoint(true);
-        }
-        
-        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Strength > 1)
-        {
-            cAttributes.Strength--;
-            AddStatusPoint(false);
-        }
-    }
-    public void ChangeIntValues(bool value)
-    {
-        if(cExpControl.AttributePoints > 0 && value && cAttributes.Intelligence < 100)
-        {
-            cAttributes.Intelligence++;
-            AddStatusPoint(true);
-        }
-        
-        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Intelligence > 1)
-        {
-            cAttributes.Intelligence--;
-            AddStatusPoint(false);
-        }
-    }    
-    public void ChangeVitValues(bool value)
-    {
-        if(cExpControl.AttributePoints > 0 && value && cAttributes.Vitality < 100)
-        {
-            cAttributes.Vitality++;
-            AddStatusPoint(true);
-        }
-        
-        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Vitality > 1)
-        {
-            cAttributes.Vitality--;
-            AddStatusPoint(false);
-        }
-    }    
-    public void ChangeLukValues(bool value)
-    {
-        if(cExpControl.AttributePoints > 0 && value && cAttributes.Luck < 100)
-        {
-            cAttributes.Luck++;
-            AddStatusPoint(true);
-        }
-        
-        if(cExpControl.UsedAttributePoints > 0 && !value && cAttributes.Luck > 1)
-        {
-            cAttributes.Luck--;
-            AddStatusPoint(false);
+    public void AddAttributePoints(string attributeName){
+        if(cExpControl.AttributePoints > 0){
+            switch(attributeName){
+                case "Strength":
+                    if(cAttributes.Strength < 100){
+                        cAttributes.Strength++;
+                        cExpControl.AttributePoints--;
+                    }
+                break;
+                case "Intelligence":
+                    if(cAttributes.Intelligence < 100){
+                        cAttributes.Intelligence++;
+                        cExpControl.AttributePoints--;
+                    }
+                break;
+                case "Vitality":
+                    if(cAttributes.Vitality < 100){
+                        cAttributes.Vitality++;
+                        cExpControl.AttributePoints--;
+                    }
+                break;
+                case "Luck":
+                    if(cAttributes.Luck < 100){
+                        cAttributes.Luck++;
+                        cExpControl.AttributePoints--;
+                    }
+                break;
+            }
         }
     }
-    private void AddStatusPoint(bool value)
-    {
-        cExpControl.usedAttributePoints = (cAttributes.Strength - 1) + (cAttributes.Intelligence - 1) + (cAttributes.Vitality - 1) + (cAttributes.Luck - 1);
-        if (value)
-            cExpControl.AttributePoints--;
-        else
-            cExpControl.AttributePoints++;
+    public void SubtractAttributePoints(string attributeName){
+        if(cExpControl.UsedAttributePoints > 0){
+            switch(attributeName){
+                case "Strength":
+                    if(cAttributes.Strength > 1){
+                        cAttributes.Strength--;
+                        cExpControl.AttributePoints++;
+                    }
+                break;
+                case "Intelligence":
+                    if(cAttributes.Intelligence > 1){
+                        cAttributes.Intelligence--;
+                        cExpControl.AttributePoints++;
+                    }
+                break;
+                case "Vitality":
+                    if(cAttributes.Vitality > 1){
+                        cAttributes.Vitality--;
+                        cExpControl.AttributePoints++;
+                    }
+                break;
+                case "Luck":
+                    if(cAttributes.Luck > 1){
+                        cAttributes.Luck--;
+                        cExpControl.AttributePoints++;
+                    }
+                break;
+            }
+        }
     }
-    #endregion
-
-    # region PanelUIUpdate
-    private void PanelComponentsUpdate()
+    private void UpdateComponentesPanelAttributess()
     {
-        //Attributes
-        SetValuesTextAttributes("txtStrValue", cAttributes.Strength);
-        SetValuesTextAttributes("txtIntValue", cAttributes.Intelligence);
-        SetValuesTextAttributes("txtVitValue", cAttributes.Vitality);
-        SetValuesTextAttributes("txtLukValue", cAttributes.Luck);
+        mainUI.SetTextMeshProUGUIValues(textAttributes[0].name, cAttributes.Strength,  textAttributes);
+        mainUI.SetTextMeshProUGUIValues(textAttributes[1].name, cAttributes.Intelligence,  textAttributes);
+        mainUI.SetTextMeshProUGUIValues(textAttributes[2].name, cAttributes.Vitality,  textAttributes);
+        mainUI.SetTextMeshProUGUIValues(textAttributes[3].name, cAttributes.Luck,  textAttributes);
 
 
-        //Status
-        SetValuesTextStatus("txtAtkPowerValue", cAttributes.PhysicalAtkPower);
-        SetValuesTextStatus("txtMagicPowerValue", cAttributes.MagicAtkPower);
-        SetValuesTextStatus("txtMaxLifeValue", cAttributes.MaxLife);
-        SetValuesTextStatus("txtCriticalRateValue", cAttributes.CriticalRate);
+        mainUI.SetTextMeshProUGUIValues(textStatus[0].name, cAttributes.PhysicalAtkPower,  textStatus);
+        mainUI.SetTextMeshProUGUIValues(textStatus[1].name, cAttributes.MagicAtkPower,  textStatus);
+        mainUI.SetTextMeshProUGUIValues(textStatus[2].name, cAttributes.MaxMana,  textStatus);
+        mainUI.SetTextMeshProUGUIValues(textStatus[3].name, cAttributes.MaxLife,  textStatus);
+        mainUI.SetTextMeshProUGUIValues(textStatus[4].name, cAttributes.CriticalRate,  textStatus);
 
+        mainUI.SetValuesSliders(sliders[0].name, cAttributes.Strength, sliders);
+        mainUI.SetValuesSliders(sliders[1].name, cAttributes.Intelligence, sliders);
+        mainUI.SetValuesSliders(sliders[2].name, cAttributes.Vitality, sliders);
+        mainUI.SetValuesSliders(sliders[3].name, cAttributes.Luck, sliders);
 
-        //Sliders
-        SetValuesSliders("sliderStrValue", cAttributes.Strength);
-        SetValuesSliders("sliderIntValue", cAttributes.Intelligence);
-        SetValuesSliders("sliderVitValue", cAttributes.Vitality);
-        SetValuesSliders("sliderLukValue", cAttributes.Luck);
 
         //Decorative attributePoints
         textAttributePointsValue.text = cExpControl.AttributePoints.ToString();
         textPointsUsedValue.text = cExpControl.usedAttributePoints.ToString();
     }
-
-    /// <summary>
-    /// [0]txtStrValue, [1]txtIntValue, [2]txtVitValue, [3]txtLukValue
-    /// </summary>
-    private void SetValuesTextAttributes(string name, int value)
-    {
-        //txtStrValue, txtIntValue, txtVitValue, txtLukValue
-
-        foreach (var item in textAttributes)
-        {
-            if(item.name == name)
-                item.text = value.ToString();
-        }
-    }
-
-    /// <summary>
-    /// [0]txtAtkPowerValue, [1]txtMagicPowerValue, [2]txtMaxLifeValue, [3]txtCriticalRateValue
-    /// </summary>
-    private void SetValuesTextStatus(string name, int value)
-    {
-        foreach (var item in textStatus)
-        {
-            if(item.name == name)
-                item.text = value.ToString();
-        }
-    }
-
-    /// <summary>
-    /// [0]sliderStrValue, [1]sliderIntValue, [2]sliderVitValue, [3]sliderLukValue
-    /// </summary>
-    private void SetValuesSliders(string name, int value)
-    {
-        foreach (var item in sliders)
-        {
-            if(item.name == name)
-                item.value = value;
-        }
-    }
-    #endregion
 }
