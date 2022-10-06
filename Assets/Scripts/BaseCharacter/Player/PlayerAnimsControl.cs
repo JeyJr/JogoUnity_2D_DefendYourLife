@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class PlayerAnimsControl : MonoBehaviour
 {
-    [SerializeField] private Animator anim;
-    [SerializeField] private PlayerMove playerMove;
-    [SerializeField] private PlayerMeleeAtk playerMeleeAtk;
-    [SerializeField] private PlayerMagicAtk playerMagicAtk;
+    PlayerMove playerMove;
+    PlayerAtk playerMeleeAtk, playerMagicAtk ;
+    Animator anim;
+    //-----------------------------------------
+
+
+    private void Start() 
+    {
+        playerMove = GetComponent<PlayerMove>();
+        playerMeleeAtk = GetComponent<PlayerAtk>();
+        playerMagicAtk = GetComponent<PlayerAtk>();
+        anim = GetComponent<Animator>();
+    }
 
     private void Update()
     {

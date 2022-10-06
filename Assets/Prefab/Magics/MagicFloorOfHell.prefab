@@ -201,15 +201,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3026725306621271612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d5ce79c4e6d83a4a9df9d4d0eaaf41f, type: 3}
+  m_Script: {fileID: 11500000, guid: fe244347d6286a84093544b479b27725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 0
-  delayNextHit: 0
-  maxHit: 1000
+  gainExp: {fileID: 0}
   target:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
+  dmg: 0
   sprites:
   - {fileID: 3026725307278491100}
   - {fileID: 3026725306565613925}

@@ -4,31 +4,43 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    PlayerAtk playerMeleeAtk, playerMagicAtk;
+    public Rigidbody2D rb2D;
+    //-----------------------------------------
 
     [Header("Movement Controll")]
     [SerializeField] private Transform startPosition;
-    [SerializeField] private float jumpForce, distance;
-    [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask groundMask; 
-    public Rigidbody2D rb2D;
-    private Vector3 inputDir;
-    private bool onGround;
-    private bool jumpActive;
-
-    public float InputDir{ get => inputDir.x;}
+    [SerializeField] private float jumpForce, distance, moveSpeed;
+    private bool onGround, jumpActive;
     public bool OnGround{ get => onGround;}
-    private void Update() {
+    private Vector3 inputDir;
+    public float InputDir{ get => inputDir.x;}
+
+    private void Start() 
+    {
+        playerMagicAtk = GetComponent<PlayerAtk>();
+        playerMeleeAtk = GetComponent<PlayerAtk>();
+    }
+
+    private void Update() 
+    {
         inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
         if (Input.GetButtonDown("Jump")) jumpActive = true;
         else jumpActive = false;
     }
+
     private void FixedUpdate() {
+
         PlayerRotate();
-        PlayerMovement();
         GroundCheck();
-        Jump();
+        if(!playerMagicAtk.AttackingMagic && !playerMeleeAtk.AttackingMelee){
+            PlayerMovement();
+            Jump();
+        }
     }
+
     private void PlayerRotate()
     {
         if(inputDir.x > 0)
@@ -39,17 +51,19 @@ public class PlayerMove : MonoBehaviour
             transform.localEulerAngles = new Vector3(0,180,0);
         }
     }
+
     private void PlayerMovement()
     {
         transform.position += new Vector3(inputDir.x * moveSpeed, 0, 0) * Time.deltaTime;
     }
+
     private void Jump()
     {
         if (onGround && jumpActive)
             rb2D.velocity = Vector2.up * jumpForce;    
             //rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-
     }
+    
     private void GroundCheck(){
         RaycastHit2D hit2D = Physics2D.Raycast(startPosition.position, Vector2.down, distance, groundMask);
 

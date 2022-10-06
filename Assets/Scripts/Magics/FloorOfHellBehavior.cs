@@ -3,38 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //sprite: free-game-assets.itch.io/fire-pixel-art-animation-sprites
-public class FloorOfHell : MonoBehaviour
+public class FloorOfHellBehavior : MonoBehaviour
 {
-    private float delayHit = .05f;
-
-    [SerializeField] private int dmg;
-    [SerializeField] private float delayNextHit;
-    [SerializeField] private int maxHit;
+    public CharacterExpControl gainExp;
     [SerializeField] private LayerMask target;
+    [SerializeField] private int dmg, maxHit;
+
+    //----------------------------------------------
+    private float delayHit = .05f, delayNextHit = .5f;
+
 
     [SerializeField] private SpriteRenderer[] sprites;
-    public CharacterExpControl gainExp;
     public Transform ground;
 
     /// <summary>
     /// All targets within the spell's area take damage per second.
     /// </summary>
     /// <param name="dmg"> Set dmg per hit</param>
-    /// <param name="delayNexHitSequence">Set delay per hit while skill active</param>
-    /// <param name="maxHit"> Define a quantidade de hits in every target  </param>
+    /// <param name="maxHit"> Set amount hits dmg in every target  </param>
     /// <param name="target"> Set target take dmg  </param>
-    public void SetSkillValues(int dmg, float delayNexHitSequence, int maxHit, LayerMask target)
+    public void SetSkillValues(int dmg, int skillLevel, LayerMask target)
     {
         this.dmg = dmg;
-        this.delayNextHit = delayNexHitSequence;
-        this.maxHit = maxHit;
+        this.maxHit = skillLevel;
         this.target = target;
     }
-    public void SetSkillValues(int dmg, float delayNexHitSequence, int maxHit, LayerMask target, CharacterExpControl gainExp)
+    public void SetSkillValues(int dmg, int skillLevel, LayerMask target, CharacterExpControl gainExp)
     {
         this.dmg = dmg;
-        this.delayNextHit = delayNexHitSequence;
-        this.maxHit = maxHit;
+        this.maxHit = skillLevel;
         this.target = target;
         this.gainExp = gainExp;
     }
@@ -45,7 +42,6 @@ public class FloorOfHell : MonoBehaviour
         StartCoroutine(nameof(HitArea));
         StartCoroutine(FadeIn());
     }
-    
     IEnumerator HitArea()
     {
         while (maxHit > 0)
@@ -72,7 +68,6 @@ public class FloorOfHell : MonoBehaviour
             if (maxHit <= 0) StartCoroutine(FadeOut());
         }
     }
-    
     IEnumerator FadeOut(){
         for(float i = 1; i > -0.2f; i -= .1f){
             sprites[0].color = new Color(1,1,1,i);
@@ -89,12 +84,4 @@ public class FloorOfHell : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
     }
-    //private void HitSingleTargetInArea()
-    //{
-    //    RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0f, Vector2.zero);
-    //    if(hit.collider != null && hit.collider.gameObject.layer == targetMask)
-    //    {
-    //        hit.collider.GetComponent<CharacterAttributes>().TakeDMG(10, false);
-    //    }
-    //}
 }

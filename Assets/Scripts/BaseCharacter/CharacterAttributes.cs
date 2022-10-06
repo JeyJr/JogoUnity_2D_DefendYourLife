@@ -9,9 +9,9 @@ public class CharacterAttributes : MonoBehaviour
     [SerializeField] private int strength, intelligence, vitality, luck;
 
     //---------------------------------------Status
-    [SerializeField] private int physicalAtkPower, magicAtkPower, life, maxLife, criticalRate;
+    [SerializeField] private int physicalAtkPower, magicAtkPower, life, maxLife, mana, maxMana,criticalRate;
     public bool criticalDmg;
-
+    int dmg;
 
     //---------------------------------------Propriedades AttributeBase
     public int Strength { get => strength; set => strength = value; }
@@ -23,6 +23,8 @@ public class CharacterAttributes : MonoBehaviour
     public int PhysicalAtkPower { get => physicalAtkPower; }
     public int MagicAtkPower { get => magicAtkPower;}
     public int MaxLife { get => maxLife;}
+    public int Mana {get => mana; set => mana = value; }
+    public int MaxMana {get => MaxMana;}
     public int CriticalRate { get => criticalRate;}
 
     //--------------------------------------Behaviors and Drops
@@ -43,6 +45,7 @@ public class CharacterAttributes : MonoBehaviour
         if (luck < 1) luck = 1;
 
         life = vitality * 50;
+        mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
     }
     private void Update()
     {
@@ -50,9 +53,10 @@ public class CharacterAttributes : MonoBehaviour
     }
     private void AttributeValues()
     {
-        physicalAtkPower = strength * 3; //atk = str * 3 
-        magicAtkPower = Mathf.RoundToInt(Intelligence * 1.5f); //magic = int * 1.5f
+        physicalAtkPower = Mathf.RoundToInt(strength * 1.5f); //atk = str * 1.5f 
+        magicAtkPower = Mathf.RoundToInt(Intelligence * 3.5f); //magic = int * 3.5f
         maxLife = vitality * 50; //maxlife = vit * 50 
+        maxMana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
         criticalRate = Mathf.RoundToInt(luck / 2); 
     }
 
@@ -93,22 +97,29 @@ public class CharacterAttributes : MonoBehaviour
         }
      }
 
-    public int DealDmg()
+    
+    public int DealDmg(bool isPhysical)
     {
-        int dmg = Mathf.RoundToInt(Random.Range(physicalAtkPower / 1.2f, physicalAtkPower / 0.9f));
         float critChance = Random.Range(1, 100);
 
-        if (critChance <= criticalRate)
-        {
-            criticalDmg = true;
-            dmg *= 2;
+        if(isPhysical){
+            dmg = Mathf.RoundToInt(Random.Range(physicalAtkPower / 1.2f, physicalAtkPower / 0.9f));
+            if (critChance <= criticalRate)
+            {
+                criticalDmg = true;
+                return dmg *= 2;
+            }
+            else{
+                criticalDmg = false;
+                return dmg;
+            }
         }
-        else criticalDmg = false;
-            
-        return  dmg;
+        else{
+            dmg = Mathf.RoundToInt(Random.Range(magicAtkPower / 1.2f, magicAtkPower / 0.9f));
+            return dmg;
+        }
     }
 
-    
     private void SpawnText(string text, bool critical)
     {
         
@@ -131,12 +142,12 @@ public class CharacterAttributes : MonoBehaviour
         textDmg.GetComponent<TextMeshPro>().text = text;
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
     }
-
     private void TextColor(float r, float g, float b, float a)
     {
         textDmg.GetComponent<TextMeshPro>().color = new Color(r, g, b, a);
     }
 
+    //end anims death
     public void Destroy() => StartCoroutine(FadeOutAndDestroy());
 
     IEnumerator FadeOutAndDestroy(){
