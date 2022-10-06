@@ -17,6 +17,8 @@ public class PanelAttributes : MonoBehaviour
     public List<TextMeshProUGUI> textStatus = new List<TextMeshProUGUI> ();
     public List<Slider> sliders = new List<Slider> ();
 
+    //Decorative informative
+    public TextMeshProUGUI textAttributePointsValue, textPointsUsedValue;
 
     private void Start()
     {
@@ -34,7 +36,12 @@ public class PanelAttributes : MonoBehaviour
 
     private void Update()
     {
-        if (this.gameObject.activeSelf) PanelComponentsUpdate();
+        if (this.gameObject.activeSelf)
+        {
+            PanelComponentsUpdate();
+            cExpControl.usedAttributePoints = (cAttributes.Strength - 1) + (cAttributes.Intelligence - 1) + (cAttributes.Vitality - 1) + (cAttributes.Luck - 1);
+        }
+
     }
 
     #region buttons
@@ -96,16 +103,11 @@ public class PanelAttributes : MonoBehaviour
     }
     private void AddStatusPoint(bool value)
     {
+        cExpControl.usedAttributePoints = (cAttributes.Strength - 1) + (cAttributes.Intelligence - 1) + (cAttributes.Vitality - 1) + (cAttributes.Luck - 1);
         if (value)
-        {
             cExpControl.AttributePoints--;
-            cExpControl.UsedAttributePoints++;
-        }
         else
-        {
             cExpControl.AttributePoints++;
-            cExpControl.UsedAttributePoints--;
-        }
     }
     #endregion
 
@@ -131,6 +133,10 @@ public class PanelAttributes : MonoBehaviour
         SetValuesSliders("sliderIntValue", cAttributes.Intelligence);
         SetValuesSliders("sliderVitValue", cAttributes.Vitality);
         SetValuesSliders("sliderLukValue", cAttributes.Luck);
+
+        //Decorative attributePoints
+        textAttributePointsValue.text = cExpControl.AttributePoints.ToString();
+        textPointsUsedValue.text = cExpControl.usedAttributePoints.ToString();
     }
 
     /// <summary>
@@ -171,5 +177,4 @@ public class PanelAttributes : MonoBehaviour
         }
     }
     #endregion
-
 }

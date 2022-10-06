@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class CharacterExpControl : MonoBehaviour
 {
+    CharacterAttributes c;
     //--------------------------------------ExpControl
-    [SerializeField] private int currentExp, nextLevelExp, level, attributePoints, usedAttributePoints;
+    [SerializeField] private int currentExp, nextLevelExp, level, attributePoints;
     private int expScaleValue = 125, attributesPointsScaleValue = 3;
+    public int usedAttributePoints;
+
+    //--------------------------------------Skill
+    [SerializeField] private int skillLevel, skillPoints, usedSkillPoints;
 
     //---------------------------------------Propriedades
     public int AttributePoints { get => attributePoints; set => attributePoints = value; }
@@ -15,66 +20,45 @@ public class CharacterExpControl : MonoBehaviour
 
     private void Awake()
     {
-        InitialValueExp();
-    }
-    private void InitialValueExp()
-    {
-        //Exp
+        c = GetComponent<CharacterAttributes>();
+
         if (level < 1)
         {
             level = 1;
             nextLevelExp = level * expScaleValue;
-            attributePoints = 0;
+            attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
         }
         else
         {
-            nextLevelExp = level * expScaleValue;
-            attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
+            //LoadData
         }
     }
-
 
     private void Update()
     {
         CheckLevelUp();
     }
-    //Chamar metodo sempre que derrotar um inimigo? 
+
+
     private void CheckLevelUp()
     {
         if (currentExp >= nextLevelExp && level  < 99)
-        {
-            level++;
-            currentExp -= nextLevelExp;
-            nextLevelExp = level * expScaleValue;
-            
-        }
-
-        if(usedAttributePoints > 0)
-        {
-            attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
-        }
-        else
-        {
-            attributePoints = level * attributesPointsScaleValue;
-        }
+            CharLevelUp(1);
     }
 
-    public void UsingAttributePoints()
+    private void CharLevelUp(int value)
     {
-        if (attributePoints > 0)
-        {
-            attributePoints--;
-            usedAttributePoints++;
-        }
+        level += value;
+        currentExp -= nextLevelExp;
+        nextLevelExp = level * expScaleValue;
+        attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
     }
 
-    public void ReturningAttributePoints()
+
+    private void SkillLevelUp(int value)
     {
-        if (usedAttributePoints > 0)
-        {
-            attributePoints++;
-            usedAttributePoints--;
-        }
+        skillLevel += value;
+
     }
 
 

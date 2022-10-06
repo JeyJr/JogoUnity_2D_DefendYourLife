@@ -51,6 +51,8 @@ public class CharacterAttributes : MonoBehaviour
     {
         AttributeValues();
     }
+
+    //Esse metodo sera acionado apenas quando houver update dos atributos ou o char upar de level
     private void AttributeValues()
     {
         physicalAtkPower = Mathf.RoundToInt(strength * 1.5f); //atk = str * 1.5f 

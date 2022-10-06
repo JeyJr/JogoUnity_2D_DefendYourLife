@@ -25,7 +25,7 @@ public class PlayerAtk : MonoBehaviour
         //FloorOfHell
         if (!AttackingMagic && Input.GetKeyDown(KeyCode.Alpha1)) {
             SetAttackingMagical();
-            GetComponentInChildren<SkillFloorOfHell>().SetSkillActivation(true, true);
+            GetComponentInChildren<SkillFloorOfHell>().SetSkillActivation(true);
         }
     }
 

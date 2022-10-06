@@ -8,30 +8,31 @@ public class SkillFloorOfHell : MonoBehaviour
     public GameObject floorOfHell;
     [SerializeField] private int skillDMG;
     [SerializeField] private int skillLevel;
+    private int skillMaxLevel = 10;
     [SerializeField] private int manaCost;
     public LayerMask target;
-
-    bool castFloorOfHell, gainExp;
+    bool gainExp;
 
     private void Start()
     {
         cAttributes = GetComponentInParent<CharacterAttributes>();
         SetLevelUpgrade(1);
     }
-
-    private void Update()
+    public void SetSkillActivation(bool gainExp)
     {
-        if (castFloorOfHell)
-        {
-            castFloorOfHell = false;
-            skillDMG = cAttributes.MagicAtkPower;
-            
+        this.gainExp = gainExp;
 
-            if (cAttributes.Mana > manaCost)
+        skillDMG = cAttributes.MagicAtkPower;
+
+        if (cAttributes.Mana > manaCost)
+        {
+            if (skillMaxLevel > 0)
                 StartCoroutine(SpawnMagicFloorOfHell());
             else
-                Debug.Log("Sem mana!");
+                Debug.Log("Skill não upada!");
         }
+        else
+            Debug.Log("Sem mana!");
     }
 
     IEnumerator SpawnMagicFloorOfHell()
@@ -50,13 +51,11 @@ public class SkillFloorOfHell : MonoBehaviour
 
     public void SetLevelUpgrade(int value)
     {
-        skillLevel += value;
-        manaCost = skillLevel * 15;
+        if(skillLevel < skillMaxLevel)
+        {
+            skillLevel += value;
+            manaCost = skillLevel * 15;
+        }
     }
 
-    public void SetSkillActivation(bool castFloorOfHell, bool gainExp)
-    {
-        this.castFloorOfHell = castFloorOfHell;
-        this.gainExp = gainExp;
-    }
 }
