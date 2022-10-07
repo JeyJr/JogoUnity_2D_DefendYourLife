@@ -6,14 +6,19 @@ public class PlayerMove : MonoBehaviour
 {
     PlayerAtk playerMeleeAtk, playerMagicAtk;
     public Rigidbody2D rb2D;
-
     //-----------------------------------------
-    [SerializeField] private float moveSpeed, dashForce, dashDelay = 5;
-    private bool useDash, dashActive;
-    public bool DashActive { get => dashActive;}
     private Vector3 inputDir;
     public float InputDir{ get => inputDir.x;}
+    //------------------------------------------
 
+    [SerializeField] private float moveSpeed, dashForce, dashDelayValue = 5;
+    private bool dashInDelayTime, dashActive;
+
+    //----------------------------------------    
+    public float DashDelayValue { get => dashDelayValue; }
+    public bool DashInDelayTime { get => dashInDelayTime; set => dashInDelayTime =value;} //PlayerCanvas
+    public bool DashActive { get => dashActive;} //PlayerAnims
+    private float timeD = 0;
 
 
 
@@ -27,11 +32,9 @@ public class PlayerMove : MonoBehaviour
     {
         inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
-        if (Input.GetKey(KeyCode.Space) && !useDash){
-            useDash = true;
-            StartCoroutine(DashDelay());
+        if (Input.GetKey(KeyCode.Space) && !dashInDelayTime){
+            dashInDelayTime = true;
             SetDashActive();
-            PlayerDash();
         }
     }
 
@@ -44,6 +47,8 @@ public class PlayerMove : MonoBehaviour
             //else
             //    PlayerDash();
         }
+
+        if(dashActive) PlayerDash();
     }
 
     private void PlayerRotate()
@@ -55,22 +60,23 @@ public class PlayerMove : MonoBehaviour
         else if(inputDir.x < 0){
             transform.localEulerAngles = new Vector3(0,180,0);
         }
+
+        
     }
+
     private void PlayerMovement()
     {
+        timeD += Time.deltaTime;
         transform.position += new Vector3(inputDir.x * moveSpeed, 0, 0) * Time.deltaTime;
     }
     private void PlayerDash(){
-        rb2D.velocity = transform.right * dashForce;
+        //rb2D.velocity = transform.right * dashForce;
+        //rb2D.AddForce(transform.right * dashForce, ForceMode2D.Force);
+        transform.Translate(Vector3.right *  dashForce * Time.deltaTime, Space.Self);
     }
 
     public void SetDashActive(){
         dashActive = !dashActive;
-    }
-
-    IEnumerator DashDelay(){
-        yield return new WaitForSeconds(dashDelay);
-        useDash = false;
     }
 }
 
