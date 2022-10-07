@@ -20,8 +20,7 @@ public class PlayerAnimsControl : MonoBehaviour
 
     private void Update()
     {
-        if (playerMove.OnGround)
-        {
+        if(!playerMove.DashActive){
             if(!playerMeleeAtk.AttackingMelee && !playerMagicAtk.AttackingMagic)
             {
                 AnimIdleAndWalk();
@@ -33,11 +32,10 @@ public class PlayerAnimsControl : MonoBehaviour
             else if(!playerMeleeAtk.AttackingMelee && playerMagicAtk.AttackingMagic)
             {
                 AnimAtkMagic();
-            }
+            }        
         }
-        else
-        {
-            AnimJump();
+        else{
+            AnimDash();
         }
     }
     private void AnimIdleAndWalk()
@@ -46,13 +44,6 @@ public class PlayerAnimsControl : MonoBehaviour
             anim.Play("Base Layer.animPlayer_Run", 0);
         else
             anim.Play("Base Layer.animPlayer_Idle", 0);
-    }
-    private void AnimJump()
-    {
-        if (playerMove.rb2D.velocity.y > 0)
-            anim.Play("Base Layer.animPlayer_Jump", 0);
-        else
-            anim.Play("Base Layer.animPlayer_Fall", 0);
     }
     private void AnimAtkMelee()
     {
@@ -75,4 +66,16 @@ public class PlayerAnimsControl : MonoBehaviour
     {
         anim.Play("Base Layer.animPlayer_MagicAtk1", 0);
     }
+    private void AnimDash()
+    {
+        anim.Play("Base Layer.animPlayer_Dash", 0);
+    }
 }
+
+    // private void AnimJump()
+    // {
+    //     if (playerMove.rb2D.velocity.y > 0)
+    //         anim.Play("Base Layer.animPlayer_Jump", 0);
+    //     else
+    //         anim.Play("Base Layer.animPlayer_Fall", 0);
+    // }

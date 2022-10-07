@@ -19,13 +19,13 @@ public class SkillFloorOfHell : MonoBehaviour
     private void Start()
     {
         cAttributes = GetComponentInParent<CharacterAttributes>();
-        SetLevelUpgrade(1);
     }
     public void SetSkillActivation(bool gainExp)
     {
         this.gainExp = gainExp;
 
         skillDMG = cAttributes.DealDmg(false);
+        manaCost = SkillLevel * 12;
 
         if (cAttributes.Mana > manaCost)
         {
@@ -41,7 +41,7 @@ public class SkillFloorOfHell : MonoBehaviour
     IEnumerator SpawnMagicFloorOfHell()
     {
         yield return new WaitForSeconds(0.33f);
-
+       
         cAttributes.Mana -= manaCost;
 
         if(gainExp)
@@ -50,15 +50,6 @@ public class SkillFloorOfHell : MonoBehaviour
             floorOfHell.GetComponent<FloorOfHellBehavior>().SetSkillValues(skillDMG, skillLevel, target);
 
         Instantiate(floorOfHell, transform.position, Quaternion.identity);
-    }
-
-    public void SetLevelUpgrade(int value)
-    {
-        if(skillLevel < skillMaxLevel)
-        {
-            skillLevel += value;
-            manaCost = skillLevel * 15;
-        }
     }
 
 }
