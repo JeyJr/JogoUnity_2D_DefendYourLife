@@ -30,6 +30,7 @@ public class CharacterAttributes : MonoBehaviour
     //--------------------------------------Behaviors and Drops
     [SerializeField] private int expToDrop;
     public bool Dead { get; private set;}
+    public bool LifeSteal {get; set;}
 
     //---------------------------------------Objs
     [SerializeField] private GameObject textDmg;
@@ -74,7 +75,7 @@ public class CharacterAttributes : MonoBehaviour
         life -= dmg;
 
         if(life > 0){
-            SpawnText(dmg.ToString(), critical);
+            SpawnText(dmg.ToString(), critical, false, false);
             Dead = false;
         }
         else if(life < 0 && !Dead){
@@ -89,7 +90,7 @@ public class CharacterAttributes : MonoBehaviour
     /// </summary>
     public void TakeDMG(int dmg, bool critical)
     {
-        SpawnText(dmg.ToString(), critical);
+        SpawnText(dmg.ToString(), critical, false, false);
         if(life > 0){
             life -= dmg;
             Dead = false;
@@ -109,10 +110,15 @@ public class CharacterAttributes : MonoBehaviour
             if (critChance <= criticalRate)
             {
                 criticalDmg = true;
+                if(LifeSteal) LifeStealControl(dmg * 2);
+
                 return dmg *= 2;
             }
             else{
                 criticalDmg = false;
+                if(LifeSteal) LifeStealControl(dmg);
+
+
                 return dmg;
             }
         }
@@ -122,28 +128,59 @@ public class CharacterAttributes : MonoBehaviour
         }
     }
 
-    private void SpawnText(string text, bool critical)
+    public void LifeStealControl(int value){
+        RecoveryLife(Mathf.RoundToInt(value / 10)); 
+        RecoveryMana(Mathf.RoundToInt(value / 15)); 
+    }
+
+    public void RecoveryLife(int value){
+        if(life < maxLife){
+            SpawnText(value.ToString(), false, true, true);
+            life += value;
+        }
+        else{
+            life = maxLife;
+        }
+    }
+
+    public void RecoveryMana(int value){
+        if(mana < maxMana){
+            SpawnText(value.ToString(), false, true, false);
+            mana += value;
+        }
+        else{
+            mana = maxMana;
+        }
+    }
+
+    private void SpawnText(string text, bool critical, bool suport, bool healt)
     {
-        
-        if(this.gameObject.layer == 6) //Player
-        {
-            if (critical)
-                TextColor(1, 0, 0, 1);
-            else
-                TextColor(0.3f, 0, 0, 1);
+        if(!suport){
+            if(this.gameObject.layer == 6) //Player
+            {
+                if (critical)
+                    TextColor(1, 0, 0, 1);
+                else
+                    TextColor(0.3f, 0, 0, 1);
+            }
+            else //Other 
+            {
+                if (critical)
+                    TextColor(0.1f, 0, 1, 1);
+                else
+                    TextColor(1, 1, 1, 1);
+            }
         }
-        else //Other 
-        {
-            if (critical)
-                TextColor(0.1f, 0, 1, 1);
-            else
-                TextColor(1, 1, 1, 1);
-        }
-            
+        else{
+            if(healt) TextColor(0, 1, 0, 1); //life
+            else TextColor(0, 0, 1, 1); //mana
+        }            
 
         textDmg.GetComponent<TextMeshPro>().text = text;
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
     }
+
+
     private void TextColor(float r, float g, float b, float a)
     {
         textDmg.GetComponent<TextMeshPro>().color = new Color(r, g, b, a);
@@ -151,7 +188,6 @@ public class CharacterAttributes : MonoBehaviour
 
     //end anims death
     public void Destroy() => StartCoroutine(FadeOutAndDestroy());
-
     IEnumerator FadeOutAndDestroy(){
         var sprite = GetComponent<SpriteRenderer>();
         for(float i = 1; i > -0.2f; i -= .1f){

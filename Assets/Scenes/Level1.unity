@@ -771,7 +771,7 @@ GameObject:
   - component: {fileID: 71995838}
   - component: {fileID: 71995837}
   m_Layer: 7
-  m_Name: Skeleton (2)
+  m_Name: Skeleton 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -973,7 +973,7 @@ Transform:
   - {fileID: 1876158353}
   - {fileID: 1460912490}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &85826905
 GameObject:
@@ -3554,7 +3554,7 @@ GameObject:
   - component: {fileID: 466960979}
   - component: {fileID: 466960981}
   m_Layer: 7
-  m_Name: Skeleton
+  m_Name: Skeleton 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4030,7 +4030,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -7.24, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6904,7 +6904,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042334202
 GameObject:
@@ -7269,7 +7269,7 @@ GameObject:
   - component: {fileID: 1064276884}
   - component: {fileID: 1064276883}
   m_Layer: 7
-  m_Name: Skeleton (4)
+  m_Name: Skeleton 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7462,7 +7462,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064276882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.97, y: -1.51, z: 10}
+  m_LocalPosition: {x: -1.057, y: -1.51, z: 10}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7471,7 +7471,7 @@ Transform:
   - {fileID: 1775263383}
   - {fileID: 2098574917}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1070988331
 GameObject:
@@ -8126,7 +8126,7 @@ GameObject:
   - component: {fileID: 1201471565}
   - component: {fileID: 1201471564}
   m_Layer: 7
-  m_Name: Skeleton (3)
+  m_Name: Skeleton 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8319,7 +8319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201471563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.61, y: -1.51, z: 10}
+  m_LocalPosition: {x: -3.148, y: -1.51, z: 10}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8328,7 +8328,7 @@ Transform:
   - {fileID: 776077214}
   - {fileID: 752009921}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1202655727
 GameObject:
@@ -10839,7 +10839,7 @@ GameObject:
   - component: {fileID: 1640964117}
   - component: {fileID: 1640964116}
   m_Layer: 7
-  m_Name: Skeleton (1)
+  m_Name: Skeleton 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11041,7 +11041,7 @@ Transform:
   - {fileID: 553692087}
   - {fileID: 290497758}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1681083125
 GameObject:
@@ -12215,7 +12215,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1934116554
 GameObject:
@@ -12675,7 +12675,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061564833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.41, y: -0.09, z: 5}
+  m_LocalPosition: {x: -6.99, y: -0.09, z: 5}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12766,6 +12766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0714b34e54a199548b494ac0b1890612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delaySkillDaporra: 0
 --- !u!1 &2067397653
 GameObject:
   m_ObjectHideFlags: 0
@@ -13591,7 +13592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7881176874990751676, guid: 1039f98d77660944d964ce0b89e20c66, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7881176874990751676, guid: 1039f98d77660944d964ce0b89e20c66, type: 3}
       propertyPath: m_LocalScale.x

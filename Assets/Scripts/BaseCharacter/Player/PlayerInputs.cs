@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
+    public float delaySkillDaporra;
     private CharacterAttributes cAttributes;
 
     //Move-------------------------------------
@@ -43,7 +44,7 @@ public class PlayerInputs : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1) && playerSKills.fohLevel > 0 && cAttributes.Mana > playerSKills.fohManaCost) {
                 SetAttackingMagical();
 
-                Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1, -4);
+                Vector3 pos = new Vector3(transform.position.x, transform.position.y - .99f, -4);
                 playerSKills.SpawnSkill(.33f,0, playerSKills.fohManaCost * playerSKills.fohLevel, playerSKills.fohDelayHit, playerSKills.fohLevel, pos,Quaternion.identity);
             }
 
@@ -53,7 +54,7 @@ public class PlayerInputs : MonoBehaviour
                 RandomAtkMelee = 4;
 
                 Quaternion q = Quaternion.Euler(transform.localEulerAngles);
-                Vector3 pos = transform.position + (transform.right * 2);
+                Vector3 pos = new Vector3(transform.position.x + .3f, transform.position.y - .5f, -4);
                 playerSKills.SpawnSkill(.25f, 1, playerSKills.bowManaCost * playerSKills.bowLevel, 0, playerSKills.bowLevel, pos, q);
             }
 
@@ -63,10 +64,16 @@ public class PlayerInputs : MonoBehaviour
 
                 //int mult = 2;
                 Quaternion q = Quaternion.Euler(transform.localEulerAngles);
-                for(int i = 0; i < 3; i++){
-                    Vector3 pos = new Vector3(transform.position.x + (transform.right.x * ( 1 + i)), transform.position.y - 1.5f, -4);
-                    playerSKills.SpawnSkill(i - .2f, 2, playerSKills.wsManaCost * playerSKills.wsLevel, 0, playerSKills.wsLevel, pos, q);
+                for(float i = 0; i < 5; i+= .5f){
+                    Vector3 pos = new Vector3(transform.position.x + (i * 2), transform.position.y - 1.5f, -4);
+                    playerSKills.SpawnSkill(i, 2, playerSKills.wsManaCost * playerSKills.wsLevel, 0, playerSKills.wsLevel, pos, q);
                 }
+            }
+
+            if(Input.GetKeyDown(KeyCode.Alpha4)){
+                //Finalizar implementações
+                //LifeSteal somente atk fisico
+                cAttributes.LifeSteal = !cAttributes.LifeSteal;
             }
         }
     }
