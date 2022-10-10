@@ -13,14 +13,28 @@ public class SkillBehavior : MonoBehaviour
     public float delayHit, delayNextHit = .5f;
 
     //------------------------------------------
-    public bool bladeOfWindActive;
+    public bool floorOfHell, bladeOfWind, waterSpikes;
 
-    /// <summary>
-    /// All targets within the spell's area take damage per second.
-    /// </summary>
-    /// <param name="dmg"> Set dmg per hit</param>
-    /// <param name="maxHit"> Set amount hits dmg in every target  </param>
-    /// <param name="target"> Set target take dmg  </param>
+    private void Awake()
+    {
+
+        if(floorOfHell) {
+            StartCoroutine(FadeIn());
+            StartCoroutine(HitAreaWithDelay());
+        }
+
+        if(bladeOfWind) {
+            StartCoroutine(FadeIn());
+            StartCoroutine(FadeOut(.5f));
+        }
+
+        if(waterSpikes){
+            StartCoroutine(FadeIn());
+            StartCoroutine(FadeOut(1.2f));
+        }
+
+    }
+
     public void SetSkillValues(float delayHit, int dmg, int skillLevel, LayerMask target)
     {
         this.delayHit = delayHit;
@@ -28,8 +42,6 @@ public class SkillBehavior : MonoBehaviour
         this.maxHit = skillLevel;
         this.target = target;
     }
-
-    /// <param name="gainExp"> Player receive exp after kill an enemy,  </param>
     public void SetSkillValues(float delayHit, int dmg, int skillLevel, LayerMask target, CharacterExpControl gainExp)
     {
         this.delayHit = delayHit;
@@ -39,20 +51,6 @@ public class SkillBehavior : MonoBehaviour
         this.gainExp = gainExp;
     }
 
-    private void Awake()
-    {
-        transform.position = new Vector3(transform.position.x, ground.position.y + 1, 4);
-        
-        StartCoroutine(FadeIn());
-
-        if(bladeOfWindActive){
-            StartCoroutine(FadeOut(5));
-        }
-        else{
-            StartCoroutine(HitAreaWithDelay());
-        }
-
-    }
 
 
     IEnumerator HitAreaWithDelay()
@@ -87,7 +85,7 @@ public class SkillBehavior : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(bladeOfWindActive){
+        if(!floorOfHell){
             if(other.gameObject.layer == 7){
                 if (gainExp != null)
                     other.GetComponent<CharacterAttributes>().TakeDMG(dmg, false, gainExp);
@@ -104,8 +102,9 @@ public class SkillBehavior : MonoBehaviour
 
         for (float i = 1; i > -0.2f; i -= .1f)
         {
-            sprites[0].color = new Color(1, 1, 1, i);
-            sprites[1].color = new Color(1, 1, 1, i);
+            for(int j = 0; j < sprites.Length; j++){
+                sprites[j].color = new Color(1, 1, 1, i);
+            }
             yield return new WaitForSeconds(.01f);
         }
 
@@ -115,8 +114,9 @@ public class SkillBehavior : MonoBehaviour
     {
         for (float i = 0; i < 1.2f; i += .1f)
         {
-            sprites[0].color = new Color(1, 1, 1, i);
-            sprites[1].color = new Color(1, 1, 1, i);
+            for(int j = 0; j < sprites.Length; j++){
+                sprites[j].color = new Color(1, 1, 1, i);
+            }
             yield return new WaitForSeconds(.01f);
         }
     }

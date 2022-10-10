@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &427549478986121117
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &6261107136837887805
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,11 +225,13 @@ MonoBehaviour:
     m_Bits: 128
   ground: {fileID: 7881176874990751676, guid: 1039f98d77660944d964ce0b89e20c66, type: 3}
   gainExp: {fileID: 0}
-  dmg: 0
-  maxHit: 0
+  dmg: 4
+  maxHit: 1
   delayHit: 0
   delayNextHit: 0
-  bladeOfWindActive: 1
+  floorOfHell: 0
+  bladeOfWind: 1
+  waterSpikes: 0
 --- !u!114 &9215909111441977805
 MonoBehaviour:
   m_ObjectHideFlags: 0

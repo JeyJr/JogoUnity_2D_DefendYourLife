@@ -216,6 +216,9 @@ MonoBehaviour:
   maxHit: 0
   delayHit: 0
   delayNextHit: 0.5
+  floorOfHell: 1
+  bladeOfWind: 0
+  waterSpikes: 0
 --- !u!1 &3026725307278491103
 GameObject:
   m_ObjectHideFlags: 0

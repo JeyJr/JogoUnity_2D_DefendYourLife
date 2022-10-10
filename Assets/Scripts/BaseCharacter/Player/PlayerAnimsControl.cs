@@ -49,6 +49,9 @@ public class PlayerAnimsControl : MonoBehaviour
             case 3:
                 anim.Play("Base Layer.animPlayer_MeleeAtk3", 0);
                 break;
+            case 4:
+                anim.Play("Base Layer.animPlayer_MeleeAtk4", 0);
+                break;
             default:
                 anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
                 break;

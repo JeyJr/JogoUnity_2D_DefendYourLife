@@ -9306,14 +9306,19 @@ MonoBehaviour:
   skillList:
   - {fileID: 3026725306621271612, guid: 46856f7ea34ad294bb3cf37ef6f969d7, type: 3}
   - {fileID: 6261107136837887805, guid: da5932769611d154681471fde4cdf328, type: 3}
+  - {fileID: 1695613060054365628, guid: 126467a2574c7d949b3b4a74c5251187, type: 3}
   fohDelayHit: 0.5
-  fohLevel: 0
+  fohLevel: 1
   fohMaxLevel: 10
-  fohManaCost: 12
+  fohManaCost: 1
   bowDelayHit: 0
   bowLevel: 1
   bowMaxLevel: 1
-  bowManaCost: 12
+  bowManaCost: 1
+  wsDelayHit: 0
+  wsLevel: 1
+  wsMaxLevel: 1
+  wsManaCost: 1
 --- !u!1 &1442802661
 GameObject:
   m_ObjectHideFlags: 0

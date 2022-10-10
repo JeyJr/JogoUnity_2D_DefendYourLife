@@ -22,6 +22,12 @@ public class PlayerSkills : MonoBehaviour
     public float bowDelayHit;
     public int bowLevel, bowMaxLevel, bowManaCost;
 
+    //BladesOfWind----------------------------------
+    [Header("WaterSpikes")]
+    public float wsDelayHit;
+    public int wsLevel, wsMaxLevel, wsManaCost;
+
+
 
     private void Start()
     {
@@ -56,22 +62,19 @@ public class PlayerSkills : MonoBehaviour
     /// <param name="delayHit">Delay to cast the next hit</param>
     /// <param name="level"></param>
     /// <param name="quaternion"></param>
-    public void SpawnSkill(int skillNum, int mana, float delayHit, int level, Quaternion quaternion)
+    public void SpawnSkill(float delay, int skillNum, int mana, float delayHit, int level, Vector3 pos,Quaternion quaternion)
     {
-        var skill = skillList[skillNum].GetComponent<SkillBehavior>();
-
-        if (cAttributes.Mana > mana)
-        {
-            cAttributes.Mana -= mana;
-
-            skill.SetSkillValues(delayHit, cAttributes.DealDmg(false), level, target, cExpControl);
-            Instantiate(skillList[skillNum], transform.position, quaternion);
-        }
-        else
-        {
-            Debug.Log("Sem mana!");
-        }
+        StartCoroutine(Spawn(delay, skillNum, mana, delayHit, level, pos, quaternion));
     }
 
+
+
+     IEnumerator Spawn(float delay, int skillNum, int mana, float delayHit, int level, Vector3 pos,Quaternion quaternion){
+        yield return new WaitForSeconds(delay);
+        var skill = skillList[skillNum].GetComponent<SkillBehavior>();
+        cAttributes.Mana -= mana;
+        skill.SetSkillValues(delayHit, cAttributes.DealDmg(false), level, target, cExpControl);
+        Instantiate(skillList[skillNum], pos, quaternion);
+    }
 
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
+    private CharacterAttributes cAttributes;
+
     //Move-------------------------------------
     private Vector3 inputDir;
     public float InputDir { get => inputDir.x; }
@@ -21,6 +23,7 @@ public class PlayerInputs : MonoBehaviour
     private void Start()
     {
         playerSKills = GetComponentInChildren<PlayerSkills>();
+        cAttributes = GetComponent<CharacterAttributes>();
     }
 
     private void Update()
@@ -29,19 +32,41 @@ public class PlayerInputs : MonoBehaviour
         inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
         //PhysicalAtk------------------------
-        if (!attackingMelee && Input.GetMouseButton(0)) SetAttackingMelee();
+        if (!attackingMelee && Input.GetMouseButton(0)){
+            RandomAtkMelee = Random.Range(1, 4);
+            SetAttackingMelee();
+        } 
 
         if (!attackingMagic)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1) && playerSKills.fohLevel > 0) {
-                playerSKills.SpawnSkill(0, playerSKills.fohManaCost * playerSKills.fohLevel, playerSKills.fohDelayHit, playerSKills.fohLevel, Quaternion.identity);
+            //FloorOfHell
+            if (Input.GetKeyDown(KeyCode.Alpha1) && playerSKills.fohLevel > 0 && cAttributes.Mana > playerSKills.fohManaCost) {
                 SetAttackingMagical();
+
+                Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1, -4);
+                playerSKills.SpawnSkill(.33f,0, playerSKills.fohManaCost * playerSKills.fohLevel, playerSKills.fohDelayHit, playerSKills.fohLevel, pos,Quaternion.identity);
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha2) && playerSKills.bowLevel > 0) {
-                Quaternion q = Quaternion.Euler(transform.localEulerAngles);
-                playerSKills.SpawnSkill(1, playerSKills.bowManaCost * playerSKills.bowLevel, 0, playerSKills.bowLevel, q);
+            //BladesOfWind
+            if (Input.GetKeyDown(KeyCode.Alpha2) && playerSKills.bowLevel > 0 && cAttributes.Mana > playerSKills.bowManaCost) {
                 SetAttackingMelee();
+                RandomAtkMelee = 4;
+
+                Quaternion q = Quaternion.Euler(transform.localEulerAngles);
+                Vector3 pos = transform.position + (transform.right * 2);
+                playerSKills.SpawnSkill(.25f, 1, playerSKills.bowManaCost * playerSKills.bowLevel, 0, playerSKills.bowLevel, pos, q);
+            }
+
+            //WaterSpikes   
+            if (Input.GetKeyDown(KeyCode.Alpha3) && playerSKills.wsLevel > 0 && cAttributes.Mana > playerSKills.wsManaCost) {
+                SetAttackingMagical();
+
+                //int mult = 2;
+                Quaternion q = Quaternion.Euler(transform.localEulerAngles);
+                for(int i = 0; i < 3; i++){
+                    Vector3 pos = new Vector3(transform.position.x + (transform.right.x * ( 1 + i)), transform.position.y - 1.5f, -4);
+                    playerSKills.SpawnSkill(i - .2f, 2, playerSKills.wsManaCost * playerSKills.wsLevel, 0, playerSKills.wsLevel, pos, q);
+                }
             }
         }
     }
@@ -50,7 +75,6 @@ public class PlayerInputs : MonoBehaviour
     //this methods is call in animPlayer_MeleeAtk[1][2][3]
     public void SetAttackingMelee()
     {
-        RandomAtkMelee = Random.Range(1, 4);
         attackingMelee = !attackingMelee;
     }
 
