@@ -9,6 +9,7 @@ public class PlayerMeleeAtk : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float atkRange;
 
+
     //this methods is call in animPlayer_MeleeAtk[1][2][3]
     public void AtkArea() 
     {

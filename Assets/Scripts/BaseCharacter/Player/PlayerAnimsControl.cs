@@ -4,50 +4,42 @@ using UnityEngine;
 
 public class PlayerAnimsControl : MonoBehaviour
 {
-    PlayerMove playerMove;
-    PlayerAtk playerMeleeAtk, playerMagicAtk ;
+    PlayerInputs playerInputs;
     Animator anim;
     //-----------------------------------------
 
 
     private void Start() 
     {
-        playerMove = GetComponent<PlayerMove>();
-        playerMeleeAtk = GetComponent<PlayerAtk>();
-        playerMagicAtk = GetComponent<PlayerAtk>();
+        playerInputs = GetComponent<PlayerInputs>();
         anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if(!playerMove.DashActive){
-            if(!playerMeleeAtk.AttackingMelee && !playerMagicAtk.AttackingMagic)
-            {
-                AnimIdleAndWalk();
-            }
-            else if(playerMeleeAtk.AttackingMelee && !playerMagicAtk.AttackingMagic)
-            {
-                AnimAtkMelee();
-            }
-            else if(!playerMeleeAtk.AttackingMelee && playerMagicAtk.AttackingMagic)
-            {
-                AnimAtkMagic();
-            }        
+        if(!playerInputs.AttackingMelee && !playerInputs.AttackingMagic)
+        {
+            AnimIdleAndWalk();
         }
-        else{
-            AnimDash();
+        else if(playerInputs.AttackingMelee && !playerInputs.AttackingMagic)
+        {
+            AnimAtkMelee();
         }
+        else if(!playerInputs.AttackingMelee && playerInputs.AttackingMagic)
+        {
+            AnimAtkMagic();
+        }        
     }
     private void AnimIdleAndWalk()
     {
-        if (playerMove.InputDir != 0)
+        if (playerInputs.InputDir != 0)
             anim.Play("Base Layer.animPlayer_Run", 0);
         else
             anim.Play("Base Layer.animPlayer_Idle", 0);
     }
     private void AnimAtkMelee()
     {
-        switch(playerMeleeAtk.RandomAtkMelee){
+        switch(playerInputs.RandomAtkMelee){
             case 1:
                 anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
                 break;
@@ -66,16 +58,6 @@ public class PlayerAnimsControl : MonoBehaviour
     {
         anim.Play("Base Layer.animPlayer_MagicAtk1", 0);
     }
-    private void AnimDash()
-    {
-        anim.Play("Base Layer.animPlayer_Dash", 0);
-    }
+
 }
 
-    // private void AnimJump()
-    // {
-    //     if (playerMove.rb2D.velocity.y > 0)
-    //         anim.Play("Base Layer.animPlayer_Jump", 0);
-    //     else
-    //         anim.Play("Base Layer.animPlayer_Fall", 0);
-    // }

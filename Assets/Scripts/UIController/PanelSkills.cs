@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public class PanelSkills : MonoBehaviour
 {
+    public enum Skills{floorOfHell}
+    public List<string> skill = new List<string>{"floorOfHell"};
     MainUI mainUI;
     [SerializeField] private GameObject player;
     private CharacterExpControl cExpControl;
 
     //Skills--------------------------------------------------------------
-    private SkillFloorOfHell floorOfHell;
+    private PlayerSkills playerSkills;
 
     //PanelComponentes------------------------------------------------------
-    public List<TextMeshProUGUI> textSkillLevel = new List<TextMeshProUGUI> ();
-    public List<Slider> sliders = new List<Slider> ();
+    public List<TextMeshProUGUI> textSkillLevel = new();
+    public List<Slider> sliders = new();
 
     //Componentes-------------------------------------------------------------
     public TextMeshProUGUI textSkillsPointsValue, textPointsUsedValue;
@@ -26,9 +28,9 @@ public class PanelSkills : MonoBehaviour
     {
         mainUI = GetComponent<MainUI>();
         cExpControl = player.GetComponent<CharacterExpControl>();
-        floorOfHell = player.GetComponentInChildren<SkillFloorOfHell>();
+        playerSkills = player.GetComponentInChildren<PlayerSkills>();
         
-        mainUI.SetMaxValueSliders("sliderFloorOfHellValue", floorOfHell.SkillMaxLevel, sliders);
+        mainUI.SetMaxValueSliders("sliderFloorOfHellValue", playerSkills.fohLevel, sliders);
     }
 
     void Update()
@@ -36,13 +38,13 @@ public class PanelSkills : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             TextSkillsUpdate();
-            cExpControl.UsedSkillsPoints = floorOfHell.SkillLevel; //More skills, update here
+            cExpControl.UsedSkillsPoints = playerSkills.fohLevel; //More skills, update here
         }
     }
 
     private void TextSkillsUpdate(){
-        mainUI.SetTextMeshProUGUIValues("txtFloorOfHellValue", $"{floorOfHell.SkillLevel}/{floorOfHell.SkillMaxLevel}", textSkillLevel);
-        mainUI.SetValuesSliders("sliderFloorOfHellValue", floorOfHell.SkillLevel, sliders);
+        mainUI.SetTextMeshProUGUIValues("txtFloorOfHellValue", $"{playerSkills.fohLevel}/{playerSkills.fohMaxLevel}", textSkillLevel);
+        mainUI.SetValuesSliders("sliderFloorOfHellValue", playerSkills.fohLevel, sliders);
 
         textSkillsPointsValue.text = cExpControl.SkillPoints.ToString();
         textPointsUsedValue.text = cExpControl.UsedSkillsPoints.ToString();
@@ -52,8 +54,8 @@ public class PanelSkills : MonoBehaviour
         if(cExpControl.SkillPoints > 0)
         switch(skillName){
             case "FloorOfHell":
-                if( floorOfHell.SkillLevel < floorOfHell.SkillMaxLevel){
-                    floorOfHell.SkillLevel++;
+                if(playerSkills.fohLevel < playerSkills.fohMaxLevel){
+                    playerSkills.fohLevel++;
                     cExpControl.SkillPoints--;
                 }
                 break;
@@ -64,8 +66,8 @@ public class PanelSkills : MonoBehaviour
         if(cExpControl.UsedSkillsPoints > 0){
             switch(skillName){
                 case "FloorOfHell":
-                    if( floorOfHell.SkillLevel > 0){
-                        floorOfHell.SkillLevel--;
+                    if( playerSkills.fohLevel > 0){
+                        playerSkills.fohLevel--;
                         cExpControl.SkillPoints++;
                     }
                     break;

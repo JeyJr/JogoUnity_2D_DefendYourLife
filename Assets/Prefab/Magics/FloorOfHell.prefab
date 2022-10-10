@@ -115,9 +115,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3026725306621271611}
   - component: {fileID: 3026725306621271610}
-  - component: {fileID: 3026725306621271608}
+  - component: {fileID: 566619216404593466}
   m_Layer: 8
-  m_Name: MagicFloorOfHell
+  m_Name: FloorOfHell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3026725306621271608
+--- !u!114 &566619216404593466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,18 +201,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3026725306621271612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe244347d6286a84093544b479b27725, type: 3}
+  m_Script: {fileID: 11500000, guid: d8d468b36a0651345aae2b5cbc0d037c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gainExp: {fileID: 0}
-  target:
-    serializedVersion: 2
-    m_Bits: 0
-  dmg: 0
   sprites:
   - {fileID: 3026725307278491100}
   - {fileID: 3026725306565613925}
+  target:
+    serializedVersion: 2
+    m_Bits: 0
   ground: {fileID: 7881176874990751676, guid: 1039f98d77660944d964ce0b89e20c66, type: 3}
+  gainExp: {fileID: 0}
+  dmg: 0
+  maxHit: 0
+  delayHit: 0
+  delayNextHit: 0.5
 --- !u!1 &3026725307278491103
 GameObject:
   m_ObjectHideFlags: 0

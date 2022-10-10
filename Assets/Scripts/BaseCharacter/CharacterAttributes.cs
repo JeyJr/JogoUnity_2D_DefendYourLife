@@ -89,8 +89,8 @@ public class CharacterAttributes : MonoBehaviour
     /// </summary>
     public void TakeDMG(int dmg, bool critical)
     {
+        SpawnText(dmg.ToString(), critical);
         if(life > 0){
-            SpawnText(dmg.ToString(), critical);
             life -= dmg;
             Dead = false;
         }
