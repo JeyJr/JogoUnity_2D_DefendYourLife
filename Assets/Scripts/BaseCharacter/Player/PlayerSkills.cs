@@ -33,10 +33,16 @@ public class PlayerSkills : MonoBehaviour
     public float lsDuration;
     public int lsLevel, lsMaxLevel, lsManaCost;
     
-    //LifeSteal----------------------------------
+    //Lucky----------------------------------
     [Header("Lucky")]
     public float lkDuration;
     public int lkLevel, lkMaxLevel, lkManaCost;
+    
+    //Invencible----------------------------------
+    [Header("Invencible")]
+    public float iDuration;
+    public int iLevel, iMaxLevel;
+    private int iManaCost;
 
 
 
@@ -78,7 +84,7 @@ public class PlayerSkills : MonoBehaviour
 
     IEnumerator LifeStealDelay(){
         cAttributes.Mana -= lsManaCost;
-        playerSkin.color = new Color(.25f, 0, 0, 1);
+        playerSkin.color = new Color(1f, .3f, .3f, 1);
         yield return new WaitForSeconds(lsDuration);
 
         playerSkin.color = new Color(1, 1, 1, 1);
@@ -99,5 +105,20 @@ public class PlayerSkills : MonoBehaviour
     cAttributes.Luck -= cAttributes.BonusLuck;
     cAttributes.BonusLuck = 0;
    }
+
+
+    //Invencible -------------------------------------------------
+    public void Invencible() => StartCoroutine(InvencibleDelay());
+
+    IEnumerator InvencibleDelay(){
+        iManaCost = iLevel * 30;
+        cAttributes.Mana -= iManaCost;
+
+        playerSkin.color = new Color(.3f, .3f, 1f, 1);
+        yield return new WaitForSeconds(iDuration);
+
+        playerSkin.color = new Color(1, 1, 1, 1);
+        cAttributes.Invencible = false;
+    }
    #endregion
 }

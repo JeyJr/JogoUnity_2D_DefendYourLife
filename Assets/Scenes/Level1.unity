@@ -9324,10 +9324,13 @@ MonoBehaviour:
   lsLevel: 1
   lsMaxLevel: 1
   lsManaCost: 1
-  lkDuration: 1
+  lkDuration: 15
   lkLevel: 5
   lkMaxLevel: 10
   lkManaCost: 10
+  iDuration: 5
+  iLevel: 1
+  iMaxLevel: 1
 --- !u!1 &1442802661
 GameObject:
   m_ObjectHideFlags: 0

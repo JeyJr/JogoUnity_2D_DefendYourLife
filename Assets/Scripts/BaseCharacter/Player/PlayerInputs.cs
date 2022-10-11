@@ -72,7 +72,7 @@ public class PlayerInputs : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Alpha4) && playerSKills.lsLevel > 0 && cAttributes.Mana > playerSKills.lsManaCost){
                 SetAttackingMagical();
                 playerSKills.LifeSteal();
-                cAttributes.LifeSteal = !cAttributes.LifeSteal;
+                cAttributes.LifeSteal = true;
             }
             
             //Lucky
@@ -80,6 +80,14 @@ public class PlayerInputs : MonoBehaviour
             {
                 SetAttackingMagical();
                 playerSKills.Lucky();
+            }
+
+            //Invencible
+            if(Input.GetKeyDown(KeyCode.Alpha6) && playerSKills.lkLevel > 0 && cAttributes.Mana > playerSKills.lkManaCost)
+            {
+                SetAttackingMagical();
+                playerSKills.Invencible();
+                cAttributes.Invencible = true;
             }
         }
     }

@@ -19,11 +19,8 @@ public class CharacterAttributes : MonoBehaviour
     public int Intelligence { get => intelligence; set => intelligence = value; }
     public int Vitality { get => vitality; set => vitality = value; }
     public int Luck { get => luck; set => luck = value; }
-    
-    //---------------------------------------Propriedades Bonus
-    public int BonusLuck { get; set; }
-
-    //---------------------------------------Propriedades Status
+ 
+     //---------------------------------------Propriedades Status
     public int PhysicalAtkPower { get => physicalAtkPower; }
     public int MagicAtkPower { get => magicAtkPower;}
     public int MaxLife { get => maxLife;}
@@ -31,10 +28,12 @@ public class CharacterAttributes : MonoBehaviour
     public int MaxMana {get => maxMana;}
     public int CriticalRate { get => criticalRate;}
 
-    //--------------------------------------Behaviors and Drops
+    //--------------------------------------Behaviors, Bonus and Drops
     [SerializeField] private int expToDrop;
+    public int BonusLuck { get; set; }
     public bool Dead { get; private set;}
     public bool LifeSteal {get; set;}
+    public bool Invencible {get; set;}
 
     //---------------------------------------Objs
     [SerializeField] private GameObject textDmg;
@@ -76,15 +75,20 @@ public class CharacterAttributes : MonoBehaviour
     /// <param name="gainExp"> The attacker gains experience </param>
     public void TakeDMG(int dmg, bool critical, CharacterExpControl gainExp)
     {
-        life -= dmg;
+        if(!Invencible){
+            life -= dmg;
 
-        if(life > 0){
-            SpawnText(dmg.ToString(), critical, false, false);
-            Dead = false;
+            if(life > 0){
+                SpawnText(dmg.ToString(), critical, false, false);
+                Dead = false;
+            }
+            else if(life < 0 && !Dead){
+                gainExp.GetExp(expToDrop);
+                Dead = true;
+            }
         }
-        else if(life < 0 && !Dead){
-            gainExp.GetExp(expToDrop);
-            Dead = true;
+        else{
+            SpawnText("Invencible", false, false, false);
         }
 
      }
@@ -94,13 +98,18 @@ public class CharacterAttributes : MonoBehaviour
     /// </summary>
     public void TakeDMG(int dmg, bool critical)
     {
-        if(life > 0){
-            SpawnText(dmg.ToString(), critical, false, false);
-            life -= dmg;
-            Dead = false;
+        if(!Invencible){
+            if(life > 0){
+                SpawnText(dmg.ToString(), critical, false, false);
+                life -= dmg;
+                Dead = false;
+            }
+            else{
+                Dead = true;
+            }
         }
         else{
-            Dead = true;
+            SpawnText("Invencible", false, false, false);
         }
      }
     #endregion
