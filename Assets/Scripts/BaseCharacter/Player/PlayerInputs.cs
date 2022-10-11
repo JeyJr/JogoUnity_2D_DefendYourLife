@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    public float delaySkillDaporra;
     private CharacterAttributes cAttributes;
+    private PlayerMove playerMove;
 
     //Move-------------------------------------
     private Vector3 inputDir;
@@ -20,6 +20,7 @@ public class PlayerInputs : MonoBehaviour
     private bool attackingMagic;
     public bool AttackingMagic { get => attackingMagic;}
     PlayerSkills playerSKills;
+
 
     private void Start()
     {
@@ -61,19 +62,24 @@ public class PlayerInputs : MonoBehaviour
             //WaterSpikes   
             if (Input.GetKeyDown(KeyCode.Alpha3) && playerSKills.wsLevel > 0 && cAttributes.Mana > playerSKills.wsManaCost) {
                 SetAttackingMagical();
-
-                //int mult = 2;
-                Quaternion q = Quaternion.Euler(transform.localEulerAngles);
-                for(float i = 0; i < 5; i+= .5f){
-                    Vector3 pos = new Vector3(transform.position.x + (i * 2), transform.position.y - 1.5f, -4);
-                    playerSKills.SpawnSkill(i, 2, playerSKills.wsManaCost * playerSKills.wsLevel, 0, playerSKills.wsLevel, pos, q);
-                }
+                for(float i = 0; i < 4; i+= .5f){
+                    Vector3 pos = new Vector3(transform.position.x + transform.right.x * (i * 2), -1.5f, -4f);
+                    playerSKills.SpawnSkill(i, 2, playerSKills.wsManaCost * playerSKills.wsLevel, 0, playerSKills.wsLevel, pos, Quaternion.Euler(transform.localEulerAngles));
+                } 
             }
 
-            if(Input.GetKeyDown(KeyCode.Alpha4)){
-                //Finalizar implementações
-                //LifeSteal somente atk fisico
+            //LifeSteal
+            if(Input.GetKeyDown(KeyCode.Alpha4) && playerSKills.lsLevel > 0 && cAttributes.Mana > playerSKills.lsManaCost){
+                SetAttackingMagical();
+                playerSKills.LifeSteal();
                 cAttributes.LifeSteal = !cAttributes.LifeSteal;
+            }
+            
+            //Lucky
+            if(Input.GetKeyDown(KeyCode.Alpha5) && playerSKills.lkLevel > 0 && cAttributes.Mana > playerSKills.lkManaCost)
+            {
+                SetAttackingMagical();
+                playerSKills.Lucky();
             }
         }
     }
@@ -84,10 +90,11 @@ public class PlayerInputs : MonoBehaviour
     {
         attackingMelee = !attackingMelee;
     }
-
     //this methods is call in animPlayer_MagicAtk1
     public void SetAttackingMagical()
     {
         attackingMagic = !attackingMagic;
     }
 }
+
+

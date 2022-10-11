@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void PlayerRotate()
+    public void PlayerRotate()
     {
         if(playerInputs.InputDir > 0)
             transform.localEulerAngles = new Vector3(0,0,0);

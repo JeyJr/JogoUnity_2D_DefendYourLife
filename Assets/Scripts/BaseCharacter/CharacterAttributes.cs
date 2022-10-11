@@ -8,6 +8,7 @@ public class CharacterAttributes : MonoBehaviour
     //---------------------------------------AttributesBase
     [SerializeField] private int strength, intelligence, vitality, luck;
 
+
     //---------------------------------------Status
     [SerializeField] private int physicalAtkPower, magicAtkPower, life, maxLife, mana, maxMana,criticalRate;
     public bool criticalDmg;
@@ -18,6 +19,9 @@ public class CharacterAttributes : MonoBehaviour
     public int Intelligence { get => intelligence; set => intelligence = value; }
     public int Vitality { get => vitality; set => vitality = value; }
     public int Luck { get => luck; set => luck = value; }
+    
+    //---------------------------------------Propriedades Bonus
+    public int BonusLuck { get; set; }
 
     //---------------------------------------Propriedades Status
     public int PhysicalAtkPower { get => physicalAtkPower; }
@@ -53,7 +57,6 @@ public class CharacterAttributes : MonoBehaviour
         AttributeValues();
     }
 
-    //Esse metodo sera acionado apenas quando houver update dos atributos ou o char upar de level
     private void AttributeValues()
     {
         physicalAtkPower = Mathf.RoundToInt(strength * 1.5f); //atk = str * 1.5f 
@@ -63,6 +66,7 @@ public class CharacterAttributes : MonoBehaviour
         criticalRate = Mathf.RoundToInt(luck / 2); 
     }
 
+    #region TakeDMG
     /// <summary>
     /// Object will take X amount of damage from the attacker.
     /// This overhead drops EXP for the attacker.
@@ -90,8 +94,8 @@ public class CharacterAttributes : MonoBehaviour
     /// </summary>
     public void TakeDMG(int dmg, bool critical)
     {
-        SpawnText(dmg.ToString(), critical, false, false);
         if(life > 0){
+            SpawnText(dmg.ToString(), critical, false, false);
             life -= dmg;
             Dead = false;
         }
@@ -99,8 +103,9 @@ public class CharacterAttributes : MonoBehaviour
             Dead = true;
         }
      }
-
+    #endregion
     
+    #region DealDmg
     public int DealDmg(bool isPhysical)
     {
         float critChance = Random.Range(1, 100);
@@ -127,7 +132,9 @@ public class CharacterAttributes : MonoBehaviour
             return dmg;
         }
     }
+    #endregion
 
+    #region LifeSteal and RecoveryLife and Mana
     public void LifeStealControl(int value){
         RecoveryLife(Mathf.RoundToInt(value / 10)); 
         RecoveryMana(Mathf.RoundToInt(value / 15)); 
@@ -135,24 +142,25 @@ public class CharacterAttributes : MonoBehaviour
 
     public void RecoveryLife(int value){
         if(life < maxLife){
-            SpawnText(value.ToString(), false, true, true);
+            SpawnText($"+{value}", false, true, true);
             life += value;
         }
         else{
             life = maxLife;
         }
     }
-
     public void RecoveryMana(int value){
         if(mana < maxMana){
-            SpawnText(value.ToString(), false, true, false);
+            SpawnText($"+{value}", false, true, false);
             mana += value;
         }
         else{
             mana = maxMana;
         }
     }
+    #endregion
 
+    #region SpawnText
     private void SpawnText(string text, bool critical, bool suport, bool healt)
     {
         if(!suport){
@@ -179,13 +187,13 @@ public class CharacterAttributes : MonoBehaviour
         textDmg.GetComponent<TextMeshPro>().text = text;
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
     }
-
-
     private void TextColor(float r, float g, float b, float a)
     {
         textDmg.GetComponent<TextMeshPro>().color = new Color(r, g, b, a);
     }
+    #endregion
 
+    #region Death
     //end anims death
     public void Destroy() => StartCoroutine(FadeOutAndDestroy());
     IEnumerator FadeOutAndDestroy(){
@@ -197,4 +205,5 @@ public class CharacterAttributes : MonoBehaviour
 
         Destroy(this.gameObject);
     }
+    #endregion
 }

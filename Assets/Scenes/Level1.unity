@@ -9299,6 +9299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555824f3d86397448b0a4dbc2c44c41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSkin: {fileID: 2061564838}
   playerInputs: {fileID: 2061564844}
   target:
     serializedVersion: 2
@@ -9319,6 +9320,14 @@ MonoBehaviour:
   wsLevel: 1
   wsMaxLevel: 1
   wsManaCost: 1
+  lsDuration: 5
+  lsLevel: 1
+  lsMaxLevel: 1
+  lsManaCost: 1
+  lkDuration: 1
+  lkLevel: 5
+  lkMaxLevel: 10
+  lkManaCost: 10
 --- !u!1 &1442802661
 GameObject:
   m_ObjectHideFlags: 0
@@ -12766,7 +12775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0714b34e54a199548b494ac0b1890612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delaySkillDaporra: 0
 --- !u!1 &2067397653
 GameObject:
   m_ObjectHideFlags: 0
