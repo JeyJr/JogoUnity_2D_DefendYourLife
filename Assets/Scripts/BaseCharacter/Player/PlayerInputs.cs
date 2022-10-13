@@ -7,6 +7,7 @@ public class PlayerInputs : MonoBehaviour
     private CharacterAttributes cAttributes;
     private PlayerMove playerMove;
 
+
     //Move-------------------------------------
     private Vector3 inputDir;
     public float InputDir { get => inputDir.x; }
@@ -42,48 +43,48 @@ public class PlayerInputs : MonoBehaviour
         if (!attackingMagic)
         {
             //FloorOfHell
-            if (Input.GetKeyDown(KeyCode.Alpha1) && playerSKills.fohLevel > 0 && cAttributes.Mana > playerSKills.fohManaCost) {
+            if (Input.GetKeyDown(KeyCode.Alpha1) && playerSKills.FloorOfHellLevel > 0 && cAttributes.Mana > playerSKills.FloorOfHellManaCost) {
                 SetAttackingMagical();
 
                 Vector3 pos = new Vector3(transform.position.x, transform.position.y - .99f, -4);
-                playerSKills.SpawnSkill(.33f,0, playerSKills.fohManaCost * playerSKills.fohLevel, playerSKills.fohDelayHit, playerSKills.fohLevel, pos,Quaternion.identity);
+                playerSKills.SpawnSkill(.33f,0, playerSKills.FloorOfHellManaCost, .5f, playerSKills.FloorOfHellLevel, pos,Quaternion.identity);
             }
 
             //BladesOfWind
-            if (Input.GetKeyDown(KeyCode.Alpha2) && playerSKills.bowLevel > 0 && cAttributes.Mana > playerSKills.bowManaCost) {
+            if (Input.GetKeyDown(KeyCode.Alpha2) && playerSKills.BladesOfWindLevel > 0 && cAttributes.Mana > playerSKills.BladesOfWindManaCost) {
                 SetAttackingMelee();
                 RandomAtkMelee = 4;
 
                 Quaternion q = Quaternion.Euler(transform.localEulerAngles);
                 Vector3 pos = new Vector3(transform.position.x + .3f, transform.position.y - .5f, -4);
-                playerSKills.SpawnSkill(.25f, 1, playerSKills.bowManaCost * playerSKills.bowLevel, 0, playerSKills.bowLevel, pos, q);
+                playerSKills.SpawnSkill(.25f, 1, playerSKills.BladesOfWindManaCost, 0, playerSKills.BladesOfWindLevel, pos, q);
             }
 
             //WaterSpikes   
-            if (Input.GetKeyDown(KeyCode.Alpha3) && playerSKills.wsLevel > 0 && cAttributes.Mana > playerSKills.wsManaCost) {
+            if (Input.GetKeyDown(KeyCode.Alpha3) && playerSKills.WaterSpikesLevel > 0 && cAttributes.Mana > playerSKills.WaterSpikesManaCost) {
                 SetAttackingMagical();
                 for(float i = 0; i < 4; i+= .5f){
                     Vector3 pos = new Vector3(transform.position.x + transform.right.x * (i * 2), -1.5f, -4f);
-                    playerSKills.SpawnSkill(i, 2, playerSKills.wsManaCost * playerSKills.wsLevel, 0, playerSKills.wsLevel, pos, Quaternion.Euler(transform.localEulerAngles));
+                    playerSKills.SpawnSkill(i, 2, playerSKills.WaterSpikesManaCost, 0, playerSKills.WaterSpikesLevel, pos, Quaternion.Euler(transform.localEulerAngles));
                 } 
             }
 
             //LifeSteal
-            if(Input.GetKeyDown(KeyCode.Alpha4) && playerSKills.lsLevel > 0 && cAttributes.Mana > playerSKills.lsManaCost){
+            if(Input.GetKeyDown(KeyCode.Alpha4) && playerSKills.LifeStealLevel > 0 && cAttributes.Mana > playerSKills.LifeStealManaCost){
                 SetAttackingMagical();
                 playerSKills.LifeSteal();
                 cAttributes.LifeSteal = true;
             }
             
             //Lucky
-            if(Input.GetKeyDown(KeyCode.Alpha5) && playerSKills.lkLevel > 0 && cAttributes.Mana > playerSKills.lkManaCost)
+            if(Input.GetKeyDown(KeyCode.Alpha5) && playerSKills.LuckyLevel > 0 && cAttributes.Mana > playerSKills.LuckyManaCost && cAttributes.BonusLuck <= 0)
             {
                 SetAttackingMagical();
                 playerSKills.Lucky();
             }
 
             //Invencible
-            if(Input.GetKeyDown(KeyCode.Alpha6) && playerSKills.lkLevel > 0 && cAttributes.Mana > playerSKills.lkManaCost)
+            if(Input.GetKeyDown(KeyCode.Alpha6) && playerSKills.InvencibleLevel > 0 && cAttributes.Mana > playerSKills.InvencibleManaCost)
             {
                 SetAttackingMagical();
                 playerSKills.Invencible();

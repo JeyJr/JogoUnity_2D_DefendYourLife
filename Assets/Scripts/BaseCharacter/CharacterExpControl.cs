@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterExpControl : MonoBehaviour
 {
+    PlayerSkills playerSkills;
+
     //--------------------------------------ExpControl
     [SerializeField] private int currentExp, nextLevelExp, level, attributePoints;
     private int expScaleValue = 125, attributesPointsScaleValue = 3;
@@ -12,7 +14,7 @@ public class CharacterExpControl : MonoBehaviour
     //--------------------------------------Skill
     [SerializeField] private int skillLevel, skillPoints, usedSkillPoints;
     public int SkillPoints { get => skillPoints; set => skillPoints = value; }
-    public int UsedSkillsPoints{get => usedSkillPoints; set => usedSkillPoints = value;}
+    public int UsedSkillsPoints{ get => usedSkillPoints;} 
 
     //---------------------------------------Propriedades
     public int AttributePoints { get => attributePoints; set => attributePoints = value; }
@@ -21,6 +23,8 @@ public class CharacterExpControl : MonoBehaviour
 
     private void Awake()
     {
+        playerSkills = GetComponentInChildren<PlayerSkills>();
+
         if (level < 1)
         {
             level = 1;
@@ -36,6 +40,7 @@ public class CharacterExpControl : MonoBehaviour
     private void Update()
     {
         CheckLevelUp();
+        UsedSkills();
     }
 
 
@@ -67,5 +72,14 @@ public class CharacterExpControl : MonoBehaviour
     public void GetExp(int value)
     {
         currentExp += value;
+    }
+
+
+
+    public void UsedSkills(){
+        //Esse sistema sera utilizado no "reset"
+        //Ira verificar a quantidade de pts de skills utilizados e devolvera para o usuario, zerando todas as skills
+        //Utilizado no update apenas para testes
+        usedSkillPoints = playerSkills.FloorOfHellLevel;
     }
 }

@@ -13,38 +13,48 @@ public class PlayerSkills : MonoBehaviour
     //SkillList-------------------------
     public List<GameObject> skillList = new();
 
+    private int skillsMaxLevel = 10;
+    public int SkillsMaxLevel { get => skillsMaxLevel;}
+
     //FloorOfHell Attributes-----------------------
     [Header("FloorOfHell")]
-    public float fohDelayHit;
-    public int fohLevel, fohMaxLevel, fohManaCost = 12;
+    private int fohLevel, fohManaCost = 12;
+    public int FloorOfHellLevel { get => fohLevel; set => fohLevel = value; }
+    public int FloorOfHellManaCost  => (fohManaCost * fohLevel)/2;
 
     //BladesOfWind----------------------------------
     [Header("BladesOfWind")]
-    public float bowDelayHit;
-    public int bowLevel, bowMaxLevel, bowManaCost;
+    private int bowLevel, bowManaCost = 5;
+    public int BladesOfWindLevel { get => bowLevel; set => bowLevel = value; }
+    public int BladesOfWindManaCost => bowManaCost * bowLevel;
 
     //BladesOfWind----------------------------------
     [Header("WaterSpikes")]
-    public float wsDelayHit;
-    public int wsLevel, wsMaxLevel, wsManaCost;
+    private int wsLevel, wsManaCost = 15;
+    public int WaterSpikesLevel { get => wsLevel; set => wsLevel = value; }
+    public int WaterSpikesManaCost => wsManaCost; //por spike
     
     //LifeSteal----------------------------------
     [Header("LifeSteal")]
-    public float lsDuration;
-    public int lsLevel, lsMaxLevel, lsManaCost;
+    private int lsLevel, lsManaCost = 3;
+    public float LifeStealDuration => lsLevel * 2;
+    public int LifeStealLevel { get => lsLevel; set => lsLevel = value; }
+    public int LifeStealManaCost => lsManaCost * lsLevel;
     
     //Lucky----------------------------------
     [Header("Lucky")]
-    public float lkDuration;
-    public int lkLevel, lkMaxLevel, lkManaCost;
+    private int lkLevel, lkManaCost = 3;
+    public float LuckyDuration => lkLevel * 2;
+    public int LuckyLevel { get => lkLevel; set=> lkLevel = value; }
+    public int LuckyManaCost => lkManaCost * lkLevel;
+
     
     //Invencible----------------------------------
     [Header("Invencible")]
-    public float iDuration;
-    public int iLevel, iMaxLevel;
-    private int iManaCost;
-
-
+    private int iLevel, iManaCost;
+    public int InvencibleDuration => iLevel * 2;
+    public int InvencibleLevel { get => iLevel; set => iLevel = value; }
+    public int InvencibleManaCost => iManaCost = iLevel * 30;
 
 
     private void Start()
@@ -53,15 +63,6 @@ public class PlayerSkills : MonoBehaviour
         cExpControl = GetComponentInParent<CharacterExpControl>();
         cAttributes = GetComponentInParent<CharacterAttributes>();
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="skillNum"></param>
-    /// <param name="mana"></param>
-    /// <param name="delayHit">Delay to cast the next hit</param>
-    /// <param name="level"></param>
-    /// <param name="quaternion"></param>
 
     #region Active Skills 
     public void SpawnSkill(float delay, int skillNum, int mana, float delayHit, int level, Vector3 pos,Quaternion quaternion)
@@ -81,11 +82,11 @@ public class PlayerSkills : MonoBehaviour
 
     //LifeSteal -------------------------------------------------
     public void LifeSteal() => StartCoroutine(LifeStealDelay());
-
     IEnumerator LifeStealDelay(){
-        cAttributes.Mana -= lsManaCost;
-        playerSkin.color = new Color(1f, .3f, .3f, 1);
-        yield return new WaitForSeconds(lsDuration);
+        cAttributes.Mana -= LifeStealManaCost;
+
+        playerSkin.color = new Color(1f, 1f, .3f, 1);
+        yield return new WaitForSeconds(LifeStealDuration);
 
         playerSkin.color = new Color(1, 1, 1, 1);
         cAttributes.LifeSteal = false;
@@ -93,15 +94,16 @@ public class PlayerSkills : MonoBehaviour
    
    //BonusLUK----------------------------------------------------
    public void Lucky(){
-        cAttributes.Mana -= lkManaCost;
+        cAttributes.Mana -= LuckyManaCost;
+
         cAttributes.BonusLuck = lkLevel * 2;
         cAttributes.Luck += cAttributes.BonusLuck;
         StartCoroutine(LuckyDelay());
    }
-
-   
    IEnumerator LuckyDelay(){
-    yield return new WaitForSeconds(lkDuration);
+    playerSkin.color = new Color(1f, .3f, 1f, 1);
+    yield return new WaitForSeconds(LuckyDuration);
+    playerSkin.color = new Color(1, 1, 1, 1);
     cAttributes.Luck -= cAttributes.BonusLuck;
     cAttributes.BonusLuck = 0;
    }
@@ -109,13 +111,11 @@ public class PlayerSkills : MonoBehaviour
 
     //Invencible -------------------------------------------------
     public void Invencible() => StartCoroutine(InvencibleDelay());
-
     IEnumerator InvencibleDelay(){
-        iManaCost = iLevel * 30;
-        cAttributes.Mana -= iManaCost;
+        cAttributes.Mana -= InvencibleManaCost;
 
-        playerSkin.color = new Color(.3f, .3f, 1f, 1);
-        yield return new WaitForSeconds(iDuration);
+        playerSkin.color = new Color(.3f, 1f, 1f, 1);
+        yield return new WaitForSeconds(InvencibleDuration);
 
         playerSkin.color = new Color(1, 1, 1, 1);
         cAttributes.Invencible = false;

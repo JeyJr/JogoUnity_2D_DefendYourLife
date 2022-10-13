@@ -39,7 +39,6 @@ public class PanelAttributes : MonoBehaviour
         {
             UpdateComponentesPanelAttributess();
             cExpControl.usedAttributePoints = (cAttributes.Strength - 1) + (cAttributes.Intelligence - 1) + (cAttributes.Vitality - 1) + ((int)cAttributes.Luck - 1);
-            cExpControl.usedAttributePoints -= cAttributes.BonusLuck;
         }
     }
 
@@ -65,7 +64,7 @@ public class PanelAttributes : MonoBehaviour
                     }
                 break;
                 case "Luck":
-                    if(cAttributes.Luck - cAttributes.BonusLuck < 100){
+                    if(cAttributes.Luck < 100){
                         cAttributes.Luck++;
                         cExpControl.AttributePoints--;
                     }
@@ -108,7 +107,7 @@ public class PanelAttributes : MonoBehaviour
         mainUI.SetTextMeshProUGUIValues(textAttributes[0].name, cAttributes.Strength,  textAttributes);
         mainUI.SetTextMeshProUGUIValues(textAttributes[1].name, cAttributes.Intelligence,  textAttributes);
         mainUI.SetTextMeshProUGUIValues(textAttributes[2].name, cAttributes.Vitality,  textAttributes);
-        mainUI.SetTextMeshProUGUIValues(textAttributes[3].name, (int)cAttributes.Luck,  textAttributes);
+        mainUI.SetTextMeshProUGUIValues(textAttributes[3].name, cAttributes.Luck,  textAttributes);
 
 
         mainUI.SetTextMeshProUGUIValues(textStatus[0].name, cAttributes.PhysicalAtkPower,  textStatus);
@@ -120,7 +119,7 @@ public class PanelAttributes : MonoBehaviour
         mainUI.SetValuesSliders(sliders[0].name, cAttributes.Strength, sliders);
         mainUI.SetValuesSliders(sliders[1].name, cAttributes.Intelligence, sliders);
         mainUI.SetValuesSliders(sliders[2].name, cAttributes.Vitality, sliders);
-        mainUI.SetValuesSliders(sliders[3].name, cAttributes.Luck + cAttributes.BonusLuck, sliders);
+        mainUI.SetValuesSliders(sliders[3].name, cAttributes.Luck, sliders);
 
 
         //Decorative attributePoints
