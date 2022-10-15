@@ -7,10 +7,7 @@ using UnityEngine.UI;
 public class MainUI : MonoBehaviour
 {
 
-    public void BtnClose(GameObject gameObject)
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
-    }
+
     public void SetTextMeshProUGUIValues(string name, int value, List<TextMeshProUGUI> textList)
     {
         foreach (var item in textList)

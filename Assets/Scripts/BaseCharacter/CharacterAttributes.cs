@@ -23,6 +23,7 @@ public class CharacterAttributes : MonoBehaviour
      //---------------------------------------Propriedades Status
     public int PhysicalAtkPower { get => physicalAtkPower; }
     public int MagicAtkPower { get => magicAtkPower;}
+    public int Life { get => life;}
     public int MaxLife { get => maxLife;}
     public int Mana {get => mana; set => mana = value; }
     public int MaxMana {get => maxMana;}
@@ -62,7 +63,10 @@ public class CharacterAttributes : MonoBehaviour
         magicAtkPower = Mathf.RoundToInt(Intelligence * 3.5f); //magic = int * 3.5f
         maxLife = vitality * 50; //maxlife = vit * 50 
         maxMana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
-        criticalRate = Mathf.RoundToInt(luck / 2); 
+        criticalRate = Mathf.RoundToInt(luck / 2);
+
+        if(life > maxLife) life = maxLife;
+        if(mana > maxMana) mana = maxMana;
     }
 
     #region TakeDMG

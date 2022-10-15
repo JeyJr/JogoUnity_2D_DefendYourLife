@@ -18,43 +18,43 @@ public class PlayerSkills : MonoBehaviour
 
     //FloorOfHell Attributes-----------------------
     [Header("FloorOfHell")]
-    private int fohLevel, fohManaCost = 12;
+    private int fohLevel;
     public int FloorOfHellLevel { get => fohLevel; set => fohLevel = value; }
-    public int FloorOfHellManaCost  => (fohManaCost * fohLevel)/2;
+    public int FloorOfHellManaCost  => 10 * fohLevel;
 
     //BladesOfWind----------------------------------
     [Header("BladesOfWind")]
-    private int bowLevel, bowManaCost = 5;
+    private int bowLevel;
     public int BladesOfWindLevel { get => bowLevel; set => bowLevel = value; }
-    public int BladesOfWindManaCost => bowManaCost * bowLevel;
+    public int BladesOfWindManaCost => 6 * bowLevel;
 
     //BladesOfWind----------------------------------
     [Header("WaterSpikes")]
-    private int wsLevel, wsManaCost = 15;
+    private int wsLevel;
     public int WaterSpikesLevel { get => wsLevel; set => wsLevel = value; }
-    public int WaterSpikesManaCost => wsManaCost; //por spike
+    public int WaterSpikesManaCost => 5; //por spike
     
     //LifeSteal----------------------------------
     [Header("LifeSteal")]
-    private int lsLevel, lsManaCost = 3;
+    private int lsLevel;
     public float LifeStealDuration => lsLevel * 2;
     public int LifeStealLevel { get => lsLevel; set => lsLevel = value; }
-    public int LifeStealManaCost => lsManaCost * lsLevel;
+    public int LifeStealManaCost => 3 * lsLevel;
     
     //Lucky----------------------------------
     [Header("Lucky")]
-    private int lkLevel, lkManaCost = 3;
+    private int lkLevel;
     public float LuckyDuration => lkLevel * 2;
     public int LuckyLevel { get => lkLevel; set=> lkLevel = value; }
-    public int LuckyManaCost => lkManaCost * lkLevel;
+    public int LuckyManaCost => 3 * lkLevel;
 
     
     //Invencible----------------------------------
     [Header("Invencible")]
-    private int iLevel, iManaCost;
+    private int iLevel;
     public int InvencibleDuration => iLevel * 2;
     public int InvencibleLevel { get => iLevel; set => iLevel = value; }
-    public int InvencibleManaCost => iManaCost = iLevel * 30;
+    public int InvencibleManaCost => iLevel * 30;
 
 
     private void Start()

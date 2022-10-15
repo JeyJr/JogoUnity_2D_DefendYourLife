@@ -5,16 +5,21 @@ using UnityEngine;
 public class CharacterExpControl : MonoBehaviour
 {
     PlayerSkills playerSkills;
+    CharacterAttributes cAttributes;
 
     //--------------------------------------ExpControl
     [SerializeField] private int currentExp, nextLevelExp, level, attributePoints;
     private int expScaleValue = 125, attributesPointsScaleValue = 3;
     public int usedAttributePoints;
 
+    public int CurrentExp => currentExp;
+    public int NextLevelExp => nextLevelExp;
+    public int Level => level;
+
     //--------------------------------------Skill
     [SerializeField] private int skillLevel, skillPoints, usedSkillPoints;
     public int SkillPoints { get => skillPoints; set => skillPoints = value; }
-    public int UsedSkillsPoints{ get => usedSkillPoints;} 
+    public int UsedSkillsPoints => usedSkillPoints; 
 
     //---------------------------------------Propriedades
     public int AttributePoints { get => attributePoints; set => attributePoints = value; }
@@ -24,6 +29,7 @@ public class CharacterExpControl : MonoBehaviour
     private void Awake()
     {
         playerSkills = GetComponentInChildren<PlayerSkills>();
+        cAttributes = GetComponent<CharacterAttributes>();
 
         if (level < 1)
         {
@@ -50,6 +56,8 @@ public class CharacterExpControl : MonoBehaviour
             CharLevelUp(1);
             SkillLevelUp(1);
         }
+
+        if(level == 100) currentExp = nextLevelExp;
     }
 
     private void CharLevelUp(int value)
@@ -58,6 +66,10 @@ public class CharacterExpControl : MonoBehaviour
         currentExp -= nextLevelExp;
         nextLevelExp = level * expScaleValue;
         attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
+
+        //Recovery life and mana
+        cAttributes.RecoveryLife(cAttributes.MaxLife - cAttributes.Life);
+        cAttributes.RecoveryMana(cAttributes.MaxMana - cAttributes.Mana);
     }
     private void SkillLevelUp(int value)
     {
