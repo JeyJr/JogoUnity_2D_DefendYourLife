@@ -5,12 +5,12 @@ using UnityEngine;
 public class CamBehavior : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private float smoothT, speed;
+    [SerializeField] private float smoothT, speed, y;
     Vector3 currentVelocity;
 
     void Update()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref currentVelocity, smoothT, speed);
-        transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y + y, -10);
+        transform.position = Vector3.SmoothDamp(transform.position, target, ref currentVelocity, smoothT, speed);
     }
 }

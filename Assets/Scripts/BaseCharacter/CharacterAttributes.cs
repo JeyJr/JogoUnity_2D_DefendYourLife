@@ -5,22 +5,37 @@ using UnityEngine;
 
 public class CharacterAttributes : MonoBehaviour
 {
-    //---------------------------------------AttributesBase
-    [SerializeField] private int strength, intelligence, vitality, luck;
+    #region Attributes
 
+    //----------------------------------------------
+    [Space(10)]
+    [Header("Attributes Base")]
+    [SerializeField] private int strength;
+    [SerializeField] private int intelligence;
+    [SerializeField] private int vitality;
+    [SerializeField] private int luck;
+ 
+    //----------------------------------------------
+    [Space(10)]
+    [Header("Status")]
 
-    //---------------------------------------Status
-    [SerializeField] private int physicalAtkPower, magicAtkPower, life, maxLife, mana, maxMana,criticalRate;
+    [SerializeField] private int physicalAtkPower;
+    [SerializeField] private int magicAtkPower;
+    [SerializeField] private int life, maxLife;
+    [SerializeField] private int mana, maxMana;
+    [SerializeField] private int criticalRate;
     public bool criticalDmg;
     int dmg;
 
-    //---------------------------------------Propriedades AttributeBase
+    //Properties: Attribute Base-------------------------------------
+
     public int Strength { get => strength; set => strength = value; }
     public int Intelligence { get => intelligence; set => intelligence = value; }
     public int Vitality { get => vitality; set => vitality = value; }
     public int Luck { get => luck; set => luck = value; }
  
-     //---------------------------------------Propriedades Status
+     //Properties: Stats----------------------------------------------
+
     public int PhysicalAtkPower { get => physicalAtkPower; }
     public int MagicAtkPower { get => magicAtkPower;}
     public int Life { get => life;}
@@ -28,22 +43,25 @@ public class CharacterAttributes : MonoBehaviour
     public int Mana {get => mana; set => mana = value; }
     public int MaxMana {get => maxMana;}
     public int CriticalRate { get => criticalRate;}
-
-    //--------------------------------------Behaviors, Bonus and Drops
+    
+    //----------------------------------------------
+    [Space(10)]
+    [Header("Behaviors, Bonus and Drops")]
     [SerializeField] private int expToDrop;
     public int BonusLuck { get; set; }
     public bool Dead { get; private set;}
     public bool LifeSteal {get; set;}
     public bool Invencible {get; set;}
 
-    //---------------------------------------Objs
+    //----------------------------------------------
+    [Header("Objs")]
     [SerializeField] private GameObject textDmg;
     [SerializeField] private Transform spawnPosition;
 
-    private void Awake()
-    {
-        AttributeValues();
+    #endregion
 
+    private void Start()
+    {
         if (strength < 1) strength = 1;
         if (vitality < 1) vitality = 1;
         if (intelligence < 1) intelligence = 1;
@@ -52,13 +70,8 @@ public class CharacterAttributes : MonoBehaviour
         life = vitality * 50;
         mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
     }
-    private void Update()
-    {
-        AttributeValues();
-    }
 
-    private void AttributeValues()
-    {
+    private void Update(){
         physicalAtkPower = Mathf.RoundToInt(strength * 1.5f); //atk = str * 1.5f 
         magicAtkPower = Mathf.RoundToInt(Intelligence * 3.5f); //magic = int * 3.5f
         maxLife = vitality * 50; //maxlife = vit * 50 
@@ -69,14 +82,6 @@ public class CharacterAttributes : MonoBehaviour
         if(mana > maxMana) mana = maxMana;
     }
 
-    #region TakeDMG
-    /// <summary>
-    /// Object will take X amount of damage from the attacker.
-    /// This overhead drops EXP for the attacker.
-    /// </summary>
-    /// <param name="dmg"> Amount of damage the target will receive </param>
-    /// <param name="critical"> Defines if this damage is critical </param>
-    /// <param name="gainExp"> The attacker gains experience </param>
     public void TakeDMG(int dmg, bool critical, CharacterExpControl gainExp)
     {
         if(!Invencible){
@@ -97,9 +102,6 @@ public class CharacterAttributes : MonoBehaviour
 
      }
 
-    /// <summary>
-    /// This overload does not drop EXP
-    /// </summary>
     public void TakeDMG(int dmg, bool critical)
     {
         if(!Invencible){
@@ -116,9 +118,8 @@ public class CharacterAttributes : MonoBehaviour
             SpawnText("Invencible", false, false, false);
         }
      }
-    #endregion
-    
-    #region DealDmg
+
+
     public int DealDmg(bool isPhysical)
     {
         float critChance = Random.Range(1, 100);
@@ -145,7 +146,7 @@ public class CharacterAttributes : MonoBehaviour
             return dmg;
         }
     }
-    #endregion
+
 
     #region LifeSteal and RecoveryLife and Mana
     public void LifeStealControl(int value){

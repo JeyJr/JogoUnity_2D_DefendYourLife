@@ -5,31 +5,47 @@ using UnityEngine;
 public class CharacterExpControl : MonoBehaviour
 {
     PlayerSkills playerSkills;
-    CharacterAttributes cAttributes;
+    CharacterAttributes cA;
 
-    //--------------------------------------ExpControl
-    [SerializeField] private int currentExp, nextLevelExp, level, attributePoints;
-    private int expScaleValue = 125, attributesPointsScaleValue = 3;
+    //ExpControl--------------------------------------
+
+    [Space(10)]
+    [Header("ExpControl")]
+    [SerializeField] private int currentExp;
+    [SerializeField] private int nextLevelExp;
+    [SerializeField] private int level;
+
+    //Points: Attributes Base------------------------
+
+    [Space(10)]
+    [Header("Points: Attributes Base")]
+    [SerializeField] private int attributePoints;
     public int usedAttributePoints;
 
+    //Skill----------------------------------------
+
+    [Space(10)]
+    [Header("Points: Skills")]
+    [SerializeField] private int skillLevel;
+    [SerializeField] private int skillPoints;
+    [SerializeField] private int usedSkillPoints;
+
+
+    //Properties----------------------------------
+    private int expScaleValue = 125, attributesPointsScaleValue = 3;
     public int CurrentExp => currentExp;
     public int NextLevelExp => nextLevelExp;
     public int Level => level;
-
-    //--------------------------------------Skill
-    [SerializeField] private int skillLevel, skillPoints, usedSkillPoints;
-    public int SkillPoints { get => skillPoints; set => skillPoints = value; }
-    public int UsedSkillsPoints => usedSkillPoints; 
-
-    //---------------------------------------Propriedades
     public int AttributePoints { get => attributePoints; set => attributePoints = value; }
     public int UsedAttributePoints { get => usedAttributePoints; set => usedAttributePoints = value; }
+    public int SkillPoints { get => skillPoints; set => skillPoints = value; }
+    public int UsedSkillsPoints => usedSkillPoints; 
 
 
     private void Awake()
     {
         playerSkills = GetComponentInChildren<PlayerSkills>();
-        cAttributes = GetComponent<CharacterAttributes>();
+        cA = GetComponent<CharacterAttributes>();
 
         if (level < 1)
         {
@@ -68,8 +84,8 @@ public class CharacterExpControl : MonoBehaviour
         attributePoints = level * attributesPointsScaleValue - usedAttributePoints;
 
         //Recovery life and mana
-        cAttributes.RecoveryLife(cAttributes.MaxLife - cAttributes.Life);
-        cAttributes.RecoveryMana(cAttributes.MaxMana - cAttributes.Mana);
+        cA.RecoveryLife(cA.MaxLife - cA.Life);
+        cA.RecoveryMana(cA.MaxMana - cA.Mana);
     }
     private void SkillLevelUp(int value)
     {

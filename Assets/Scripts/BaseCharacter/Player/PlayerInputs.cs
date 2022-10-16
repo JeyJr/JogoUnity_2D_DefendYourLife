@@ -5,116 +5,116 @@ using UnityEngine.UI;
 
 public class PlayerInputs : MonoBehaviour
 {
-    private CharacterAttributes cAttributes;
-    private PlayerMove playerMove;
+    public CharacterAttributes cA;
+    public PlayerMove playerMove;
+    public PlayerSkills playerSkills;
 
     //Move-------------------------------------
     private Vector3 inputDir;
     public float InputDir { get => inputDir.x; }
 
     //PhysicalAtk------------------------
-    private bool attackingMelee;
-    public bool AttackingMelee { get => attackingMelee; }
+    private bool attacking;
+    public bool Attacking { get => attacking; }
     public int RandomAtkMelee { get; set; }
-
     public bool MeleeAtkEnabled {get; set;}
-    
-    //MagicalAtk-----------------------------------
-    private bool attackingMagic;
-    public bool AttackingMagic { get => attackingMagic;}
-    PlayerSkills playerSKills;
 
-
-    private void Start()
+    public float y;
+    private float x = 2;
+    void Start()
     {
-        playerSKills = GetComponentInChildren<PlayerSkills>();
-        cAttributes = GetComponent<CharacterAttributes>();
+        MeleeAtkEnabled = true;
     }
 
     private void Update()
     {
-        if (!attackingMagic)
+        if (!attacking)
         {
             //PlayerMove
             inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
             //PhysicalAtk------------------------
-            if(!attackingMelee){
-                if(Input.GetMouseButton(0) && MeleeAtkEnabled){
-                    RandomAtkMelee = Random.Range(1, 4);
-                    SetAttackingMelee();
-                }
+            if(Input.GetMouseButton(0) && MeleeAtkEnabled){
+                RandomAtkMelee = Random.Range(1, 4);
+                SetAttacking();
             }
-
-
+        }
             if (Input.GetKeyDown(KeyCode.Alpha1)) FloorOfHellSkill();
             if (Input.GetKeyDown(KeyCode.Alpha2)) WaterSpikesSkill();
             if (Input.GetKeyDown(KeyCode.Alpha3)) BladesOfWindSkill();
             if (Input.GetKeyDown(KeyCode.Alpha4)) LifeStealSkill();
             if (Input.GetKeyDown(KeyCode.Alpha5)) LuckySkill();
             if (Input.GetKeyDown(KeyCode.Alpha6)) InvencibleSkill();
-        }
     }
 
     public void FloorOfHellSkill(){
-        if(playerSKills.FloorOfHellLevel > 0 && cAttributes.Mana > playerSKills.FloorOfHellManaCost){
-            SetAttackingMagical();
-            Vector3 pos = new Vector3(transform.position.x, transform.position.y - .99f, -4);
-            playerSKills.SpawnSkill(.33f,0, playerSKills.FloorOfHellManaCost, .5f, playerSKills.FloorOfHellLevel, pos,Quaternion.identity);
+        if(!attacking && playerSkills.FloorOfHellLevel > 0 && cA.Mana > playerSkills.FloorOfHellManaCost && !playerSkills.FloorOfHellCountdown){
+            RandomAtkMelee = 4;
+            SetAttacking();
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + .5f, -2);
+            playerSkills.SpawnSkill(.33f,0, playerSkills.FloorOfHellManaCost, .5f, playerSkills.FloorOfHellLevel, pos,Quaternion.identity);
+
+            playerSkills.StartCountdown("FloorOfHellCD");
         }
     }
     public void WaterSpikesSkill(){
-        if (playerSKills.WaterSpikesLevel > 0 && cAttributes.Mana > playerSKills.WaterSpikesManaCost) {
-            SetAttackingMagical();
-            for(float i = 0; i < 4; i+= .5f){
-                Vector3 pos = new Vector3(transform.position.x + transform.right.x * (i * 2), -2.22f, -4f);
-                playerSKills.SpawnSkill(i, 2, playerSKills.WaterSpikesManaCost, 0, playerSKills.WaterSpikesLevel, pos, Quaternion.Euler(transform.localEulerAngles));
-            } 
+        if (!attacking && playerSkills.WaterSpikesLevel > 0 && cA.Mana > playerSkills.WaterSpikesManaCost * 4 && !playerSkills.WaterSpikesCountdown) {
+            RandomAtkMelee = 4;
+            SetAttacking();
+            //playerSkills.SpawnSkill(1, 1, 0, 1, 1, transform.right * x + transform.position, Quaternion.Euler(playerMove.PlayerRotate()));
+            playerSkills.StartCountdown("WaterSpikesCD");
+            for (float i = 0; i < 2.5; i += .5f)
+            {
+                Vector3 p = (transform.right * (x * (i + 1))) + transform.position;
+                p.y =  -2.22f;
+                p.z = -2f;
+                playerSkills.SpawnSkill(i + .3f, 1, playerSkills.WaterSpikesManaCost, 0, playerSkills.WaterSpikesLevel, p, Quaternion.Euler(playerMove.PlayerRotate()));
+            }
         }
     }
     public void BladesOfWindSkill(){
-        if (playerSKills.BladesOfWindLevel > 0 && cAttributes.Mana > playerSKills.BladesOfWindManaCost) {
-            SetAttackingMelee();
+        if (!attacking && playerSkills.BladesOfWindLevel > 0 && cA.Mana > playerSkills.BladesOfWindManaCost && !playerSkills.BladesOfWindCountdown) {
             RandomAtkMelee = 4;
+            SetAttacking();
 
-            Quaternion q = Quaternion.Euler(transform.localEulerAngles);
-            Vector3 pos = new Vector3(transform.position.x + .3f, transform.position.y - .5f, -4);
-            playerSKills.SpawnSkill(.25f, 1, playerSKills.BladesOfWindManaCost, 0, playerSKills.BladesOfWindLevel, pos, q);
+            playerSkills.StartCountdown("BladesOfWindCD");
+
+            Vector3 p = transform.right * 1.2f + transform.position;
+            p.y = -1.5f;
+            p.z = -2f;
+            playerSkills.SpawnSkill(.5f, 2, playerSkills.BladesOfWindManaCost, 0, playerSkills.BladesOfWindLevel, p, Quaternion.Euler(playerMove.PlayerRotate()));
         }
     }
     public void LifeStealSkill(){
-        if(playerSKills.LifeStealLevel > 0 && cAttributes.Mana > playerSKills.LifeStealManaCost){
-            SetAttackingMagical();
-            playerSKills.LifeSteal();
-            cAttributes.LifeSteal = true;
+        if(!attacking && playerSkills.LifeStealLevel > 0 && cA.Mana > playerSkills.LifeStealManaCost && !playerSkills.LifeStealCountdown){
+            RandomAtkMelee = 4;
+            SetAttacking();
+            playerSkills.LifeSteal();
+            cA.LifeSteal = true;
+            playerSkills.StartCountdown("LifeStealCD");
         }
     }
     public void LuckySkill(){
-        if(playerSKills.LuckyLevel > 0 && cAttributes.Mana > playerSKills.LuckyManaCost && cAttributes.BonusLuck <= 0)
-        {
-            SetAttackingMagical();
-            playerSKills.Lucky();
+        if(!attacking && playerSkills.LuckyLevel > 0 && cA.Mana > playerSkills.LuckyManaCost && cA.BonusLuck <= 0 && !playerSkills.LuckyCountdown){
+            RandomAtkMelee = 4;
+            SetAttacking();
+            playerSkills.Lucky();
+            playerSkills.StartCountdown("LuckyCD");
         }
     }
     public void InvencibleSkill(){
-        if(playerSKills.InvencibleLevel > 0 && cAttributes.Mana > playerSKills.InvencibleManaCost)
-        {
-            SetAttackingMagical();
-            playerSKills.Invencible();
-            cAttributes.Invencible = true;
+        if(!attacking && playerSkills.InvencibleLevel > 0 && cA.Mana > playerSkills.InvencibleManaCost && !playerSkills.InvencibleCountdown){
+            RandomAtkMelee = 4;
+            SetAttacking();
+            playerSkills.Invencible();
+            cA.Invencible = true;
+            playerSkills.StartCountdown("InvencibleCD");
         }
     }
 
-    //this methods is call in animPlayer_MeleeAtk[1][2][3]
-    public void SetAttackingMelee()
-    {
-        attackingMelee = !attackingMelee;
-    }
-    //this methods is call in animPlayer_MagicAtk1
-    public void SetAttackingMagical()
-    {
-        attackingMagic = !attackingMagic;
-    }
+
+    //this methods is called in Atk anims
+    public void SetAttacking() => attacking = !attacking;
 }
 
 

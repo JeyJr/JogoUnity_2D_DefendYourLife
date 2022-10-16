@@ -4,63 +4,53 @@ using UnityEngine;
 
 public class PlayerAnimsControl : MonoBehaviour
 {
-    PlayerInputs playerInputs;
-    Animator anim;
-    //-----------------------------------------
+    public PlayerInputs playerInputs;
+    public Animator anim;
+    public PlayerMeleeAtk playerMeleeAtk;
+    public List<string> animsName = new(); 
 
-
-    private void Start() 
-    {
-        playerInputs = GetComponent<PlayerInputs>();
-        anim = GetComponent<Animator>();
-    }
 
     private void Update()
     {
-        if(!playerInputs.AttackingMelee && !playerInputs.AttackingMagic)
+        if(!playerInputs.Attacking)
         {
             AnimIdleAndWalk();
         }
-        else if(playerInputs.AttackingMelee && !playerInputs.AttackingMagic)
+        else if(playerInputs.Attacking)
         {
             AnimAtkMelee();
         }
-        else if(!playerInputs.AttackingMelee && playerInputs.AttackingMagic)
-        {
-            AnimAtkMagic();
-        }        
     }
+
     private void AnimIdleAndWalk()
     {
         if (playerInputs.InputDir != 0)
-            anim.Play("Base Layer.animPlayer_Run", 0);
+            anim.Play($"Base Layer.{animsName[1]}", 0); //Run
         else
-            anim.Play("Base Layer.animPlayer_Idle", 0);
+            anim.Play($"Base Layer.{animsName[0]}", 0); //Idle
     }
     private void AnimAtkMelee()
     {
         switch(playerInputs.RandomAtkMelee){
             case 1:
-                anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
+                anim.Play($"Base Layer.{animsName[2]}", 0); //Atk1
                 break;
             case 2:
-                anim.Play("Base Layer.animPlayer_MeleeAtk2", 0);
+                anim.Play($"Base Layer.{animsName[3]}", 0); //Atk2
                 break;
             case 3:
-                anim.Play("Base Layer.animPlayer_MeleeAtk3", 0);
+                anim.Play($"Base Layer.{animsName[4]}", 0); //Atk3
                 break;
             case 4:
-                anim.Play("Base Layer.animPlayer_MeleeAtk4", 0);
+                anim.Play($"Base Layer.{animsName[5]}", 0); //Atk4 - Used to Magic Atk
                 break;
             default:
-                anim.Play("Base Layer.animPlayer_MeleeAtk1", 0);
+                anim.Play($"Base Layer.{animsName[2]}", 0); 
                 break;
         }
     }
-    private void AnimAtkMagic()
-    {
-        anim.Play("Base Layer.animPlayer_MagicAtk1", 0);
-    }
 
+    public void SetAttacking() => playerInputs.SetAttacking();
+    public void SetAtk() => playerMeleeAtk.Atk();
 }
 

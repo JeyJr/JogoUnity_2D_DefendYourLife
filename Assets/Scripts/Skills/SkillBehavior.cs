@@ -120,4 +120,6 @@ public class SkillBehavior : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
     }
+
+    public void DestroyAtEndOfAnimation() => Destroy(this.gameObject);
 }

@@ -4,30 +4,25 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    PlayerInputs playerInputs;
+    public PlayerInputs playerInputs;
     public Rigidbody2D rb2D;
     [SerializeField] private float moveSpeed;
 
 
-    private void Start() 
-    {
-        playerInputs = GetComponent<PlayerInputs>();
-    }
-
     private void FixedUpdate() {
         PlayerRotate();
 
-        if(!playerInputs.AttackingMagic && !playerInputs.AttackingMelee){
-            PlayerMovement();
-        }
+        if(!playerInputs.Attacking) PlayerMovement();
     }
 
-    public void PlayerRotate()
+    public Vector3 PlayerRotate()
     {
         if(playerInputs.InputDir > 0)
             transform.localEulerAngles = new Vector3(0,0,0);
         else if(playerInputs.InputDir < 0)
             transform.localEulerAngles = new Vector3(0,180,0);
+        
+        return transform.localEulerAngles;
     }
 
     private void PlayerMovement()

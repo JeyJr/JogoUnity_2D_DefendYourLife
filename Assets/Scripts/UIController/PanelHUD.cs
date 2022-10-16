@@ -25,6 +25,7 @@ public class PanelHUD : MonoBehaviour
     public TextMeshProUGUI txtSkillName, txtSkillLevel, txtSkillMana, txtSkillDmg;
 
 
+
     void Update()
     {
         SkillsChecks();
@@ -43,23 +44,36 @@ public class PanelHUD : MonoBehaviour
 
     public void SetBtnEnabled(){
 
-        if (playerSkills.FloorOfHellLevel <= 0) btnSkills[0].interactable = false;
-        else btnSkills[0].interactable = true;
+        if(playerSkills.FloorOfHellLevel <= 0 || playerSkills.FloorOfHellCountdown)
+            btnSkills[0].interactable = false;
+        else if(playerSkills.FloorOfHellLevel > 0 && !playerSkills.FloorOfHellCountdown)
+            btnSkills[0].interactable = true;
 
-        if (playerSkills.WaterSpikesLevel <= 0) btnSkills[1].interactable = false;
-        else btnSkills[1].interactable = true;
-        
-        if (playerSkills.BladesOfWindLevel <= 0) btnSkills[2].interactable = false;
-        else btnSkills[2].interactable = true;
-        
-        if (playerSkills.LifeStealLevel <= 0) btnSkills[3].interactable = false;
-        else btnSkills[3].interactable = true;
 
-        if (playerSkills.LuckyLevel <= 0) btnSkills[4].interactable = false;
-        else btnSkills[4].interactable = true;
+        if (playerSkills.WaterSpikesLevel <= 0 || playerSkills.WaterSpikesCountdown) 
+            btnSkills[1].interactable = false;
+        else 
+            btnSkills[1].interactable = true;
         
-        if (playerSkills.InvencibleLevel <= 0) btnSkills[5].interactable = false;
-        else btnSkills[5].interactable = true;
+        if (playerSkills.BladesOfWindLevel <= 0 || playerSkills.BladesOfWindCountdown) 
+            btnSkills[2].interactable = false;
+        else 
+            btnSkills[2].interactable = true;
+        
+        if (playerSkills.LifeStealLevel <= 0 || playerSkills.LifeStealCountdown) 
+            btnSkills[3].interactable = false;
+        else 
+            btnSkills[3].interactable = true;
+
+        if (playerSkills.LuckyLevel <= 0 || playerSkills.LuckyCountdown) 
+            btnSkills[4].interactable = false;
+        else 
+            btnSkills[4].interactable = true;
+        
+        if (playerSkills.InvencibleLevel <= 0 || playerSkills.InvencibleCountdown) 
+            btnSkills[5].interactable = false;
+        else 
+            btnSkills[5].interactable = true;
     }
     #endregion
 
