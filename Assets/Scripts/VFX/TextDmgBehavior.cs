@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
+using Unity.Jobs;
 using UnityEngine;
+
 
 public class TextDmgBehavior : MonoBehaviour
 {
@@ -15,6 +18,8 @@ public class TextDmgBehavior : MonoBehaviour
 
     private void Update()
     {
-        this.transform.Translate((Vector3.up * speed) * Time.deltaTime);
+        transform.Translate((Vector3.up * speed) * Time.deltaTime);
     }
+
+
 }

@@ -78,13 +78,14 @@ public class PanelHUD : MonoBehaviour
     #endregion
 
     #region EventTrigger
-    public void SetPointerEnter(){
+    public void SetPointerEnter(bool value){
         playerInputs.MeleeAtkEnabled = false;
-        skillsDescription.SetActive(true);
+        skillsDescription.SetActive(value);
     }
-    public void SetPointerExit(){
+    public void SetPointerExit(bool value)
+    {
         playerInputs.MeleeAtkEnabled = true;
-        skillsDescription.SetActive(false);
+        skillsDescription.SetActive(value);
     }
 
     public void SetSkillsDescription(int skillNum){

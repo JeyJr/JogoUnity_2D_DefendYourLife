@@ -9,10 +9,30 @@ public class EnemyHorizontalMovement : MonoBehaviour
     [SerializeField] private Animator anim;
     private float moveSpeed;
 
+    [SerializeField] private string enemyName;
+     private string animIdle, animRun, animAtk, animDying;
+
     private void Awake()
     {
         moveSpeed = Random.Range(0.5f, 1.2f);
         Rotate();
+
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        
+
+        foreach(var i in clips)
+        {
+            if(i.name == $"{enemyName}Idle")
+                animIdle = i.name;
+            else if(i.name == $"{enemyName}Run")
+                animRun = i.name;            
+            else if(i.name == $"{enemyName}Atk")
+                animAtk = i.name;            
+            else if(i.name == $"{enemyName}Dying")
+                animDying = i.name;
+
+        }
+         
     }
 
 
@@ -50,8 +70,30 @@ public class EnemyHorizontalMovement : MonoBehaviour
 
     private void Anims()
     {
-        anim.SetBool("isWalk", enemyDetectingObjects.playerAhead);
-        anim.SetBool("isAtk", enemyDetectingObjects.atkArea);
-        anim.SetBool("isDead", cAttributes.Dead);
+        if (!cAttributes.Dead)
+        {
+            if (enemyDetectingObjects.atkArea)
+            {
+                anim.Play($"Base Layer.{animAtk}");
+            }
+            else
+            {
+                if (enemyDetectingObjects.playerAhead)
+                {
+                    anim.Play($"Base Layer.{animRun}");
+                }
+                else
+                {
+                    anim.Play($"Base Layer.{animIdle}");
+                }
+            }
+        }
+        else
+        {
+            anim.Play($"Base Layer.{animDying}");
+        }
+        //anim.SetBool("isWalk", enemyDetectingObjects.playerAhead);
+        //anim.SetBool("isAtk", enemyDetectingObjects.atkArea);
+        //anim.SetBool("isDead", cAttributes.Dead);
     }
 }

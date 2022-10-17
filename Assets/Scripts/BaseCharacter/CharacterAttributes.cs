@@ -6,6 +6,8 @@ using UnityEngine;
 public class CharacterAttributes : MonoBehaviour
 {
     #region Attributes
+    [Header("EnemyLevel")]
+    [SerializeField] private int enemyLevel;
 
     //----------------------------------------------
     [Space(10)]
@@ -57,18 +59,13 @@ public class CharacterAttributes : MonoBehaviour
     [Header("Objs")]
     [SerializeField] private GameObject textDmg;
     [SerializeField] private Transform spawnPosition;
+    [SerializeField] private CharacterExpControl playerExp;
 
     #endregion
 
     private void Start()
     {
-        if (strength < 1) strength = 1;
-        if (vitality < 1) vitality = 1;
-        if (intelligence < 1) intelligence = 1;
-        if (luck < 1) luck = 1;
-
-        life = vitality * 50;
-        mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
+        StartAttributes();
     }
 
     private void Update(){
@@ -217,7 +214,35 @@ public class CharacterAttributes : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
 
+        if (this.gameObject.layer != 6) playerExp.GetExp(expToDrop);
+
         Destroy(this.gameObject);
     }
     #endregion
+
+
+    void StartAttributes() {
+        if(this.gameObject.layer == 6)
+        {
+            if (strength < 1) strength = 1;
+            if (vitality < 1) vitality = 1;
+            if (intelligence < 1) intelligence = 1;
+            if (luck < 1) luck = 1;
+            life = vitality * 50;
+            mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;            
+        }
+        else
+        {
+            strength = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
+            vitality = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
+            intelligence = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
+            luck = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
+
+            expToDrop = Random.Range(enemyLevel, enemyLevel + 10);
+            
+            life = vitality * 20;
+            mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
+        }
+
+    }
 }
