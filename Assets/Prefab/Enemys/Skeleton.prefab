@@ -184,6 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyLevel: 1
+  player: 0
+  enemy: 1
+  boss: 0
   strength: 0
   intelligence: 0
   vitality: 0

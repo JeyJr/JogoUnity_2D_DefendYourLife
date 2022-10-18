@@ -19,7 +19,7 @@ public class PlayerSkills : MonoBehaviour
     //FloorOfHell Attributes-----------------------
     [Header("FloorOfHell")]
     private int fohLevel;
-    public int FloorOfHellLevel { get => fohLevel; set => fohLevel = value; }
+    public int FloorOfHellLevel { get => fohLevel;}
     public int FloorOfHellManaCost  => 10 * fohLevel;
     public bool FloorOfHellCountdown { get; set; }
     private float fohDelayToUseAgain = 5;
@@ -27,7 +27,7 @@ public class PlayerSkills : MonoBehaviour
     //WaterSpikes----------------------------------
     [Header("WaterSpikes")]
     private int wsLevel;
-    public int WaterSpikesLevel { get => wsLevel; set => wsLevel = value; }
+    public int WaterSpikesLevel { get => wsLevel;}
     public int WaterSpikesManaCost => 5; //por spike
     public bool WaterSpikesCountdown { get; set; }
     private float wsDelayToUseAgain = 5;
@@ -35,7 +35,7 @@ public class PlayerSkills : MonoBehaviour
     //BladesOfWind----------------------------------
     [Header("BladesOfWind")]
     private int bowLevel;
-    public int BladesOfWindLevel { get => bowLevel; set => bowLevel = value; }
+    public int BladesOfWindLevel { get => bowLevel;}
     public int BladesOfWindManaCost => 6 * bowLevel;
     public bool BladesOfWindCountdown { get; set; }
     private float bowDelayToUseAgain = 5;
@@ -44,7 +44,7 @@ public class PlayerSkills : MonoBehaviour
     [Header("LifeSteal")]
     private int lsLevel;
     public float LifeStealDuration => lsLevel * 2;
-    public int LifeStealLevel { get => lsLevel; set => lsLevel = value; }
+    public int LifeStealLevel { get => lsLevel; }
     public int LifeStealManaCost => 3 * lsLevel;
     public bool LifeStealCountdown { get; set; }
     private float lsDelayToUseAgain = 30;
@@ -52,7 +52,7 @@ public class PlayerSkills : MonoBehaviour
     [Header("Lucky")]
     private int lkLevel;
     public float LuckyDuration => lkLevel * 2;
-    public int LuckyLevel { get => lkLevel; set=> lkLevel = value; }
+    public int LuckyLevel { get => lkLevel;}
     public int LuckyManaCost => 3 * lkLevel;
     public bool LuckyCountdown { get; set; }
     private float lkDelayToUseAgain = 30;
@@ -61,10 +61,21 @@ public class PlayerSkills : MonoBehaviour
     [Header("Invencible")]
     private int iLevel;
     public int InvencibleDuration => iLevel * 2;
-    public int InvencibleLevel { get => iLevel; set => iLevel = value; }
+    public int InvencibleLevel { get => iLevel;}
     public int InvencibleManaCost => iLevel * 30;
     public bool InvencibleCountdown { get; set; }
     private float iDelayToUseAgain = 60;
+
+    private void Start()
+    {
+        fohLevel = PlayerPrefs.GetInt("fohLevel");
+        wsLevel = PlayerPrefs.GetInt("wsLevel");
+        bowLevel = PlayerPrefs.GetInt("bowLevel");
+        lsLevel = PlayerPrefs.GetInt("lsLevel");
+        lkLevel = PlayerPrefs.GetInt("lkLevel");
+        iLevel = PlayerPrefs.GetInt("iLevel");
+    }
+
 
     #region Active Skills 
     public void SpawnSkill(float delay, int skillNum, int mana, float delayHit, int level, Vector3 pos,Quaternion quaternion)

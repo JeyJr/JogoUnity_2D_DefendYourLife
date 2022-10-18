@@ -26,6 +26,4 @@ public class SceneControl : MonoBehaviour
         Vector3 p = new Vector3(Random.Range(-42, 43), -2.2f, 10);
         Instantiate(enemys[enemyNum], p, Quaternion.identity);
     }
-
-
 }

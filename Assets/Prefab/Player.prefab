@@ -115,6 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyLevel: 0
+  player: 1
+  enemy: 0
+  boss: 0
   strength: 0
   intelligence: 1
   vitality: 0
@@ -130,7 +133,7 @@ MonoBehaviour:
   expToDrop: 0
   textDmg: {fileID: 8875598763902279731, guid: 2b06cf33d63fa5144bda4322fc04ae9f, type: 3}
   spawnPosition: {fileID: 3217462371537593852}
-  playerExp: {fileID: 0}
+  playerExp: {fileID: 3217462369907067228}
 --- !u!114 &3217462369907067228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57a33edb02f153438bc431db11e56e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentExp: 0
+  currentExp: 367
   nextLevelExp: 0
   level: 0
   attributePoints: 0
@@ -201,7 +204,7 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 128
-  atkRange: 1.5
+  atkRange: 1.1
   cA: {fileID: 3217462369907067231}
   cE: {fileID: 3217462369907067228}
 --- !u!114 &3217462370415690902

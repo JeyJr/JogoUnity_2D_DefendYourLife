@@ -8,7 +8,7 @@ public class CharacterAttributes : MonoBehaviour
     #region Attributes
     [Header("EnemyLevel")]
     [SerializeField] private int enemyLevel;
-
+    [SerializeField] private bool player, enemy, boss;
     //----------------------------------------------
     [Space(10)]
     [Header("Attributes Base")]
@@ -65,18 +65,45 @@ public class CharacterAttributes : MonoBehaviour
 
     private void Start()
     {
-        StartAttributes();
+        if (player) StartAttributesPlayer(); //Carregar
+        if (enemy) StartAttributesEnemys(5, 1000, 20, 5);
+        if (boss) StartAttributesEnemys(15, 100, 50, 10);
+    }
+
+    void StartAttributesPlayer()
+    {
+        physicalAtkPower = PlayerPrefs.GetInt("physicalAtkPower");
+        magicAtkPower = PlayerPrefs.GetInt("magicAtkPower");
+        maxLife = PlayerPrefs.GetInt("maxLife");
+        life = maxLife;
+        maxMana = PlayerPrefs.GetInt("maxMana");
+        mana = maxMana;
+        criticalRate = PlayerPrefs.GetInt("criticalRate");
+    }
+
+    void StartAttributesEnemys(int attributesMultiplicador, int dropExp, int lifeMult, int manaMult) {
+        strength = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        vitality = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        intelligence = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        luck = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+
+        expToDrop = Random.Range(enemyLevel + (dropExp / 2), enemyLevel + dropExp);
+
+        life = vitality * lifeMult;
+        maxLife = life;
+        mana = intelligence * manaMult;
+        maxMana = mana;
+
+        physicalAtkPower = Mathf.RoundToInt(strength * enemyLevel); //atk = str * 1.5f 
+        magicAtkPower = Mathf.RoundToInt(Intelligence * enemyLevel); //magic = int * 3.5f
+        criticalRate = Mathf.RoundToInt(luck / 2);
     }
 
     private void Update(){
-        physicalAtkPower = Mathf.RoundToInt(strength * 1.5f); //atk = str * 1.5f 
-        magicAtkPower = Mathf.RoundToInt(Intelligence * 3.5f); //magic = int * 3.5f
-        maxLife = vitality * 50; //maxlife = vit * 50 
-        maxMana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
-        criticalRate = Mathf.RoundToInt(luck / 2);
-
-        if(life > maxLife) life = maxLife;
-        if(mana > maxMana) mana = maxMana;
+        if (player) {
+            if (life > maxLife) life = maxLife;
+            if (mana > maxMana) mana = maxMana;
+        }
     }
 
     public void TakeDMG(int dmg, bool critical, CharacterExpControl gainExp)
@@ -98,7 +125,6 @@ public class CharacterAttributes : MonoBehaviour
         }
 
      }
-
     public void TakeDMG(int dmg, bool critical)
     {
         if(!Invencible){
@@ -115,8 +141,6 @@ public class CharacterAttributes : MonoBehaviour
             SpawnText("Invencible", false, false, false);
         }
      }
-
-
     public int DealDmg(bool isPhysical)
     {
         float critChance = Random.Range(1, 100);
@@ -143,7 +167,6 @@ public class CharacterAttributes : MonoBehaviour
             return dmg;
         }
     }
-
 
     #region LifeSteal and RecoveryLife and Mana
     public void LifeStealControl(int value){
@@ -214,35 +237,8 @@ public class CharacterAttributes : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
 
-        if (this.gameObject.layer != 6) playerExp.GetExp(expToDrop);
-
         Destroy(this.gameObject);
     }
     #endregion
 
-
-    void StartAttributes() {
-        if(this.gameObject.layer == 6)
-        {
-            if (strength < 1) strength = 1;
-            if (vitality < 1) vitality = 1;
-            if (intelligence < 1) intelligence = 1;
-            if (luck < 1) luck = 1;
-            life = vitality * 50;
-            mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;            
-        }
-        else
-        {
-            strength = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
-            vitality = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
-            intelligence = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
-            luck = Random.Range(enemyLevel, (1 + enemyLevel)+ 5);
-
-            expToDrop = Random.Range(enemyLevel, enemyLevel + 10);
-            
-            life = vitality * 20;
-            mana = Mathf.RoundToInt(intelligence * 4.5f) + 50;
-        }
-
-    }
 }

@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 108218197090745426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.36757323, y: -2.221, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 108218195371494074}
@@ -256,7 +256,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb358a881c81c14aaf8a78a2999700b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 2
+  enemyLevel: 5
+  player: 0
+  enemy: 0
+  boss: 1
   strength: 0
   intelligence: 0
   vitality: 0
@@ -291,8 +294,8 @@ MonoBehaviour:
   frontStartPosition: {fileID: 108218195371494074}
   backStartPosition: {fileID: 108218196538192672}
   atkStartPosition: {fileID: 108218195275414820}
-  frontRange: 5
-  backRange: 1
+  frontRange: 7
+  backRange: 4
   atkRange: 0.5
   playerAhead: 0
   playerBehind: 0
