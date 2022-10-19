@@ -48,6 +48,19 @@ public class LobbyUIController : MonoBehaviour
         }
     }
 
+    public int GetAttributePointsRealValue()
+    {
+        int usedPoints = (str - 1) + (inte - 1) + (vit - 1) + (luk - 1);
+        int points = (level * 3) - usedPoints;
+        return points;
+    }    
+    
+    public int GetUsedPointsRealValue()
+    {
+        int usedPoints = (str - 1) + (inte - 1) + (vit - 1) + (luk - 1);
+        return usedPoints;
+    }
+
     void Load()
     {
         PlayerData playerData = GameData.LoadData();
@@ -55,6 +68,11 @@ public class LobbyUIController : MonoBehaviour
         level = playerData.level;
         currentExp = playerData.currentExp;
         nextLevelExp = playerData.nextLevelExp;
+
+        str = playerData.str;
+        inte = playerData.inte;
+        vit = playerData.vit;
+        luk = playerData.luk;
     }
 
     void FirstTimeSave()
@@ -62,12 +80,20 @@ public class LobbyUIController : MonoBehaviour
         level = 1;
         currentExp = 1;
         nextLevelExp = 125;
+
+        str = 1;
+        inte = 1;
+        vit = 1;
+        luk = 1;
+
         GameData.CreateFile();
-        GameData.SaveLevel(level, currentExp, nextLevelExp);
+        GameData.SaveData(level, currentExp, nextLevelExp, str, inte, vit, luk);
     }
 
     public void DeleteSave() {
         File.Delete(Application.persistentDataPath + "/sData.data");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+
+    public void SaveAttributes() => GameData.SaveData(level, currentExp, nextLevelExp, str, inte, vit, luk);
 }

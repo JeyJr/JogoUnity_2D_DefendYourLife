@@ -69,10 +69,15 @@ public class CharacterExpControl : MonoBehaviour
         level = playerData.level;
         currentExp = playerData.currentExp;
         nextLevelExp = playerData.nextLevelExp;
+
+        cA.Str = playerData.str;
+        cA.Inte = playerData.inte;
+        cA.Vit = playerData.vit;
+        cA.Luk = playerData.luk;
     }
 
     void Save()
     {
-        GameData.SaveLevel(level, currentExp, nextLevelExp);
+        GameData.SaveData(level, currentExp, nextLevelExp, cA.Str, cA.Inte, cA.Vit, cA.Luk);
     }
 }

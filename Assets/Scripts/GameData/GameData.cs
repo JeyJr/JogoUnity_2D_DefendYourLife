@@ -34,7 +34,7 @@ public class GameData : MonoBehaviour
     //    file.Close();
     //}
 
-    public static void SaveLevel(int level, int currentExp, int nextLevelExp)
+    public static void SaveData(int level, int currentExp, int nextLevelExp, int str, int inte, int vit, int luk)
     {
         PlayerData playerData = new PlayerData();
 
@@ -42,13 +42,19 @@ public class GameData : MonoBehaviour
         playerData.currentExp = currentExp;
         playerData.nextLevelExp = nextLevelExp;
 
+        playerData.str = str;
+        playerData.inte = inte;
+        playerData.vit = vit;
+        playerData.luk = luk;
+
         BinaryFormatter bf = new();
         FileStream file = File.Create(Application.persistentDataPath + "/sData.data");
         bf.Serialize(file, playerData);
         file.Close();
 
         Debug.Log($"File saved: Level: {playerData.level} | CurrentExp: {playerData.currentExp} | NextLevel: {playerData.nextLevelExp}");
-    }
+    }    
+
 
     public static PlayerData LoadData()
     {

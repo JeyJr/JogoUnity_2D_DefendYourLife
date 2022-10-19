@@ -7,10 +7,10 @@ public class PlayerData
     public int currentExp;
     public int nextLevelExp;
 
-    //public int str;
-    //public int inte;
-    //public int vit;
-    //public int luk;
+    public int str;
+    public int inte;
+    public int vit;
+    public int luk;
 
     //public int physical;
     //public int magical;
