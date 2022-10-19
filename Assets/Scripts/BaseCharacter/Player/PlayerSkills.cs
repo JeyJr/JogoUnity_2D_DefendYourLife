@@ -111,7 +111,7 @@ public class PlayerSkills : MonoBehaviour
         cA.Mana -= LuckyManaCost;
 
         cA.BonusLuck = lkLevel * 2;
-        cA.Luck += cA.BonusLuck;
+        cA.Luk += cA.BonusLuck;
         StartCoroutine(LuckyDelay());
    }
     IEnumerator LuckyDelay(){
@@ -119,7 +119,7 @@ public class PlayerSkills : MonoBehaviour
         playerSkin.color = new Color(1f, .3f, 1f, 1);
         yield return new WaitForSeconds(LuckyDuration);
         playerSkin.color = new Color(1, 1, 1, 1);
-        cA.Luck -= cA.BonusLuck;
+        cA.Luk -= cA.BonusLuck;
         cA.BonusLuck = 0;
    }
     //Invencible -------------------------------------------------

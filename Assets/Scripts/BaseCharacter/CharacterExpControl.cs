@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CharacterExpControl : MonoBehaviour
@@ -22,13 +23,10 @@ public class CharacterExpControl : MonoBehaviour
     public int Level => level;
 
 
-    private void Awake()
+    private void Start()
     {
         cA = GetComponent<CharacterAttributes>();
-
-        level = PlayerPrefs.GetInt("level");
-        currentExp = PlayerPrefs.GetInt("currentExp");
-        nextLevelExp = PlayerPrefs.GetInt("nextLevelExp");
+        Load();
     }
 
     private void Update()
@@ -51,29 +49,30 @@ public class CharacterExpControl : MonoBehaviour
         level += value;
         currentExp -= nextLevelExp;
         nextLevelExp = level * expScaleValue;
+        Save();
 
-        PlayerPrefs.SetInt("level", level);
-
-        //Recovery life and mana
         cA.RecoveryLife(cA.MaxLife - cA.Life);
         cA.RecoveryMana(cA.MaxMana - cA.Mana);
     }
-    //private void SkillLevelUp(int value)
-    //{
-    //    if(level % 2  == 0){
-    //        skillLevel += value;
-    //        skillPoints = level / 2 - usedSkillPoints;
-
-    //        PlayerPrefs.SetInt("skillLevel", skillLevel);
-    //        PlayerPrefs.SetInt("skillPoints", skillPoints);
-    //    }
-    //}
 
     public void GetExp(int value)
     {
         currentExp += value;
-        PlayerPrefs.SetInt("level", level);
-        PlayerPrefs.SetInt("currentExp", currentExp);
-        PlayerPrefs.SetInt("nextLevelExp", nextLevelExp);
+        Save();
+    }
+
+
+    void Load()
+    {
+        PlayerData playerData = GameData.LoadData();
+
+        level = playerData.level;
+        currentExp = playerData.currentExp;
+        nextLevelExp = playerData.nextLevelExp;
+    }
+
+    void Save()
+    {
+        GameData.SaveLevel(level, currentExp, nextLevelExp);
     }
 }

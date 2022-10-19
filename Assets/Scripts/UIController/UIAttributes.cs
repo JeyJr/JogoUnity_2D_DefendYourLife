@@ -27,6 +27,15 @@ public class UIAttributes : MonoBehaviour
     [SerializeField] private Slider sVit;
     [SerializeField] private Slider sLuk;
 
+
+    [Header("PlayerInfo")]
+    [SerializeField] private TextMeshProUGUI txtLevel;
+    [SerializeField] private TextMeshProUGUI txtPhysicalAtkValue;
+    [SerializeField] private TextMeshProUGUI txtMagicAtkValue;
+    [SerializeField] private TextMeshProUGUI txtMaxLifeValue;
+    [SerializeField] private TextMeshProUGUI txtMaxManaValue;
+    [SerializeField] private TextMeshProUGUI txtCriticalRateValue;
+
     private void Start()
     {
         AttributePointsControl();
@@ -40,25 +49,6 @@ public class UIAttributes : MonoBehaviour
     {
         usedAttributePoints = (lobbyUI.Str - 1) + (lobbyUI.Inte - 1) + (lobbyUI.Vit - 1) + (lobbyUI.Luk - 1);
         attributePoints = (lobbyUI.Level * 3) - usedAttributePoints;
-    }
-
-    private void Update()
-    {
-        if(panel.activeSelf == true)
-        {
-            AttributePointsControl();
-            txtTitle.text = "Attributes";
-            txtStrValue.text = lobbyUI.Str.ToString();
-            txtIntValue.text = lobbyUI.Inte.ToString();
-            txtVitValue.text = lobbyUI.Vit.ToString();
-            txtLukValue.text = lobbyUI.Luk.ToString();
-            txtAttributePoints.text = attributePoints.ToString();
-
-            sStr.value = lobbyUI.Str;
-            sInt.value = lobbyUI.Inte;
-            sVit.value = lobbyUI.Vit;
-            sLuk.value = lobbyUI.Luk;
-        }
     }
 
 
@@ -136,5 +126,45 @@ public class UIAttributes : MonoBehaviour
             }
         }
     }
+
+
+
+    private void Update()
+    {
+        if (panel.activeSelf)
+        {
+            //make somenting
+        }
+
+        //Status
+        txtLevel.text = $"Level: {lobbyUI.Level}";
+    }
+    //void UpdatePlayerInfo()
+    //{
+    //    PlayerData playerData = GameData.LoadData();
+
+    //    AttributePointsControl();
+    //    txtTitle.text = "Attributes";
+    //    txtStrValue.text = playerData.str.ToString();
+    //    txtIntValue.text = playerData.inte.ToString();
+    //    txtVitValue.text = playerData.vit.ToString();
+    //    txtLukValue.text = playerData.luk.ToString();
+    //    txtAttributePoints.text = attributePoints.ToString();
+
+    //    sStr.value = playerData.str;
+    //    sInt.value = playerData.inte;
+    //    sVit.value = playerData.vit;
+    //    sLuk.value = playerData.luk;
+
+
+    //    
+    //    txtPhysicalAtkValue.text = playerData.physical.ToString();
+    //    txtMagicAtkValue.text = playerData.magical.ToString();
+    //    txtMaxLifeValue.text = playerData.maxLife.ToString();
+    //    txtMaxManaValue.text = playerData.maxMana.ToString();
+    //    txtCriticalRateValue.text = playerData.criticalRate.ToString();
+    //}
+
+
 
 }

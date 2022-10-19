@@ -12,17 +12,17 @@ public class CharacterAttributes : MonoBehaviour
     //----------------------------------------------
     [Space(10)]
     [Header("Attributes Base")]
-    [SerializeField] private int strength;
-    [SerializeField] private int intelligence;
-    [SerializeField] private int vitality;
-    [SerializeField] private int luck;
+    [SerializeField] private int str;
+    [SerializeField] private int inte;
+    [SerializeField] private int vit;
+    [SerializeField] private int luk;
  
     //----------------------------------------------
     [Space(10)]
     [Header("Status")]
 
-    [SerializeField] private int physicalAtkPower;
-    [SerializeField] private int magicAtkPower;
+    [SerializeField] private int physical;
+    [SerializeField] private int magical;
     [SerializeField] private int life, maxLife;
     [SerializeField] private int mana, maxMana;
     [SerializeField] private int criticalRate;
@@ -31,20 +31,20 @@ public class CharacterAttributes : MonoBehaviour
 
     //Properties: Attribute Base-------------------------------------
 
-    public int Strength { get => strength; set => strength = value; }
-    public int Intelligence { get => intelligence; set => intelligence = value; }
-    public int Vitality { get => vitality; set => vitality = value; }
-    public int Luck { get => luck; set => luck = value; }
+    public int Str { get => str; set => str = value; }
+    public int Inte { get => inte; set => inte = value; }
+    public int Vit { get => vit; set => vit = value; }
+    public int Luk { get => luk; set => luk = value; }
  
      //Properties: Stats----------------------------------------------
 
-    public int PhysicalAtkPower { get => physicalAtkPower; }
-    public int MagicAtkPower { get => magicAtkPower;}
-    public int Life { get => life;}
-    public int MaxLife { get => maxLife;}
-    public int Mana {get => mana; set => mana = value; }
-    public int MaxMana {get => maxMana;}
-    public int CriticalRate { get => criticalRate;}
+    public int Physical { get => physical; set => physical = value; }
+    public int Magical { get => magical; set => magical = value; }
+    public int Life { get => life; set => life = value; }
+    public int MaxLife { get => maxLife; set => maxLife = value; }
+    public int Mana { get => mana; set => mana = value; }
+    public int MaxMana {get => maxMana; set => maxMana = value; }
+    public int CriticalRate { get => criticalRate; set => criticalRate = value; }
     
     //----------------------------------------------
     [Space(10)]
@@ -65,38 +65,26 @@ public class CharacterAttributes : MonoBehaviour
 
     private void Start()
     {
-        if (player) StartAttributesPlayer(); //Carregar
         if (enemy) StartAttributesEnemys(5, 1000, 20, 5);
         if (boss) StartAttributesEnemys(15, 100, 50, 10);
     }
 
-    void StartAttributesPlayer()
-    {
-        physicalAtkPower = PlayerPrefs.GetInt("physicalAtkPower");
-        magicAtkPower = PlayerPrefs.GetInt("magicAtkPower");
-        maxLife = PlayerPrefs.GetInt("maxLife");
-        life = maxLife;
-        maxMana = PlayerPrefs.GetInt("maxMana");
-        mana = maxMana;
-        criticalRate = PlayerPrefs.GetInt("criticalRate");
-    }
-
     void StartAttributesEnemys(int attributesMultiplicador, int dropExp, int lifeMult, int manaMult) {
-        strength = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
-        vitality = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
-        intelligence = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
-        luck = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        str = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        vit = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        inte = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
+        luk = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
 
         expToDrop = Random.Range(enemyLevel + (dropExp / 2), enemyLevel + dropExp);
 
-        life = vitality * lifeMult;
+        life = vit * lifeMult;
         maxLife = life;
-        mana = intelligence * manaMult;
+        mana = inte * manaMult;
         maxMana = mana;
 
-        physicalAtkPower = Mathf.RoundToInt(strength * enemyLevel); //atk = str * 1.5f 
-        magicAtkPower = Mathf.RoundToInt(Intelligence * enemyLevel); //magic = int * 3.5f
-        criticalRate = Mathf.RoundToInt(luck / 2);
+        physical = Mathf.RoundToInt(str * enemyLevel); //atk = str * 1.5f 
+        magical = Mathf.RoundToInt(inte * enemyLevel); //magic = int * 3.5f
+        criticalRate = Mathf.RoundToInt(luk / 2);
     }
 
     private void Update(){
@@ -106,6 +94,7 @@ public class CharacterAttributes : MonoBehaviour
         }
     }
 
+    #region DMGControl
     public void TakeDMG(int dmg, bool critical, CharacterExpControl gainExp)
     {
         if(!Invencible){
@@ -146,7 +135,7 @@ public class CharacterAttributes : MonoBehaviour
         float critChance = Random.Range(1, 100);
 
         if(isPhysical){
-            dmg = Mathf.RoundToInt(Random.Range(physicalAtkPower / 1.2f, physicalAtkPower / 0.9f));
+            dmg = Mathf.RoundToInt(Random.Range(physical / 1.2f, physical / 0.9f));
             if (critChance <= criticalRate)
             {
                 criticalDmg = true;
@@ -163,10 +152,11 @@ public class CharacterAttributes : MonoBehaviour
             }
         }
         else{
-            dmg = Mathf.RoundToInt(Random.Range(magicAtkPower / 1.2f, magicAtkPower / 0.9f));
+            dmg = Mathf.RoundToInt(Random.Range(magical / 1.2f, magical / 0.9f));
             return dmg;
         }
     }
+    #endregion
 
     #region LifeSteal and RecoveryLife and Mana
     public void LifeStealControl(int value){

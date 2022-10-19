@@ -119,7 +119,7 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   strength: 0
-  intelligence: 1
+  intelligence: 0
   vitality: 0
   luck: 0
   physicalAtkPower: 0
@@ -146,14 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57a33edb02f153438bc431db11e56e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentExp: 367
+  currentExp: 0
   nextLevelExp: 0
   level: 0
-  attributePoints: 0
-  usedAttributePoints: 0
-  skillLevel: 0
-  skillPoints: 0
-  usedSkillPoints: 0
 --- !u!1 &3217462370415690900
 GameObject:
   m_ObjectHideFlags: 0
