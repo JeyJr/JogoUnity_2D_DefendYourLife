@@ -186,10 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1affce64ab51d459fd3acf102aac21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 511964012}
   lobbyUI: {fileID: 14953474}
-  attributePoints: 0
-  usedAttributePoints: 0
   txtTitle: {fileID: 1453485087}
   txtAttributePoints: {fileID: 1420434434}
   txtStrValue: {fileID: 33023059}
@@ -222,15 +219,6 @@ MonoBehaviour:
   lobbyUI: {fileID: 14953474}
   txtTitle: {fileID: 1164145739}
   txtSkillPoints: {fileID: 1281698772}
-  skillPoints: 0
-  usedSkillPoints: 0
-  skillsMaxLevel: 10
-  fohLevel: 0
-  wsLevel: 0
-  bowLevel: 0
-  lsLevel: 0
-  lkLevel: 0
-  iLevel: 0
   btnSkills:
   - {fileID: 1415172382}
   - {fileID: 106277358}
@@ -2399,7 +2387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 231}
+  m_AnchoredPosition: {x: -207, y: -222}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &361392500
@@ -3849,7 +3837,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 14953477}
         m_TargetAssemblyTypeName: UISkills, Assembly-CSharp
-        m_MethodName: SaveSkills
+        m_MethodName: Confirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4812,7 +4800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &770014781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12538,7 +12526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1850916819
 RectTransform:
   m_ObjectHideFlags: 0

@@ -65,10 +65,21 @@ public class CharacterAttributes : MonoBehaviour
 
     private void Start()
     {
+        if (player) StartPlayerAttributes();
         if (enemy) StartAttributesEnemys(5, 1000, 20, 5);
         if (boss) StartAttributesEnemys(15, 100, 50, 10);
     }
 
+    void StartPlayerAttributes() {
+        physical = Mathf.RoundToInt(str * 2.5f);
+        magical = Mathf.RoundToInt(inte * 1.5f);
+        maxLife = Mathf.RoundToInt(vit * 50);
+        maxMana = Mathf.RoundToInt(inte * 25);
+        criticalRate = Mathf.RoundToInt(luk / 2);
+
+        life = maxLife;
+        mana = maxMana;
+    }
     void StartAttributesEnemys(int attributesMultiplicador, int dropExp, int lifeMult, int manaMult) {
         str = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);
         vit = Random.Range(enemyLevel, enemyLevel + attributesMultiplicador);

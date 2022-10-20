@@ -118,12 +118,12 @@ MonoBehaviour:
   player: 1
   enemy: 0
   boss: 0
-  strength: 0
-  intelligence: 0
-  vitality: 0
-  luck: 0
-  physicalAtkPower: 0
-  magicAtkPower: 0
+  str: 0
+  inte: 0
+  vit: 0
+  luk: 0
+  physical: 0
+  magical: 0
   life: 0
   maxLife: 0
   mana: 0
@@ -146,9 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57a33edb02f153438bc431db11e56e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSkill: {fileID: 3217462370415690902}
   currentExp: 0
   nextLevelExp: 0
   level: 0
+  currentSkillExp: 0
+  nextSkillLevelExp: 0
+  skillLevel: 0
 --- !u!1 &3217462370415690900
 GameObject:
   m_ObjectHideFlags: 0

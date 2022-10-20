@@ -11,10 +11,19 @@ public class PlayerData
     public int inte;
     public int vit;
     public int luk;
+}
 
-    //public int physical;
-    //public int magical;
-    //public int maxLife;
-    //public int maxMana;
-    //public int criticalRate;
+[Serializable]
+public class PlayerSkillsData
+{
+    public int skillLevel;
+    public int currentSkillExp;
+    public int nextSkillLevelExp;
+
+    public int fohLevel;
+    public int wsLevel;
+    public int bowLevel;
+    public int lsLevel;
+    public int lkLevel;
+    public int iLevel;
 }

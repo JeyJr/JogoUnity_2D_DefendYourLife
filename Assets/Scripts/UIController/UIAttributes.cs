@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class UIAttributes : MonoBehaviour
 {
-    [SerializeField] private GameObject panel;
     [SerializeField] private LobbyUIController lobbyUI;
 
     [Header("TextMeshPro")]
@@ -35,16 +34,16 @@ public class UIAttributes : MonoBehaviour
     private void Start()
     {
         PanelAttributes();
+        PlayerInfo();
         sStr.maxValue = 100;
         sInt.maxValue = 100;
         sVit.maxValue = 100;
         sLuk.maxValue = 100;
     }
 
-
     public void AddAttributePoints(string attributeName)
     {
-        if (lobbyUI.GetAttributePointsRealValue() > 0)
+        if (lobbyUI.GetAttributePoints() > 0)
         {
             switch (attributeName)
             {
@@ -74,13 +73,15 @@ public class UIAttributes : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(lobbyUI.GetAttributePointsRealValue());
-        Debug.Log(lobbyUI.GetUsedPointsRealValue());
+        Debug.Log(lobbyUI.GetAttributePoints());
+        Debug.Log(lobbyUI.GetUsedAttributesPoints());
         lobbyUI.SaveAttributes();
+        PanelAttributes();
+        PlayerInfo();
     }
     public void SubtractAttributePoints(string attributeName)
     {
-        if (lobbyUI.GetUsedPointsRealValue() > 0)
+        if (lobbyUI.GetUsedAttributesPoints() > 0)
         {
             switch (attributeName)
             {
@@ -110,23 +111,12 @@ public class UIAttributes : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(lobbyUI.GetAttributePointsRealValue());
-        Debug.Log(lobbyUI.GetUsedPointsRealValue());
+        Debug.Log(lobbyUI.GetAttributePoints());
+        Debug.Log(lobbyUI.GetUsedAttributesPoints());
+        PlayerInfo();
+        PanelAttributes();
         lobbyUI.SaveAttributes();
     }
-
-
-    private void Update()
-    {
-        if (panel.activeSelf)
-        {
-            PanelAttributes();
-        }
-
-        //Status
-        txtLevel.text = $"Level: {lobbyUI.Level}";
-    }
-
     void PanelAttributes()
     {
         txtTitle.text = "Attributes";
@@ -140,38 +130,18 @@ public class UIAttributes : MonoBehaviour
         sVit.value = lobbyUI.Vit;
         sLuk.value = lobbyUI.Luk;
 
-        txtAttributePoints.text = lobbyUI.GetAttributePointsRealValue().ToString();
+        txtAttributePoints.text = lobbyUI.GetAttributePoints().ToString();
         
     }
-
-
     void PlayerInfo()
     {
+        txtLevel.text = $"Level: {lobbyUI.Level}";
+        lobbyUI.SetPlayerInfo();
 
+        txtPhysicalAtkValue.text = lobbyUI.Physical.ToString();
+        txtMagicAtkValue.text = lobbyUI.Magical.ToString();
+        txtMaxLifeValue.text = lobbyUI.MaxLife.ToString();
+        txtMaxManaValue.text = lobbyUI.MaxMana.ToString();
+        txtCriticalRateValue.text = lobbyUI.CriticalRate.ToString();
     }
-
-    //void UpdatePlayerInfo()
-    //{
-    //    PlayerData playerData = GameData.LoadData();
-
-    //    AttributePointsControl();
-    //    
-    //    
-    //    
-    //    txtVitValue.text = playerData.vit.ToString();
-    //    
-    //    ;
-
-
-
-    //    
-    //    txtPhysicalAtkValue.text = playerData.physical.ToString();
-    //    txtMagicAtkValue.text = playerData.magical.ToString();
-    //    txtMaxLifeValue.text = playerData.maxLife.ToString();
-    //    txtMaxManaValue.text = playerData.maxMana.ToString();
-    //    txtCriticalRateValue.text = playerData.criticalRate.ToString();
-    //}
-
-
-
 }

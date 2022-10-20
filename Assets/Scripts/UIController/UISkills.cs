@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,14 +15,7 @@ public class UISkills : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtTitle;
     [SerializeField] private TextMeshProUGUI txtSkillPoints;
 
-    [Header("Skill Points Control")]
-    [SerializeField] private int skillPoints;
-    [SerializeField] private int usedSkillPoints;
 
-
-    [Header("Skills level")]
-    [SerializeField] private int skillsMaxLevel = 10;
-    [SerializeField] private int fohLevel, wsLevel, bowLevel, lsLevel, lkLevel, iLevel;
 
     [Header("Skills Btn")]
     public List<GameObject> btnSkills;
@@ -40,103 +34,94 @@ public class UISkills : MonoBehaviour
     {
         if(panel.activeSelf == true)
         {
-            SkillPoints();
             SetBtnColorEffect();
 
             txtTitle.text = "Skills";
-            txtSkillPoints.text = $"{skillPoints}";
+            txtSkillPoints.text = $"{lobbyUI.GetSkillPoints()}";
+            Debug.Log(lobbyUI.GetUsedSkillsPoints());
         }
     }
-    void SkillPoints()
-    {
-        usedSkillPoints = fohLevel + wsLevel + bowLevel + lsLevel + lkLevel + iLevel;
 
-        if (lobbyUI.Level % 2 == 0)
-        {
-            skillPoints = (lobbyUI.Level / 2) - usedSkillPoints;
-        }
-    }
+
     public void AddSkillPoint(int skillNum)
     {
-        if(skillPoints > 0)
+        if (lobbyUI.GetSkillPoints() > 0)
         {
             switch (skillNum)
             {
                 case 1:
-                    if(fohLevel < skillsMaxLevel)
-                        fohLevel++;
+                    if (lobbyUI.FohLevel < lobbyUI.SkillsMaxLevel)
+                        lobbyUI.FohLevel++;
                     break;
                 case 2:
-                    if(wsLevel < skillsMaxLevel)
-                        wsLevel++;
+                    if (lobbyUI.WsLevel < lobbyUI.SkillsMaxLevel)
+                        lobbyUI.WsLevel++;
                     break;
                 case 3:
-                    if(bowLevel < skillsMaxLevel)
-                        bowLevel++;
-                    break; 
+                    if (lobbyUI.BowLevel < lobbyUI.SkillsMaxLevel)
+                        lobbyUI.BowLevel++;
+                    break;
                 case 4:
-                    if(lsLevel < skillsMaxLevel)
-                        lsLevel++;
+                    if (lobbyUI.LsLevel < lobbyUI.SkillsMaxLevel)
+                        lobbyUI.LsLevel++;
                     break;
                 case 5:
-                    if(lkLevel < skillsMaxLevel)
-                        lkLevel++;
-                    break; 
+                    if (lobbyUI.LkLevel < lobbyUI.SkillsMaxLevel)
+                        lobbyUI.LkLevel++;
+                    break;
                 case 6:
-                    if(iLevel < skillsMaxLevel)
-                        iLevel++;
+                    if (lobbyUI.ILevel < lobbyUI.SkillsMaxLevel)
+                        lobbyUI.ILevel++;
                     break;
             }
+            lobbyUI.SaveSkills();
         }
     }
+
+    public void Confirm()
+    {
+        lobbyUI.SaveSkills();
+    }
+
     public void ResetSkills()
     {
-        fohLevel = 0;
-        wsLevel = 0;
-        bowLevel = 0;
-        lsLevel = 0;
-        lkLevel = 0;
-        iLevel = 0;
+        lobbyUI.FohLevel = 0;
+        lobbyUI.WsLevel = 0;
+        lobbyUI.BowLevel = 0;
+        lobbyUI.LsLevel = 0;
+        lobbyUI.LkLevel = 0;
+        lobbyUI.ILevel = 0;
         SetSkillsDescription(1);
-    }
-    public void SaveSkills()
-    {
-        PlayerPrefs.SetInt("fohLevel", fohLevel);
-        PlayerPrefs.SetInt("wsLevel", wsLevel);
-        PlayerPrefs.SetInt("bowLevel", bowLevel);
-        PlayerPrefs.SetInt("lsLevel", lsLevel);
-        PlayerPrefs.SetInt("lkLevel", lkLevel);
-        PlayerPrefs.SetInt("iLevel", iLevel);
+        lobbyUI.SaveSkills();
     }
     void SetBtnColorEffect()
     {
-
-        if (fohLevel <= 0)
+        if (lobbyUI.FohLevel <= 0)
             btnSkills[0].GetComponent<Image>().color = Color.gray;
         else
             btnSkills[0].GetComponent<Image>().color = Color.white;
-        
-        if (wsLevel <= 0)
+
+        if (lobbyUI.WsLevel <= 0)
             btnSkills[1].GetComponent<Image>().color = Color.gray;
         else
             btnSkills[1].GetComponent<Image>().color = Color.white;
-        
-        if (bowLevel <= 0)
+
+        if (lobbyUI.BowLevel <= 0)
             btnSkills[2].GetComponent<Image>().color = Color.gray;
         else
             btnSkills[2].GetComponent<Image>().color = Color.white;
-        
-        if (lsLevel <= 0)
+
+        if (lobbyUI.LsLevel <= 0)
             btnSkills[3].GetComponent<Image>().color = Color.gray;
         else
             btnSkills[3].GetComponent<Image>().color = Color.white;
-        
-        if (lkLevel <= 0)
+
+        if (lobbyUI.LkLevel <= 0)
             btnSkills[4].GetComponent<Image>().color = Color.gray;
         else
             btnSkills[4].GetComponent<Image>().color = Color.white;
-        
-        if (iLevel <= 0)
+
+        if (lobbyUI.ILevel <= 0)
             btnSkills[5].GetComponent<Image>().color = Color.gray;
         else
             btnSkills[5].GetComponent<Image>().color = Color.white;
@@ -148,22 +133,22 @@ public class UISkills : MonoBehaviour
         switch (skillNum)
         {
             case 1:
-                Description("Floor of Hell", $"{fohLevel}/{skillsMaxLevel}", $"Every 0.5s burn the enemys!");
+                Description("Floor of Hell", $"{lobbyUI.FohLevel}/{lobbyUI.SkillsMaxLevel}", $"Every <color=red><b>0.5s burn</b></color> the enemys!");
                 break;
             case 2:
-                Description("Water spikes", $"{wsLevel}/{skillsMaxLevel}", $"Spawn of the ground, water spikes that pierce enemies!");
+                Description("Water spikes", $"{lobbyUI.WsLevel}/{lobbyUI.SkillsMaxLevel}", $"Spawn of the ground, <color=blue>water spikes</color> that pierce enemies!");
                 break;
             case 3:
-                Description("Blades Of Wind", $"{bowLevel}/{skillsMaxLevel}", $"Generate a blade of wind to slash enemies!");
+                Description("Blades Of Wind", $"{lobbyUI.BowLevel}/{lobbyUI.SkillsMaxLevel}", $"Generate a blade of <color=green>wind to slash</color> enemies!");
                 break;
             case 4:
-                Description("Life Steal", $"{lsLevel}/{skillsMaxLevel}", $"Steals an amount of health and mana from enemies!");
+                Description("Life Steal", $"{lobbyUI.LsLevel}/{lobbyUI.SkillsMaxLevel}", $"Steals an amount of health and mana from enemies!");
                 break;
             case 5:
-                Description("Lucky", $"{lkLevel}/{skillsMaxLevel}", $"Get an amount of luck!");
+                Description("Lucky", $"{lobbyUI.LkLevel}/{lobbyUI.SkillsMaxLevel}", $"Get an amount of luck!");
                 break;
             case 6:
-                Description("Invencible", $"{iLevel}/{skillsMaxLevel}", $"Become a god...for a few seconds!");
+                Description("Invencible", $"{lobbyUI.ILevel}/{lobbyUI.SkillsMaxLevel}", $"Become a god...for a few seconds!");
                 break;
         }
     }
