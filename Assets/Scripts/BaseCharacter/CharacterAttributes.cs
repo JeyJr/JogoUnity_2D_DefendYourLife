@@ -118,6 +118,8 @@ public class CharacterAttributes : MonoBehaviour
             else if(life < 0 && !Dead){
                 gainExp.GetExp(expToDrop);
                 Dead = true;
+
+                if (boss) GetComponent<BossNum>().UnlockNextLevel();
             }
         }
         else{
@@ -135,6 +137,7 @@ public class CharacterAttributes : MonoBehaviour
             }
             else{
                 Dead = true;
+                if (boss) GetComponent<BossNum>().UnlockNextLevel();
             }
         }
         else{

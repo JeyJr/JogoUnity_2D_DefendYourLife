@@ -170,6 +170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba2e05788172034cae7eaffdc7459f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnLevels:
+  - {fileID: 1973602246}
+  - {fileID: 1499137798}
+  - {fileID: 1827504817}
+  - {fileID: 962770679}
+  - {fileID: 1117713327}
+  - {fileID: 928661359}
   panels:
   - {fileID: 511964012}
   - {fileID: 1850916818}
@@ -4800,7 +4807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &770014781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10705,7 +10712,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1499137799}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 14953478}
+        m_TargetAssemblyTypeName: UILevels, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1499137799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12259,7 +12278,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1827504818}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 14953478}
+        m_TargetAssemblyTypeName: UILevels, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1827504818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12526,7 +12557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1850916819
 RectTransform:
   m_ObjectHideFlags: 0

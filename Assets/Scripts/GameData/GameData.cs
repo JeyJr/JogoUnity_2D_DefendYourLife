@@ -4,36 +4,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameData : MonoBehaviour
 {
-    //public static PlayerData playerData = new PlayerData();
-
-    //public static void SaveData(int level, int currentExp, int nextLevelExp, int str, int inte, int vit, int luk)
-    //{
-    //    PlayerData playerData = new PlayerData();
-
-    //    //LEVEL
-    //    playerData.level = level;
-    //    playerData.currentExp = currentExp;
-    //    playerData.nextLevelExp = nextLevelExp;
-
-    //    //ATTRIBUTES
-    //    playerData.str = str;
-    //    playerData.inte = inte;
-    //    playerData.vit = vit;
-    //    playerData.luk = luk;
-
-    //    //STATUS
-    //    playerData.physical = Mathf.RoundToInt(playerData.str * 1.5f);
-    //    playerData.magical = Mathf.RoundToInt(playerData.inte * 3.5f);
-    //    playerData.maxLife = Mathf.RoundToInt(playerData.vit * 50);
-    //    playerData.maxMana = Mathf.RoundToInt((playerData.inte * 4.5f) + 50);
-    //    playerData.criticalRate = Mathf.RoundToInt(playerData.luk / 2);
-
-    //    BinaryFormatter bf = new();
-    //    FileStream file = File.Create(Application.persistentDataPath + "/sData.data");
-    //    bf.Serialize(file, playerData);
-    //    file.Close();
-    //}
-
     public static void SaveData(int level, int currentExp, int nextLevelExp, int str, int inte, int vit, int luk)
     {
         PlayerData playerData = new PlayerData();
@@ -54,7 +24,6 @@ public class GameData : MonoBehaviour
 
         //Debug.Log($"File saved: Level: {playerData.level} | CurrentExp: {playerData.currentExp} | NextLevel: {playerData.nextLevelExp}");
     }    
-
     public static PlayerData LoadData()
     {
         BinaryFormatter bf = new();
@@ -62,7 +31,7 @@ public class GameData : MonoBehaviour
         PlayerData playerData = (PlayerData)bf.Deserialize(file);
         file.Close();
 
-        Debug.Log("FileLoaded!");
+        //Debug.Log("FileLoaded!");
         return playerData;
     }
 
@@ -94,9 +63,53 @@ public class GameData : MonoBehaviour
         PlayerSkillsData playerData = (PlayerSkillsData)bf.Deserialize(file);
         file.Close();
 
-        Debug.Log("FileLoaded!");
+        //Debug.Log("FileLoaded!");
         return playerData;
     }
+    
+    public static void SaveLevelData(int levelNum)
+    {
+        LevelUnlockData levelData = new();
+        LevelUnlockData checkLevelData = LoadLevelData();
+
+        Debug.Log($"CheckLevelData: {checkLevelData.levelUnlock}");
+        Debug.Log($"LevelUnlok: {levelData.levelUnlock}");
+        Debug.Log($"LevelNum: {levelNum}");
+        Debug.Log("------------------------------------------");
+
+        if (checkLevelData.levelUnlock < levelNum)
+        {
+            //--------------------------------
+            levelData.levelUnlock = levelNum;
+
+            Debug.Log("Depois de salvar!");
+            Debug.Log($"CheckLevelData: {checkLevelData.levelUnlock}");
+            Debug.Log($"LevelUnlok: {levelData.levelUnlock}");
+            Debug.Log($"LevelNum: {levelNum}");
+            Debug.Log("Fase salva com sucesso!");
+        }
+        else
+        {
+            Debug.Log($"LevelUnlok: {levelData.levelUnlock}");
+            Debug.Log("Fase ja foi desbloqueado!");
+        }
+            
+
+        BinaryFormatter bf = new();
+        FileStream file = File.Create(Application.persistentDataPath + "/lData.data");
+        bf.Serialize(file, levelData);
+        file.Close();
+    }
+    public static LevelUnlockData LoadLevelData()
+    {
+        BinaryFormatter bf = new();
+        FileStream file = File.Open(Application.persistentDataPath + "/lData.data", FileMode.Open);
+        LevelUnlockData levelData = (LevelUnlockData)bf.Deserialize(file);
+        file.Close();
+        return levelData;
+    }
+    
+    
     public static void CreateDataFile()
     {
         PlayerData playerData = new PlayerData();
@@ -112,5 +125,16 @@ public class GameData : MonoBehaviour
         FileStream file = File.Create(Application.persistentDataPath + "/sData.data");
         bf.Serialize(file, playerSkillsData);
         file.Close();
+    }    
+    public static void CreateLevelDataFile()
+    {
+        LevelUnlockData levelUnlockData = new LevelUnlockData();
+        BinaryFormatter bf = new();
+        FileStream file = File.Create(Application.persistentDataPath + "/lData.data");
+        bf.Serialize(file, levelUnlockData);
+        file.Close();
     }
+
+
+
 }

@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyUIController : MonoBehaviour
 {
+    //UnlockLevel--------
+    public List<Button> btnLevels;
+
+    //Attributes and BaseLevel---------
     private int str, inte, vit, luk, level, currentExp, nextLevelExp;
     private int physical, magical, maxLife, maxMana, criticalRate;
 
-    
-    private int skillPoints, usedSkillPoints, skillLevel, currentSkillExp, nextSkillLevelExp;
+    //SkillLevel--------------------
+    private int skillLevel, currentSkillExp, nextSkillLevelExp;
     private int skillsMaxLevel = 10;
     private int fohLevel, wsLevel, bowLevel, lsLevel, lkLevel, iLevel;
 
-
+    //Props-------------------
     public int Str { get => str; set => str = value; }
     public int Inte { get => inte; set => inte = value; }
     public int Vit { get => vit; set => vit = value; }
@@ -35,7 +40,6 @@ public class LobbyUIController : MonoBehaviour
     public int LkLevel { get => lkLevel; set => lkLevel = value; }
     public int ILevel { get => iLevel; set => iLevel = value; }
 
-
     //---------------------------
     public List<GameObject> panels;
 
@@ -53,7 +57,12 @@ public class LobbyUIController : MonoBehaviour
             LoadSkills();
 
 
-        for (int i = 0; i < panels.Count; i++)
+        if (!File.Exists(Application.persistentDataPath + "/lData.data"))
+            FirstTimeLevelUnlockSave();
+        else
+            LoadLevelUnlock();
+
+            for (int i = 0; i < panels.Count; i++)
         {
             if (i > 0) panels[i].SetActive(false);
             else panels[i].SetActive(true);
@@ -166,14 +175,30 @@ public class LobbyUIController : MonoBehaviour
         GameData.SaveSkillsData(skillLevel, currentSkillExp, nextSkillLevelExp, fohLevel, wsLevel, bowLevel, lsLevel, lkLevel, iLevel);
     }
 
+    void FirstTimeLevelUnlockSave()
+    {
+        //Level 1 = Unlock
+        GameData.CreateLevelDataFile();
+        GameData.SaveLevelData(1);
+        LoadLevelUnlock();
+    }
+
+    void LoadLevelUnlock()
+    {
+        LevelUnlockData unlockData = GameData.LoadLevelData();
+        for (int i = unlockData.levelUnlock; i < btnLevels.Count; i ++)
+        {
+            btnLevels[i].interactable = false;
+        }
+    }
+
     public void DeleteSave() {
         File.Delete(Application.persistentDataPath + "/aData.data");
         File.Delete(Application.persistentDataPath + "/sData.data");
+        File.Delete(Application.persistentDataPath + "/lData.data");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     public void SaveAttributes() => GameData.SaveData(level, currentExp, nextLevelExp, str, inte, vit, luk);
     public void SaveSkills() => GameData.SaveSkillsData(skillLevel, currentSkillExp, nextSkillLevelExp, fohLevel, wsLevel, bowLevel, lsLevel, lkLevel, iLevel);
-
-
 }

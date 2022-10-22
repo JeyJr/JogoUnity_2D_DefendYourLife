@@ -27,3 +27,8 @@ public class PlayerSkillsData
     public int lkLevel;
     public int iLevel;
 }
+
+[Serializable]
+public class LevelUnlockData {
+    public int levelUnlock;
+}
