@@ -57,16 +57,21 @@ public class LobbyUIController : MonoBehaviour
             LoadSkills();
 
 
+        //LevelUnlock--------------------
+
         if (!File.Exists(Application.persistentDataPath + "/lData.data"))
             FirstTimeLevelUnlockSave();
         else
             LoadLevelUnlock();
 
-            for (int i = 0; i < panels.Count; i++)
+        for (int i = 0; i < panels.Count; i++)
         {
             if (i > 0) panels[i].SetActive(false);
             else panels[i].SetActive(true);
         }
+        //--------------------
+
+
         SetPlayerInfo();
     }
 
@@ -198,7 +203,6 @@ public class LobbyUIController : MonoBehaviour
         File.Delete(Application.persistentDataPath + "/lData.data");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
-
     public void SaveAttributes() => GameData.SaveData(level, currentExp, nextLevelExp, str, inte, vit, luk);
     public void SaveSkills() => GameData.SaveSkillsData(skillLevel, currentSkillExp, nextSkillLevelExp, fohLevel, wsLevel, bowLevel, lsLevel, lkLevel, iLevel);
 }

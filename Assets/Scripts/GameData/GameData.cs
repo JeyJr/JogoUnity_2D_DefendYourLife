@@ -70,30 +70,7 @@ public class GameData : MonoBehaviour
     public static void SaveLevelData(int levelNum)
     {
         LevelUnlockData levelData = new();
-        LevelUnlockData checkLevelData = LoadLevelData();
-
-        Debug.Log($"CheckLevelData: {checkLevelData.levelUnlock}");
-        Debug.Log($"LevelUnlok: {levelData.levelUnlock}");
-        Debug.Log($"LevelNum: {levelNum}");
-        Debug.Log("------------------------------------------");
-
-        if (checkLevelData.levelUnlock < levelNum)
-        {
-            //--------------------------------
-            levelData.levelUnlock = levelNum;
-
-            Debug.Log("Depois de salvar!");
-            Debug.Log($"CheckLevelData: {checkLevelData.levelUnlock}");
-            Debug.Log($"LevelUnlok: {levelData.levelUnlock}");
-            Debug.Log($"LevelNum: {levelNum}");
-            Debug.Log("Fase salva com sucesso!");
-        }
-        else
-        {
-            Debug.Log($"LevelUnlok: {levelData.levelUnlock}");
-            Debug.Log("Fase ja foi desbloqueado!");
-        }
-            
+        levelData.levelUnlock = levelNum;
 
         BinaryFormatter bf = new();
         FileStream file = File.Create(Application.persistentDataPath + "/lData.data");
