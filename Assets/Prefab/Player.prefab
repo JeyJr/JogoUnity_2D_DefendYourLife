@@ -134,6 +134,7 @@ MonoBehaviour:
   textDmg: {fileID: 8875598763902279731, guid: 2b06cf33d63fa5144bda4322fc04ae9f, type: 3}
   spawnPosition: {fileID: 3217462371537593852}
   playerExp: {fileID: 3217462369907067228}
+  sceneControl: {fileID: 0}
 --- !u!114 &3217462369907067228
 MonoBehaviour:
   m_ObjectHideFlags: 0

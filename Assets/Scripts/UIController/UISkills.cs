@@ -30,18 +30,12 @@ public class UISkills : MonoBehaviour
         SetSkillsDescription(1);
     }
 
-    private void Update()
+    public void SetTitleSkillsPanel()
     {
-        if(panel.activeSelf == true)
-        {
-            SetBtnColorEffect();
-
-            txtTitle.text = "Skills";
-            txtSkillPoints.text = $"{lobbyUI.GetSkillPoints()}";
-            Debug.Log(lobbyUI.GetUsedSkillsPoints());
-        }
+        txtTitle.text = "Skills";
+        txtSkillPoints.text = $"{lobbyUI.GetSkillPoints()}";
+        SetBtnColorEffect();
     }
-
 
     public void AddSkillPoint(int skillNum)
     {
@@ -75,6 +69,7 @@ public class UISkills : MonoBehaviour
                     break;
             }
             lobbyUI.SaveSkills();
+            txtSkillPoints.text = $"{lobbyUI.GetSkillPoints()}";
         }
     }
 
@@ -93,6 +88,7 @@ public class UISkills : MonoBehaviour
         lobbyUI.ILevel = 0;
         SetSkillsDescription(1);
         lobbyUI.SaveSkills();
+        SetBtnColorEffect();
     }
     void SetBtnColorEffect()
     {

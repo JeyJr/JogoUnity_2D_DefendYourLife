@@ -73,9 +73,7 @@ public class UIAttributes : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(lobbyUI.GetAttributePoints());
-        Debug.Log(lobbyUI.GetUsedAttributesPoints());
-        lobbyUI.SaveAttributes();
+        //lobbyUI.SaveAttributes();
         PanelAttributes();
         PlayerInfo();
     }
@@ -111,11 +109,19 @@ public class UIAttributes : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(lobbyUI.GetAttributePoints());
-        Debug.Log(lobbyUI.GetUsedAttributesPoints());
         PlayerInfo();
         PanelAttributes();
+        //lobbyUI.SaveAttributes();
+    }
+
+    public void SaveAttributes() => lobbyUI.SaveAttributes();
+    public void ResetAttributes(){
+        lobbyUI.Str = 1;
+        lobbyUI.Inte = 1;
+        lobbyUI.Vit = 1;
+        lobbyUI.Luk = 1;
         lobbyUI.SaveAttributes();
+        PanelAttributes();
     }
     void PanelAttributes()
     {

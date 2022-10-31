@@ -192,12 +192,12 @@ MonoBehaviour:
   player: 0
   enemy: 1
   boss: 0
-  strength: 0
-  intelligence: 0
-  vitality: 0
-  luck: 0
-  physicalAtkPower: 0
-  magicAtkPower: 0
+  str: 0
+  inte: 0
+  vit: 0
+  luk: 0
+  physical: 0
+  magical: 0
   life: 0
   maxLife: 0
   mana: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   backStartPosition: {fileID: 3484734168698165905}
   atkStartPosition: {fileID: 3484734167001727833}
   frontRange: 5
-  backRange: 1
+  backRange: 5
   atkRange: 0.7
   playerAhead: 0
   playerBehind: 0

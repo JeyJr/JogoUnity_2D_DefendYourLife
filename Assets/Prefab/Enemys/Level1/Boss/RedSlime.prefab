@@ -309,7 +309,7 @@ MonoBehaviour:
   backStartPosition: {fileID: 108218196538192672}
   atkStartPosition: {fileID: 108218195275414820}
   frontRange: 7
-  backRange: 4
+  backRange: 10
   atkRange: 0.5
   playerAhead: 0
   playerBehind: 0

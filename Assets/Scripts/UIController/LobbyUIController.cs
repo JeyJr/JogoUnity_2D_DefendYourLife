@@ -42,6 +42,8 @@ public class LobbyUIController : MonoBehaviour
 
     //---------------------------
     public List<GameObject> panels;
+    public List<Button> btnPanels;
+    public List<Sprite> imgBtn; // Set blue if panel is active - gray false
 
     private void Start()
     {
@@ -88,9 +90,19 @@ public class LobbyUIController : MonoBehaviour
     {
         for (int i = 0; i < panels.Count; i++)
         {
-            if (i == panel) panels[i].SetActive(true);
-            else panels[i].SetActive(false);
+            if (i == panel) {
+                panels[i].SetActive(true);
+                btnPanels[i].GetComponent<Image>().sprite = imgBtn[1]; //img blue
+            }
+            else
+            {
+                panels[i].SetActive(false);
+                btnPanels[i].GetComponent<Image>().sprite = imgBtn[0]; //img gray
+            }
         }
+
+        if (panels[1].activeSelf) GetComponent<UISkills>().SetTitleSkillsPanel();
+        if (panels[2].activeSelf) GetComponent<UILevels>().SetTitleLevelPanel();
     }
 
     public int GetAttributePoints()
@@ -196,7 +208,6 @@ public class LobbyUIController : MonoBehaviour
             btnLevels[i].interactable = false;
         }
     }
-
     public void DeleteSave() {
         File.Delete(Application.persistentDataPath + "/aData.data");
         File.Delete(Application.persistentDataPath + "/sData.data");

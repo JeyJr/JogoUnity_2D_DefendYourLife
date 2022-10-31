@@ -120,6 +120,7 @@ public class CharacterAttributes : MonoBehaviour
                 Dead = true;
 
                 if (boss) GetComponent<BossNum>().UnlockNextLevel();
+                if (enemy) GameObject.FindGameObjectWithTag("SceneControl").GetComponent<SceneControl>().EnemySpawned(1);
             }
         }
         else{
@@ -138,6 +139,7 @@ public class CharacterAttributes : MonoBehaviour
             else{
                 Dead = true;
                 if (boss) GetComponent<BossNum>().UnlockNextLevel();
+                if (enemy) GameObject.FindGameObjectWithTag("SceneControl").GetComponent<SceneControl>().EnemySpawned(1);
             }
         }
         else{
