@@ -21,6 +21,10 @@ public class PlayerInputs : MonoBehaviour
 
     public float y;
     private float x = 2;
+
+    //Active skill in HUD----------------------------
+    public bool UseSkill { get; set; }
+
     void Start()
     {
         MeleeAtkEnabled = true;
@@ -33,18 +37,20 @@ public class PlayerInputs : MonoBehaviour
             //PlayerMove
             inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
-            //PhysicalAtk------------------------
-            if(Input.GetMouseButton(0) && MeleeAtkEnabled){
+            if (!UseSkill && Input.GetMouseButton(0) && MeleeAtkEnabled)
+            {
+                //PhysicalAtk------------------------
                 RandomAtkMelee = Random.Range(1, 4);
                 SetAttacking();
             }
         }
-            if (Input.GetKeyDown(KeyCode.Alpha1)) FloorOfHellSkill();
-            if (Input.GetKeyDown(KeyCode.Alpha2)) WaterSpikesSkill();
-            if (Input.GetKeyDown(KeyCode.Alpha3)) BladesOfWindSkill();
-            if (Input.GetKeyDown(KeyCode.Alpha4)) LifeStealSkill();
-            if (Input.GetKeyDown(KeyCode.Alpha5)) LuckySkill();
-            if (Input.GetKeyDown(KeyCode.Alpha6)) InvencibleSkill();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) FloorOfHellSkill();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) WaterSpikesSkill();
+        if (Input.GetKeyDown(KeyCode.Alpha3)) BladesOfWindSkill();
+        if (Input.GetKeyDown(KeyCode.Alpha4)) LifeStealSkill();
+        if (Input.GetKeyDown(KeyCode.Alpha5)) LuckySkill();
+        if (Input.GetKeyDown(KeyCode.Alpha6)) InvencibleSkill();
     }
 
     public void FloorOfHellSkill(){

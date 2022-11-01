@@ -70,6 +70,7 @@ public class UISkills : MonoBehaviour
             }
             lobbyUI.SaveSkills();
             txtSkillPoints.text = $"{lobbyUI.GetSkillPoints()}";
+            SetBtnColorEffect();
         }
     }
 
@@ -89,6 +90,7 @@ public class UISkills : MonoBehaviour
         SetSkillsDescription(1);
         lobbyUI.SaveSkills();
         SetBtnColorEffect();
+        txtSkillPoints.text = $"{lobbyUI.GetSkillPoints()}";
     }
     void SetBtnColorEffect()
     {
