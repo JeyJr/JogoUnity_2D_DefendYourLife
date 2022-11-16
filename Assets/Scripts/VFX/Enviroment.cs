@@ -23,4 +23,6 @@ public class Enviroment : MonoBehaviour
         transform.position = new Vector3(d + initialPosition, transform.position.y, transform.position.z);
     }
 
+
+
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8875598763902279742}
   - component: {fileID: 8875598763902279729}
   - component: {fileID: 8875598763902279728}
+  - component: {fileID: 6645938685315475157}
   m_Layer: 0
   m_Name: TextDecorative
   m_TagString: Untagged
@@ -101,7 +102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +9999
+  m_text: 9999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5b65413a8fa9c246998f1b05fe90dfa, type: 2}
   m_sharedMaterial: {fileID: 6933004789156108557, guid: e5b65413a8fa9c246998f1b05fe90dfa, type: 2}
@@ -186,3 +187,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+--- !u!95 &6645938685315475157
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8875598763902279731}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b313a57fcc3cf2545897fb3288b23880, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

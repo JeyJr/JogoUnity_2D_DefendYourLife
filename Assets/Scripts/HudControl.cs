@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HudControl : MonoBehaviour
@@ -9,13 +10,16 @@ public class HudControl : MonoBehaviour
     public Button btnFoh, btnWs, btnBoW, btnLS, btnLuk, btnInv;
     public TextMeshProUGUI txtLife, txtMana, txtLevel, txtExp;
     public Slider liferBar, manaBar, expBar;
-    public Button btnPanel;
 
     [Space(5)]
     [Header("Get Player")]
     public GameObject player;
     CharacterExpControl cExp;
     CharacterAttributes cAtr;
+
+    [Space(5)]
+    [Header("Dead")]
+    public GameObject deadPanel;
 
     private void Start()
     {
@@ -47,7 +51,9 @@ public class HudControl : MonoBehaviour
         liferBar.maxValue = maxLife;
 
         float p = (life / maxLife) * 100;
-        txtLife.text = p.ToString() + "%";
+        txtLife.text = p.ToString("F0") + "%";
+
+        if (cAtr.Dead) deadPanel.SetActive(true);
     }
 
     void Mana()
@@ -59,7 +65,7 @@ public class HudControl : MonoBehaviour
         manaBar.maxValue = maxMana;
 
         float p = (mana / maxMana) * 100;
-        txtMana.text = p.ToString() + "%";
+        txtMana.text = p.ToString("F0") + "%";
     }
 
     void Exp()
@@ -105,6 +111,11 @@ public class HudControl : MonoBehaviour
     }
 
     public void UseSkill(bool value) => player.GetComponentInChildren<PlayerInputs>().UseSkill = value;
+    #endregion
+
+    #region DeathPanel
+    public void Revive() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    public void BackToMainMenu() => SceneManager.LoadScene(0);
 
     #endregion
 }

@@ -20,7 +20,7 @@ public class PlayerSkills : MonoBehaviour
     [Header("FloorOfHell")]
     private int fohLevel;
     public int FloorOfHellLevel { get => fohLevel; set => fohLevel = value; }
-    public int FloorOfHellManaCost  => 10 * fohLevel;
+    public int FloorOfHellManaCost  => 5 * fohLevel;
     public bool FloorOfHellCountdown { get; set; }
     private float fohDelayToUseAgain = 5;
 
@@ -36,33 +36,33 @@ public class PlayerSkills : MonoBehaviour
     [Header("BladesOfWind")]
     private int bowLevel;
     public int BladesOfWindLevel { get => bowLevel; set => bowLevel = value; }
-    public int BladesOfWindManaCost => 6 * bowLevel;
+    public int BladesOfWindManaCost => 5 * bowLevel;
     public bool BladesOfWindCountdown { get; set; }
     private float bowDelayToUseAgain = 5;
 
     //LifeSteal----------------------------------
     [Header("LifeSteal")]
     private int lsLevel;
-    public float LifeStealDuration => lsLevel * 2;
+    public float LifeStealDuration => lsLevel * 5;
     public int LifeStealLevel { get => lsLevel; set => lsLevel = value; }
-    public int LifeStealManaCost => 3 * lsLevel;
+    public int LifeStealManaCost => 5 * lsLevel;
     public bool LifeStealCountdown { get; set; }
-    private float lsDelayToUseAgain = 30;
+    private float lsDelayToUseAgain = 6;
     //Lucky----------------------------------
     [Header("Lucky")]
     private int lkLevel;
-    public float LuckyDuration => lkLevel * 2;
+    public float LuckyDuration => lkLevel * 5;
     public int LuckyLevel { get => lkLevel; set => lkLevel = value; }
-    public int LuckyManaCost => 3 * lkLevel;
+    public int LuckyManaCost => 5 * lkLevel;
     public bool LuckyCountdown { get; set; }
-    private float lkDelayToUseAgain = 30;
+    private float lkDelayToUseAgain = 60;
 
     //Invencible----------------------------------
     [Header("Invencible")]
     private int iLevel;
-    public int InvencibleDuration => iLevel * 2;
+    public int InvencibleDuration => iLevel * 5;
     public int InvencibleLevel { get => iLevel; set => iLevel = value; }
-    public int InvencibleManaCost => iLevel * 30;
+    public int InvencibleManaCost => iLevel * 10;
     public bool InvencibleCountdown { get; set; }
     private float iDelayToUseAgain = 60;
 

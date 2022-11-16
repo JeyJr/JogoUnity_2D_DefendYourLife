@@ -60,13 +60,16 @@ public class CharacterAttributes : MonoBehaviour
     [SerializeField] private GameObject textDmg;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private CharacterExpControl playerExp;
-
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    Color originalColor;
     #endregion
 
     private void Start()
     {
+        originalColor = spriteRenderer.color;
+
         if (player) StartPlayerAttributes();
-        if (enemy) StartAttributesEnemys(5, 1000, 20, 5);
+        if (enemy) StartAttributesEnemys(5, 10, 20, 5);
         if (boss) StartAttributesEnemys(15, 100, 50, 10);
     }
 
@@ -108,7 +111,10 @@ public class CharacterAttributes : MonoBehaviour
     #region DMGControl
     public void TakeDMG(int dmg, bool critical, CharacterExpControl gainExp)
     {
-        if(!Invencible){
+        spriteRenderer.color = Color.red;
+        StartCoroutine(SetColorDefault(originalColor));
+
+        if (!Invencible){
             life -= dmg;
 
             if(life > 0){
@@ -119,7 +125,11 @@ public class CharacterAttributes : MonoBehaviour
                 gainExp.GetExp(expToDrop);
                 Dead = true;
 
-                if (boss) GetComponent<BossNum>().UnlockNextLevel();
+                if (boss) {
+                    GetComponent<BossNum>().UnlockNextLevel();
+                    GameObject.FindGameObjectWithTag("SceneControl").GetComponent<SceneControl>().SpawnBoss();
+                }
+
                 if (enemy) GameObject.FindGameObjectWithTag("SceneControl").GetComponent<SceneControl>().EnemySpawned(1);
             }
         }
@@ -130,6 +140,9 @@ public class CharacterAttributes : MonoBehaviour
      }
     public void TakeDMG(int dmg, bool critical)
     {
+        spriteRenderer.color = Color.red;
+        StartCoroutine(SetColorDefault(originalColor));
+
         if(!Invencible){
             if(life > 0){
                 SpawnText(dmg.ToString(), critical, false, false);
@@ -146,6 +159,13 @@ public class CharacterAttributes : MonoBehaviour
             SpawnText("Invencible", false, false, false);
         }
      }
+
+    IEnumerator SetColorDefault(Color color)
+    {
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = color;
+    }
+
     public int DealDmg(bool isPhysical)
     {
         float critChance = Random.Range(1, 100);
@@ -181,21 +201,33 @@ public class CharacterAttributes : MonoBehaviour
     }
 
     public void RecoveryLife(int value){
-        if(life < maxLife){
-            SpawnText($"+{value}", false, true, true);
-            life += value;
-        }
-        else{
-            life = maxLife;
+        if(life < maxLife)
+        {
+            if(value <= 0)
+            {
+                SpawnText($"1", false, true, true);
+                life ++;
+            }
+            else
+            {
+                SpawnText($"{value}", false, true, true);
+                life += value;
+            }
         }
     }
     public void RecoveryMana(int value){
         if(mana < maxMana){
-            SpawnText($"+{value}", false, true, false);
-            mana += value;
-        }
-        else{
-            mana = maxMana;
+
+            if(value <= 0)
+            {
+                SpawnText($"1", false, true, false);
+                mana ++;
+            }
+            else
+            {
+                SpawnText($"{value}", false, true, false);
+                mana += value;
+            }
         }
     }
     #endregion
@@ -205,26 +237,23 @@ public class CharacterAttributes : MonoBehaviour
     {
         if(!suport){
             if(this.gameObject.layer == 6) //Player
-            {
-                if (critical)
-                    TextColor(1, 0, 0, 1);
-                else
-                    TextColor(0.3f, 0, 0, 1);
-            }
+                TextColor(1, 0, 0, 1);
             else //Other 
-            {
-                if (critical)
-                    TextColor(0.1f, 0, 1, 1);
-                else
-                    TextColor(1, 1, 1, 1);
-            }
+                TextColor(1, 1, 1, 1);
+
+            textDmg.GetComponent<TextMeshPro>().text = text;
         }
         else{
-            if(healt) TextColor(0, 1, 0, 1); //life
-            else TextColor(0, 0, 1, 1); //mana
+            if (healt)
+            {
+                TextColor(0, 1, 0, 1); //life
+                textDmg.GetComponent<TextMeshPro>().text = $"+{text}";
+            }
+            else {
+                TextColor(0, 0, 1, 1); //mana
+                textDmg.GetComponent<TextMeshPro>().text = $"+{text}";
+            }
         }            
-
-        textDmg.GetComponent<TextMeshPro>().text = text;
         Instantiate(textDmg, spawnPosition.position, Quaternion.Euler(0, 0, 0));
     }
     private void TextColor(float r, float g, float b, float a)

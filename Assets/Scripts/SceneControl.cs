@@ -8,6 +8,10 @@ public class SceneControl : MonoBehaviour
     private int maxEnemys = 30;
     [SerializeField] private int enemySpawned;
 
+    [Header("BOSS")]
+    public GameObject boss;
+    [SerializeField] private float yBoss;
+
     private void Start()
     {
         enemySpawned = 0;
@@ -30,5 +34,14 @@ public class SceneControl : MonoBehaviour
     public void EnemySpawned(int value)
     {
         enemySpawned -= value;
+    }
+
+    public void SpawnBoss() => StartCoroutine(Boss());
+
+    IEnumerator Boss()
+    {
+        yield return new WaitForSeconds(5);
+        Vector3 p = new Vector3(Random.Range(-55, -45f), yBoss, 10);
+        Instantiate(boss, p, Quaternion.identity);
     }
 }

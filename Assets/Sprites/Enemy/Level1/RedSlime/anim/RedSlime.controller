@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedSlimeAtk
+  m_Name: BossSkeletonAtk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 03de453c967155340acde492f6ab8345, type: 2}
+  m_Motion: {fileID: 7400000, guid: 7d04b0d2a07a9184b93d6da27f10b02c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -37,16 +37,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2168135275999231994}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_Position: {x: 50, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6642509653428790034}
-    m_Position: {x: 235, y: 65, z: 0}
+    m_Position: {x: 100, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8088700494896463991}
-    m_Position: {x: 270, y: 130, z: 0}
+    m_Position: {x: 60, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3970035090382736690}
-    m_Position: {x: 305, y: 195, z: 0}
+    m_Position: {x: 80, y: 310, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -64,7 +64,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedSlimeIdle
+  m_Name: BossSkeletonIdle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -77,7 +77,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 12ed10a5cc4e12b4a9b1e4bd2a8df920, type: 2}
+  m_Motion: {fileID: 7400000, guid: 30132bd848110374abe8b769cb181334, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -112,7 +112,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedSlimeDying
+  m_Name: BossSkeletonDying
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -125,7 +125,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4f2ce4b16bcb44f459862ad9805231fb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 364ff3bdedf37a942b4e42c2bb23da71, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -138,7 +138,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedSlimeRun
+  m_Name: BossSkeletonRun
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 525ed280c89445a4abcc42dd602fe081, type: 2}
+  m_Motion: {fileID: 7400000, guid: d8381b94b8c123f448cd1a1f96d7e19c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

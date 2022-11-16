@@ -11,11 +11,11 @@ public class PlayerMeleeAtk : MonoBehaviour
     public CharacterAttributes cA;
     public CharacterExpControl cE;
 
+
     //this method is called in Atk anims
     public void Atk() 
     {
         hit2DAtk = Physics2D.RaycastAll(startPosition.position, startPosition.right, atkRange, enemyMask);
-        
         if (hit2DAtk != null)
             for (int i = 0; i < hit2DAtk.Length; i++)
             {
@@ -28,4 +28,5 @@ public class PlayerMeleeAtk : MonoBehaviour
     {
         Debug.DrawRay(startPosition.position, startPosition.right * atkRange, Color.green);
     }
+
 }

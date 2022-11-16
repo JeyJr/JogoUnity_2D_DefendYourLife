@@ -134,6 +134,7 @@ MonoBehaviour:
   textDmg: {fileID: 8875598763902279731, guid: 2b06cf33d63fa5144bda4322fc04ae9f, type: 3}
   spawnPosition: {fileID: 3217462371537593852}
   playerExp: {fileID: 3217462369907067228}
+  spriteRenderer: {fileID: 3217462371640830257}
 --- !u!114 &3217462369907067228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +154,8 @@ MonoBehaviour:
   currentSkillExp: 0
   nextSkillLevelExp: 0
   skillLevel: 0
+  textLevelUp: {fileID: 8875598763902279731, guid: 2b06cf33d63fa5144bda4322fc04ae9f, type: 3}
+  spawnPosition: {fileID: 3217462371537593852}
 --- !u!1 &3217462370415690900
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,6 +248,7 @@ MonoBehaviour:
   playerMove: {fileID: 3217462369907067230}
   playerSkills: {fileID: 3217462370415690902}
   y: 0
+  smokeWalk: {fileID: 1072487263536792519, guid: 94dae5e6cb3a2bd4eae2b2eb4b8c2299, type: 3}
 --- !u!1 &3217462370552336722
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +323,7 @@ GameObject:
   - component: {fileID: 3217462371640830257}
   - component: {fileID: 3217462371640830259}
   - component: {fileID: 3217462371640830256}
+  - component: {fileID: 332773529}
   m_Layer: 6
   m_Name: Skin
   m_TagString: Untagged
@@ -383,7 +388,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2138943626, guid: 3264a51f85b1ee043af9d70e111e6957, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -435,3 +440,105 @@ MonoBehaviour:
   - pAtk2
   - pAtk3
   - pAtk4
+  - pDied
+  cAtr: {fileID: 3217462369907067231}
+  audioSource: {fileID: 332773529}
+  clips:
+  - {fileID: 8300000, guid: 926187e1b49154d4a907ab26171e7d9b, type: 3}
+  - {fileID: 8300000, guid: ac143121a9f061d468ff63cbe58151c6, type: 3}
+--- !u!82 &332773529
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3217462371640830254}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

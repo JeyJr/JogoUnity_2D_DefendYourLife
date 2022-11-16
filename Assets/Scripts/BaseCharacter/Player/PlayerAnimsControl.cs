@@ -7,18 +7,35 @@ public class PlayerAnimsControl : MonoBehaviour
     public PlayerInputs playerInputs;
     public Animator anim;
     public PlayerMeleeAtk playerMeleeAtk;
-    public List<string> animsName = new(); 
+    public List<string> animsName = new();
 
+    public CharacterAttributes cAtr;
+    bool stopAnimDead;
+
+    //SFX----------------------------
+    public AudioSource audioSource;
+    public AudioClip[] clips;
 
     private void Update()
     {
-        if(!playerInputs.Attacking)
+        if (!cAtr.Dead)
         {
-            AnimIdleAndWalk();
+            if(!playerInputs.Attacking)
+            {
+                AnimIdleAndWalk();
+            }
+            else if(playerInputs.Attacking)
+            {
+                AnimAtkMelee();
+            }
         }
-        else if(playerInputs.Attacking)
+        else
         {
-            AnimAtkMelee();
+            if (!stopAnimDead)
+            {
+                stopAnimDead = true;
+                anim.Play($"Base Layer.{animsName[6]}", 0);
+            }
         }
     }
 
@@ -52,5 +69,13 @@ public class PlayerAnimsControl : MonoBehaviour
 
     public void SetAttacking() => playerInputs.SetAttacking();
     public void SetAtk() => playerMeleeAtk.Atk();
+
+
+    #region SFX
+    public void SFXMeleeAtk() => audioSource.PlayOneShot(clips[0]);
+    public void SFXCastSpell() => audioSource.PlayOneShot(clips[1]);
+
+    #endregion
+
 }
 

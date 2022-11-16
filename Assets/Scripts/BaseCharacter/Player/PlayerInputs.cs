@@ -25,6 +25,10 @@ public class PlayerInputs : MonoBehaviour
     //Active skill in HUD----------------------------
     public bool UseSkill { get; set; }
 
+    //VFX-----------------------------------
+    bool isMove;
+    public GameObject smokeWalk;
+
     void Start()
     {
         MeleeAtkEnabled = true;
@@ -36,6 +40,16 @@ public class PlayerInputs : MonoBehaviour
         {
             //PlayerMove
             inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+
+            if (Input.GetAxisRaw("Horizontal") != 0 && !isMove)
+            {
+                isMove = true;
+                Instantiate(smokeWalk, transform.position, Quaternion.identity);
+            }
+
+            if (Input.GetAxisRaw("Horizontal") == 0)
+                isMove = false;
+
 
             if (!UseSkill && Input.GetMouseButton(0) && MeleeAtkEnabled)
             {

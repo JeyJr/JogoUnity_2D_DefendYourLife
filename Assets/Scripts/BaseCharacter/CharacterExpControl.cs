@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class CharacterExpControl : MonoBehaviour
@@ -35,7 +36,9 @@ public class CharacterExpControl : MonoBehaviour
     public int NextSkillLevelExp => nextSkillLevelExp;
     public int SkillLevel => skillLevel;
 
-
+    //Obj----------------------------------
+    [SerializeField] private GameObject textLevelUp;
+    [SerializeField] private Transform spawnPosition;
 
     private void Start()
     {
@@ -62,6 +65,10 @@ public class CharacterExpControl : MonoBehaviour
 
     private void CharLevelUp(int value)
     {
+        textLevelUp.GetComponent<TextMeshPro>().text = "Level Up";
+        textLevelUp.GetComponent<TextMeshPro>().color = Color.yellow;
+        Instantiate(textLevelUp, spawnPosition.position, Quaternion.Euler(0, 0, 0));
+
         level += value;
         currentExp -= nextLevelExp;
         nextLevelExp = level * expScaleValue;

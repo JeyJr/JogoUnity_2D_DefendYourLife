@@ -117,7 +117,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108218196843242063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.188, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb358a881c81c14aaf8a78a2999700b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 5
+  enemyLevel: 2
   player: 0
   enemy: 0
   boss: 1
@@ -290,6 +290,7 @@ MonoBehaviour:
   textDmg: {fileID: 8875598763902279731, guid: 2b06cf33d63fa5144bda4322fc04ae9f, type: 3}
   spawnPosition: {fileID: 108218196843242062}
   playerExp: {fileID: 3217462369907067228, guid: f9a6f71faaa22dc439ec12b4a73e7b3a, type: 3}
+  spriteRenderer: {fileID: 108218197090745420}
 --- !u!114 &108218197090745419
 MonoBehaviour:
   m_ObjectHideFlags: 0

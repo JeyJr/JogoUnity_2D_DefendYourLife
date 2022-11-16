@@ -86,7 +86,6 @@ public class GameData : MonoBehaviour
         return levelData;
     }
     
-    
     public static void CreateDataFile()
     {
         PlayerData playerData = new PlayerData();

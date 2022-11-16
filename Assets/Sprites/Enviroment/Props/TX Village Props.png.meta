@@ -3,7 +3,7 @@ guid: 6bc1a5eabe865914f90911f8ea3f328d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -2964,10 +2965,10 @@ TextureImporter:
       TX Village Props_44: -888221709
       TX Village Props_73: -1615941111
       TX Village Props_118: 1569863834
-      TX Village Props_64: -865480379
-      TX Village Props_79: 2115839882
-      TX Village Props_13: 825971856
       TX Village Props_109: 1737037590
+      TX Village Props_79: 2115839882
+      TX Village Props_64: -865480379
+      TX Village Props_13: 825971856
       TX Village Props_131: -1502932645
       TX Village Props_14: 459002909
       TX Village Props_94: 1004452538

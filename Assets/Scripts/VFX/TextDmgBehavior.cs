@@ -8,11 +8,11 @@ using UnityEngine;
 
 public class TextDmgBehavior : MonoBehaviour
 {
-    [SerializeField] private float speed = 2;
+    private float speed;
 
     private void Awake()
     {
-        speed = Random.Range(0.5f, 2);
+        speed = Random.Range(1f, 2.5f);
         Destroy(this.gameObject, 1f);
     }
 
