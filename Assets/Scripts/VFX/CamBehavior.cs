@@ -8,6 +8,11 @@ public class CamBehavior : MonoBehaviour
     [SerializeField] private float smoothT, speed, y;
     Vector3 currentVelocity;
 
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+    }
+
     void Update()
     {
         Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y + y, -10);

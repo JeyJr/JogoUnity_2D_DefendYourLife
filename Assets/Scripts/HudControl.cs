@@ -23,6 +23,7 @@ public class HudControl : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         cAtr = player.GetComponent<CharacterAttributes>();
         cExp = player.GetComponent<CharacterExpControl>();
         BtnSkills();

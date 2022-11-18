@@ -14,6 +14,7 @@ public class Enviroment : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         initialPosition = transform.position.x;
     }
 

@@ -10,7 +10,7 @@ public class BossNum : MonoBehaviour
         LevelUnlockData levelUnlock = GameData.LoadLevelData();
 
         //12 endLevel
-        if(levelUnlock.levelUnlock <= bossNum && bossNum != 12)
+        if(levelUnlock.levelUnlock <= bossNum && bossNum != 5)
         {
             GameData.SaveLevelData(bossNum + 1);
             levelUnlock = GameData.LoadLevelData();
