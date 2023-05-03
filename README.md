@@ -8,7 +8,7 @@ Não é necessário ter a mesma versão da Unity para abrir o projeto, mas é re
 https://jeyjr.itch.io/defenderyourlife
 
 
-![GamePlay](https://jjimagens.netlify.app/img/DefendYourLife2D/DefGamePlay.png)
+![GamePlay](https://imgs-projetos-jeyjr.netlify.app/gamesunity/defenderyourlife-game/DefGamePlay.png)
 
 ---
 
@@ -30,7 +30,7 @@ https://github.com/JeyJr/2D_DefendYourLife/tree/main/Assets/Scenes
 Em seguida, clique duas vezes no arquivo e selecione a versão da Unity desejada para carregar o projeto. Todos os arquivos de base da Unity serão implementados automaticamente.
 
 
-![Unity](https://jjimagens.netlify.app/img/DefendYourLife2D/DefUnity.png)
+![Unity](https://imgs-projetos-jeyjr.netlify.app/gamesunity/defenderyourlife-game/DefUnity.png)
 
 ---
 ## Uso:
